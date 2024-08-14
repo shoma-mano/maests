@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./dist/commands.js",
   "bin": {
-    "maestro-ts": "./dist/index.js"
+    "maests": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc; chmod 755 dist/index.js",
