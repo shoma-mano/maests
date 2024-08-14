@@ -1,11 +1,8 @@
 # This package is inspired by [maestro-ts](https:/google.com)
 
-# mests
-
-You can write Maestro flows in TypeScript.
-
 # ✅ Features
 
+・You can write Maestro flows in TypeScript.  
 ・Break down Flow into smaller, reusable modules  
 ・Automatically load environment variables from .env  
 ・No need to use runScript or runFlow anymore
