@@ -1,0 +1,150 @@
+appId: com.coludus.coludus
+---
+- launchApp:
+    appId: "com.coludus.coludus"
+- tapOn:
+    id: "今すぐはじめる"
+- clearKeychain
+- clearState
+- stopApp: test
+- stopApp
+- tapOn: Let's get started
+- tapOn:
+    id: "loginButtonId"
+- tapOn:
+    point: 100,100
+- tapOn:
+    point: 50%,50%
+- longPressOn: Submit
+- longPressOn:
+    id: "longPressableButtonId"
+- longPressOn:
+    point: 100, 200
+- longPressOn:
+    point: 50%, 50%
+- tapOn:
+    id: "input-id"
+- inputText: sample text
+- inputText: More text
+- tapOn:
+    id: "undefined"
+- inputText: More text
+- tapOn:
+    id: "input-id"
+- eraseText: 5
+- eraseText: 5
+- tapOn:
+    id: "undefined"
+- eraseText: 5
+- tapOn:
+    id: "number-input-id"
+- inputRandomNumber
+- inputRandomNumber
+- tapOn:
+    id: "undefined"
+- inputRandomNumber
+- tapOn:
+    id: "name-input-id"
+- inputRandomPersonName
+- inputRandomPersonName
+- tapOn:
+    id: "undefined"
+- inputRandomPersonName
+- tapOn:
+    id: "email-input-id"
+- inputRandomEmail
+- inputRandomEmail
+- tapOn:
+    id: "undefined"
+- inputRandomEmail
+- tapOn:
+    id: "text-input-id"
+- inputRandomText
+- inputRandomText
+- tapOn:
+    id: "undefined"
+- inputRandomText
+- pressKey: Enter
+- hideKeyboard
+- pressKey: Home
+- pressKey: Lock
+- pressKey: volume down
+- pressKey: volume up
+- copyTextFrom:
+    id: "element-id"
+- openLink: https://example.com
+- openLink: undefined/path
+- takeScreenshot: test.png
+- swipe:
+    direction: LEFT
+    duration: 400
+- swipe:
+    direction: RIGHT
+    duration: 400
+- swipe:
+    direction: DOWN
+    duration: 400
+- swipe:
+    direction: UP
+    duration: 400
+- swipe:
+    start: 0%, 0%
+    end: 100%, 100%
+- scroll
+- scrollUntilVisible:
+    element:
+      id: "element-id"
+- assertVisible:
+    id: "element-id"
+    enabled: true
+- assertVisible:
+    id: "element-id"
+- assertTrue: condition
+- assertNotVisible:
+    id: "element-id"
+- swipe:
+    start: -1, -1
+    end: -1, -100
+    duration: 1000
+- waitForAnimationToEnd
+- waitForAnimationToEnd:
+    timeout: undefined
+- extendedWaitUntil:
+    visible:
+        id: "element-id"
+    timeout: 5000
+- extendedWaitUntil:
+    notVisible:
+        id: "element-id"
+    timeout: 5000
+- repeat:
+    times: 3
+    commands:
+        - tapOn:
+            id: "hello"
+        - tapOn:
+            id: "my"
+        - tapOn:
+            id: "friend"
+- repeat:
+    while:
+        visible:
+            id: "element-id"
+    commands:
+        - tapOn:
+            id: "hello"
+        - tapOn:
+            id: "my"
+        - tapOn:
+            id: "friend"
+- repeat:
+    while:
+        notVisible:
+            id: "element-id"
+    commands:
+        - tapOn:
+            id: "hello"
+        - tapOn:
+            id: "my"
+        - tapOn:
+            id: "friend"
