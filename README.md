@@ -12,7 +12,7 @@
 ### Install
 
 ```sh:
-pnpm -D add maestro-ts
+pnpm -D add maests
 ```
 
 ### Create E2E folder
@@ -36,7 +36,7 @@ M.tapOn("someTestId");
 Now, from your e2e test folder, generate the yaml flows and run them.
 
 ```sh
-cd test/e2e && npx maestro-ts
+cd test/e2e && npx maests
 maestro test my-first-flow.yaml
 ```
 
