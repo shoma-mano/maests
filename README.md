@@ -1,4 +1,4 @@
-# This package is inspired by [maestro-ts](https:/google.com)
+# This package is inspired by [maestro-ts](https://github.com/johkade/maestro-ts)
 
 # ✅ Features
 
