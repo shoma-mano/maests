@@ -68,6 +68,18 @@ export const MaestroTranslators = {
     addOut(`- tapOn:\n    point: ${x},${y}\n`);
   },
   /**
+   * Wait for testId to appear and the tap on an element with the given testId.
+   */
+  waitForAndtapOn: (id, maxWait) => {
+    addOut(
+      "- extendedWaitUntil:\n" +
+        "    visible:\n" +
+        `        id: "${id}"\n` +
+        `    timeout: ${maxWait}\n`
+    );
+    addOut(`- tapOn:\n    id: "${id}"\n`);
+  },
+  /**
    * Long press on an element with the given testId.
    */
   longPressOn: (id) => {
