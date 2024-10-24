@@ -1,11 +1,3 @@
-import { writeFileSync } from 'fs';
-
-const writeYaml = (path) => {
-  console.log("out", out);
-  writeFileSync(`./${path.replace(".maestro.ts", ".yaml")}`, out);
-  resetOut();
-};
-
 let isNested = false;
 let nestedCommands = "";
 const handleNest = (func) => {
@@ -16,18 +8,16 @@ const handleNest = (func) => {
   nestedCommands = "";
   return out2;
 };
-let out = "";
-const resetOut = () => {
+export let out = "";
+export const resetOut = () => {
   out = "";
 };
 const addOut = (command) => {
-  if (isNested)
-    nestedCommands += command;
-  else
-    out += command;
+  if (isNested) nestedCommands += command;
+  else out += command;
 };
 const envAppId = process.env["appId"];
-const MaestroTranslators = {
+export const MaestroTranslators = {
   /**
    * Should be called at the start of every test flow.
    * In the config object, you can define the appId to use.
@@ -50,8 +40,7 @@ const MaestroTranslators = {
    * Clear the state of the current app or of the app with the given id.
    */
   clearState: ({ appId } = {}) => {
-    if (appId)
-      addOut(`- clearState: ${appId ?? envAppId}
+    if (appId) addOut(`- clearState: ${appId ?? envAppId}
 `);
     addOut("- clearState\n");
   },
@@ -162,8 +151,7 @@ const MaestroTranslators = {
    * Input a text into the currently focused input or the input with the given testId.
    */
   inputText: (text, id) => {
-    if (!id)
-      addOut(`- inputText: ${text}
+    if (!id) addOut(`- inputText: ${text}
 `);
     addOut(`- tapOn:
     id: "${id}"
@@ -174,8 +162,7 @@ const MaestroTranslators = {
    * Input random name into focused input or the one with given testId.
    */
   inputRandomName: (id) => {
-    if (!id)
-      addOut(`- inputRandomPersonName
+    if (!id) addOut(`- inputRandomPersonName
 `);
     addOut(`- tapOn:
     id: "${id}"
@@ -186,8 +173,7 @@ const MaestroTranslators = {
    * Input random number into focused input or the one with given testId.
    */
   inputRandomNumber: (id) => {
-    if (!id)
-      addOut(`- inputRandomNumber
+    if (!id) addOut(`- inputRandomNumber
 `);
     addOut(`- tapOn:
     id: "${id}"
@@ -206,8 +192,7 @@ const MaestroTranslators = {
    * Input random email into focused input or the one with given testId.
    */
   inputRandomEmail: (id) => {
-    if (!id)
-      addOut(`- inputRandomEmail
+    if (!id) addOut(`- inputRandomEmail
 `);
     addOut(`- tapOn:
     id: "${id}"
@@ -218,8 +203,7 @@ const MaestroTranslators = {
    * Input random text into focused input or the one with given testId.
    */
   inputRandomText: (id) => {
-    if (!id)
-      addOut(`- inputRandomText
+    if (!id) addOut(`- inputRandomText
 `);
     addOut(`- tapOn:
     id: "${id}"
@@ -230,8 +214,7 @@ const MaestroTranslators = {
    * Erase a number of characters from the focused input or the input with the given testId.
    */
   eraseText: (chars, id) => {
-    if (!id)
-      addOut(`- eraseText: ${chars ?? 50}
+    if (!id) addOut(`- eraseText: ${chars ?? 50}
 `);
     addOut(`- tapOn:
     id: "${id}"
@@ -393,8 +376,7 @@ const MaestroTranslators = {
    */
   stopApp: ({ appId } = {}) => {
     appId = appId ?? envAppId;
-    if (appId)
-      addOut(`- stopApp: ${appId}
+    if (appId) addOut(`- stopApp: ${appId}
 `);
     addOut("- stopApp\n");
   },
@@ -446,5 +428,5 @@ const MaestroTranslators = {
 `);
   }
 };
-
-export { MaestroTranslators as M, MaestroTranslators, out, resetOut, writeYaml };
+export { MaestroTranslators as M };
+export { writeYaml } from "./write-yaml.mjs";
