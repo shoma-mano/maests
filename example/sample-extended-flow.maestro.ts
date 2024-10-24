@@ -1,8 +1,8 @@
 import { M } from "maests";
-import { openColudus } from "./openColudus";
+import { openApp } from "./openApp";
 
 // Initialize your flow
-openColudus();
+openApp();
 
 // you can clear the simulator's state whenever you like.
 M.clearKeychain();
