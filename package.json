@@ -3,20 +3,20 @@
   "version": "1.0.4",
   "description": "An executable compiler for creating Maestro's yaml-flows with typescript.",
   "type": "module",
-  "main": "./dist/commands.js",
+  "main": "./dist/commands.mjs",
   "bin": {
-    "maests": "./dist/index.js"
+    "maests": "./dist/index.mjs"
   },
   "scripts": {
-    "build": "tsc && chmod 755 dist/index.js",
-    "gen": "cd example && node ../dist/index.cjs",
+    "build": "npx unbuild && chmod 755 dist/index.js",
     "release": "pnpm build && changelogen --release  --publish --push"
   },
   "author": "ms2geki@gmail.com",
   "devDependencies": {
     "@types/node": "^18.14.0",
     "changelogen": "^0.5.7",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "unbuild": "^2.0.0"
   },
   "repository": {
     "type": "git",
