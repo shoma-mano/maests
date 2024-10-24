@@ -4,6 +4,7 @@
   "description": "An executable compiler for creating Maestro's yaml-flows with typescript.",
   "type": "module",
   "main": "./dist/commands.mjs",
+  "types": "./dist/commands.d.ts",
   "bin": {
     "maests": "./dist/index.mjs"
   },
