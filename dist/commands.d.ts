@@ -42,6 +42,10 @@ export declare const MaestroTranslators: {
         y: any;
     }) => void;
     /**
+     * Wait for testId to appear and the tap on an element with the given testId.
+     */
+    waitForAndtapOn: (id: any, maxWait: any) => void;
+    /**
      * Long press on an element with the given testId.
      */
     longPressOn: (id: any) => void;
