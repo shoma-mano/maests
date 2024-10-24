@@ -6,11 +6,12 @@ export default defineBuildConfig({
       input: "src/",
       format: "esm",
       builder: "mkdist",
+      declaration: true,
+      esbuild: {
+        define: {
+          "import.meta.vitest": "undefined",
+        },
+      },
     },
   ],
-  declaration: true,
-  rollup: {
-    emitCJS: true,
-  },
-  failOnWarn: false,
 });
