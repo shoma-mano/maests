@@ -5,5 +5,5 @@ export const openApp = () => {
 
   M.launchApp({ appId: "com.app.app" });
 
-  M.tapOn("今すぐはじめる");
+  M.tapOn("start app");
 };

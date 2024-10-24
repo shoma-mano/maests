@@ -2,10 +2,10 @@
 
 import fs, { writeFileSync } from "fs";
 import path from "path";
-import * as Tools from "./tools";
 import { fileURLToPath } from "url";
 import createJiti from "jiti";
 import dotenv from "dotenv";
+import { consola } from "consola";
 
 const filePath = fileURLToPath(import.meta.url);
 const distPath = path.join(filePath, "../");
@@ -29,7 +29,7 @@ const getDotEnvPath = () => {
 };
 const dotEnvPath = getDotEnvPath();
 if (dotEnvPath) {
-  Tools.dim(`Found .env file at ${dotEnvPath}`);
+  consola.info(`Found .env file at ${dotEnvPath}`);
   dotenv.config({ path: dotEnvPath });
 }
 
@@ -42,12 +42,12 @@ const main = async () => {
 
   const flowsCount = flowPaths.length;
   if (!flowsCount) {
-    Tools.yellow("No flows found - are you in the right directory?");
-    return Tools.dim(
+    consola.warn("No flows found - are you in the right directory?");
+    return consola.info(
       "File names for flows should follow the pattern `my-flow.maestro.ts`"
     );
   }
-  Tools.dim(`Found ${flowsCount} flows.`);
+  consola.info(`Found ${flowsCount} flows.`);
 
   for (const fp of flowPaths) {
     let code = fs.readFileSync(fp, "utf-8");
@@ -72,9 +72,9 @@ const main = async () => {
     const jiti = createJiti(cwd, { interopDefault: true });
     try {
       await jiti(tempFilePath);
-      Tools.green(`Created ${fp} ✔`);
+      consola.success(`Created ${fp} ✔`);
     } catch (error) {
-      Tools.red(error);
+      consola.error(error);
     }
     // remove temp file
     fs.unlinkSync(tempFilePath);
