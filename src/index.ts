@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import createJiti from "jiti";
 import dotenv from "dotenv";
 import { consola } from "consola";
+import { rewriteCode } from "./rewriteCode";
 
 const filePath = fileURLToPath(import.meta.url);
 const distPath = path.join(filePath, "../");
@@ -51,15 +52,7 @@ const main = async () => {
 
   for (const fp of flowPaths) {
     let code = fs.readFileSync(fp, "utf-8");
-    code = code.replace(
-      /import.*["']maests.*\n/g,
-      `
-      import { M, writeYaml } from '${distPath}/commands'
-      `
-    );
-    code += `
-    writeYaml("${fp}")
-    `;
+    code = rewriteCode({ code, flowPath: fp, distPath });
 
     // write code to a temp file
     const tempFilePath = path.join(
