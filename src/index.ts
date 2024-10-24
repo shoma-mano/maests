@@ -2,7 +2,7 @@
 
 import fs, { writeFileSync } from "fs";
 import path from "path";
-import * as Tools from "./tools.js";
+import * as Tools from "./tools";
 import { fileURLToPath } from "url";
 import createJiti from "jiti";
 import dotenv from "dotenv";
