@@ -8,6 +8,10 @@ export interface NestedOrBase {
    */
   tapOn(testId: string): void;
   /**
+   * Wait for testId to appear and the tap on an element with the given testId.
+   */
+  waitForAndtapOn(testId: string, maxWait: number): void;
+  /**
    * Long press on an element with the given testId.
    */
   longPressOn(testId: string): string;
