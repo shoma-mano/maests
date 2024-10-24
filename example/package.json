@@ -12,5 +12,8 @@
   "dependencies": {
     "maests": "link:..",
     "tsx": "^4.17.0"
+  },
+  "devDependencies": {
+    "unbuild": "^2.0.0"
   }
 }

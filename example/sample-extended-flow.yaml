@@ -1,7 +1,7 @@
-appId: com.coludus.coludus
+appId: com.app.app
 ---
 - launchApp:
-    appId: "com.coludus.coludus"
+    appId: "com.app.app"
 - tapOn:
     id: "今すぐはじめる"
 - clearKeychain
