@@ -9,8 +9,11 @@ importers:
   .:
     dependencies:
       maests:
-        specifier: file:/Users/mano/my-oss/maests/maests-0.4.10.tgz
-        version: file:../maests-0.4.10.tgz
+        specifier: link:..
+        version: link:..
+      tsx:
+        specifier: ^4.17.0
+        version: 4.17.0
     devDependencies:
       unbuild:
         specifier: ^2.0.0
@@ -942,11 +945,6 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
-
-  maests@file:../maests-0.4.10.tgz:
-    resolution: {integrity: sha512-7n8dGK4185a+xNY7yN1VQe+BR+MyjRF3571Gc27il3E0F1MCoj7fbTjv+US1tdZ4jJA/3upSHToiPpiHwIkV5g==, tarball: file:../maests-0.4.10.tgz}
-    version: 0.4.10
-    hasBin: true
 
   magic-string@0.30.12:
     resolution: {integrity: sha512-Ea8I3sQMVXr8JhN4z+H/d8zwo+tYDgHE9+5G4Wnrwhs0gaK9fXTKx0Tw5Xwsd/bCPTTZNRAdpyzvoeORe9LYpw==}
@@ -2129,11 +2127,6 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
-
-  maests@file:../maests-0.4.10.tgz:
-    dependencies:
-      jiti: 1.21.6
-      tsx: 4.17.0
 
   magic-string@0.30.12:
     dependencies:
