@@ -3,7 +3,7 @@ appId: com.app.app
 - launchApp:
     appId: "com.app.app"
 - tapOn:
-    id: "今すぐはじめる"
+    id: "start app"
 - clearKeychain
 - clearState
 - stopApp: test
