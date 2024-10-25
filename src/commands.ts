@@ -202,7 +202,7 @@ export const MaestroTranslators = {
   /**
    * Assert the element with the given testId is not visible.
    */
-  assertNotVisible: (id: any) => {
+  assertNotVisible: (id: string) => {
     addOut(`- assertNotVisible:\n    id: "${id}"\n`);
   },
   /**
@@ -214,7 +214,7 @@ export const MaestroTranslators = {
   /**
    * Scroll until the element with the given testId is visible.
    */
-  scrollUntilVisible: (id: any) => {
+  scrollUntilVisible: (id: string) => {
     addOut(`- scrollUntilVisible:\n    element:\n      id: "${id}"\n`);
   },
   /**
@@ -222,7 +222,11 @@ export const MaestroTranslators = {
    * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
    */
   waitForAnimationEnd: (maxWait: number) => {
-    addOut(`- waitForAnimationToEnd:\n    timeout: ${maxWait}\n`);
+    const command = maxWait 
+      ? `- waitForAnimationToEnd:\n    timeout: ${maxWait}\n`
+      : "- waitForAnimationToEnd\n";
+    
+    addOut(command);
   },
   /**
    * Wait a max of milliseconds until the element with the given testId is visible.
