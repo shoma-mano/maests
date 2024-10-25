@@ -32,7 +32,7 @@ export declare const MaestroTranslators: {
     /**
      * Tap on a text visible on screen.
      */
-    tapOnText: (text: any) => void;
+    tapOnText: (text: string) => void;
     /**
      * Tap on the given point.
      * Can either take numbers for dips or strings for percentages.
@@ -44,11 +44,11 @@ export declare const MaestroTranslators: {
     /**
      * Wait for testId to appear and the tap on an element with the given testId.
      */
-    waitForAndtapOn: (id: any, maxWait: any) => void;
+    waitForAndtapOn: (id: string, maxWait: number) => void;
     /**
      * Long press on an element with the given testId.
      */
-    longPressOn: (id: any) => void;
+    longPressOn: (id: string) => void;
     /**
      * Long press on the given point.
      */
@@ -59,7 +59,7 @@ export declare const MaestroTranslators: {
     /**
      * Long press on an element with the given text.
      */
-    longPressOnText: (text: any) => void;
+    longPressOnText: (text: string) => void;
     /**
      * Swipe left from center.
      */
@@ -117,17 +117,17 @@ export declare const MaestroTranslators: {
     /**
      * Open a url / deepLink.
      */
-    openLink: (url: any) => void;
+    openLink: (url: string) => void;
     /**
      * Use the configured deepLinkBase or appId to navigate to the given path.
      * Only works if deepLinking is set up correctly.
      */
-    navigate: (path: any) => void;
+    navigate: (path: string) => void;
     /**
      * Assert an element with the given testId is visible.
      * @param enabled Whether the view should also be enabled.
      */
-    assertVisible: (id: any, enabled: any) => void;
+    assertVisible: (id: string, enabled: boolean) => void;
     /**
      * Assert the element with the given testId is not visible.
      */
@@ -141,22 +141,23 @@ export declare const MaestroTranslators: {
      */
     scrollUntilVisible: (id: any) => void;
     /**
-     * Wait a max of n ms or until the current animation has ended.
+     * Waits until an ongoing animation/video is fully finished and screen becomes static.
+     * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
      */
-    waitForAnimationEnd: (continueAfter?: boolean) => void;
+    waitForAnimationEnd: (maxWait: number) => void;
     /**
      * Wait a max of milliseconds until the element with the given testId is visible.
      */
-    waitUntilVisible: (id: any, maxWait: any) => void;
+    waitUntilVisible: (id: string, maxWait: number) => void;
     /**
      * Wait a max of milliseconds until the element with the given testId is no longer visible.
      */
-    waitUntilNotVisible: (id: any, maxWait: any) => void;
+    waitUntilNotVisible: (id: string, maxWait: number) => void;
     /**
      * Wait a number of milliseconds.
      * This is an anti-pattern, try to fall back to other waiting methods if possible.
      */
-    wait: (ms: any) => void;
+    wait: (ms: number) => void;
     /**
      * Dismiss the software keyboard.
      */
@@ -164,7 +165,7 @@ export declare const MaestroTranslators: {
     /**
      * Take a screenshot and store at the path with the given name.
      */
-    screenshot: (fileName: any) => void;
+    screenshot: (fileName: string) => void;
     /**
      * Press the enter key on the software keyboard.
      */
@@ -198,15 +199,15 @@ export declare const MaestroTranslators: {
     /**
      * Repeats the given actions a given number of times.
      */
-    repeat: (times: any, func: any) => void;
+    repeat: (times: number, func: () => any) => void;
     /**
      * Repeats the given actions while the element with the given testId is visible.
      */
-    repeatWhileVisible: (id: any, func: any) => void;
+    repeatWhileVisible: (id: string, func: () => any) => void;
     /**
      * Repeats the given actions while the element with the given testId is not visible.
      */
-    repeatWhileNotVisible: (id: any, func: any) => void;
+    repeatWhileNotVisible: (id: string, func: () => any) => void;
     /**
      * Insert inline yaml code. Good for specialized commands.
      */
