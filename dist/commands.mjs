@@ -275,14 +275,12 @@ export const MaestroTranslators = {
 `);
   },
   /**
-   * Wait a max of n ms or until the current animation has ended.
+   * Waits until an ongoing animation/video is fully finished and screen becomes static.
+   * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
    */
-  waitForAnimationEnd: (continueAfter) => {
-    if (!continueAfter) {
-      addOut("- waitForAnimationToEnd\n");
-    }
+  waitForAnimationEnd: (maxWait) => {
     addOut(`- waitForAnimationToEnd:
-    timeout: ${continueAfter}
+    timeout: ${maxWait}
 `);
   },
   /**
