@@ -131,7 +131,7 @@ export declare const MaestroTranslators: {
     /**
      * Assert the element with the given testId is not visible.
      */
-    assertNotVisible: (id: any) => void;
+    assertNotVisible: (id: string) => void;
     /**
      * Scroll down.
      */
@@ -139,7 +139,7 @@ export declare const MaestroTranslators: {
     /**
      * Scroll until the element with the given testId is visible.
      */
-    scrollUntilVisible: (id: any) => void;
+    scrollUntilVisible: (id: string) => void;
     /**
      * Waits until an ongoing animation/video is fully finished and screen becomes static.
      * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.

@@ -279,9 +279,10 @@ export const MaestroTranslators = {
    * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
    */
   waitForAnimationEnd: (maxWait) => {
-    addOut(`- waitForAnimationToEnd:
+    const command = maxWait ? `- waitForAnimationToEnd:
     timeout: ${maxWait}
-`);
+` : "- waitForAnimationToEnd\n";
+    addOut(command);
   },
   /**
    * Wait a max of milliseconds until the element with the given testId is visible.
