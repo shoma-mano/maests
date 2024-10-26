@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.6
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v1.0.5...v1.1.6)
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+- Ian-Hamilton <ian.ross.hamilton@gmail.com>
 
 ## v1.0.5
 

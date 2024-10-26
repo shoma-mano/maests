@@ -1,0 +1,63 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MaestroTranslators Tap Command Snapshots > tapOn with all properties 1`] = `
+"- tapOn:
+    id: "testId"
+    repeat: 3
+    waitToSettleTimeoutMs: 200
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > tapOn with formatted tap props 1`] = `
+"- tapOn:
+    id: "testId"
+    repeat: 3
+    waitToSettleTimeoutMs: 500
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > tapOn with id only 1`] = `
+"- tapOn:
+    id: "testId"
+    retryTapIfNoChange: true
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > tapOnPoint with coordinates and properties 1`] = `
+"- tapOn:
+    point: 50%,50%
+    retryTapIfNoChange: true
+    repeat: 4
+    waitToSettleTimeoutMs: 500
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > tapOnText with text and properties 1`] = `
+"- tapOn:
+    text: "sample text"
+    retryTapIfNoChange: true
+    repeat: 2
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > waitForAndTapOn with all properties 1`] = `
+"- extendedWaitUntil:
+    visible:
+        id: "testId"
+    timeout: 3000
+- tapOn:
+    id: "testId"
+    waitToSettleTimeoutMs: 400
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > waitForAndTapOn with id and maxWait 1`] = `
+"- extendedWaitUntil:
+    visible:
+        id: "testId"
+    timeout: 3000
+- tapOn:
+    id: "testId"
+    retryTapIfNoChange: true
+"
+`;

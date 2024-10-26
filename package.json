@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "npx unbuild && chmod 755 dist/index.mjs",
-    "release": "pnpm build && changelogen --release  --publish --push"
+    "release": "pnpm build && changelogen --release  --publish --push",
+     "test": "vitest run __tests__"
   },
   "author": "ms2geki@gmail.com",
   "devDependencies": {

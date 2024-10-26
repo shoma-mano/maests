@@ -1,219 +1,240 @@
+import { TapProps, PointProps } from "./types";
 export declare let out: string;
 export declare const resetOut: () => void;
 export declare const MaestroTranslators: {
     /**
-     * Should be called at the start of every test flow.
-     * In the config object, you can define the appId to use.
+     * Initializes the test flow with an optional application ID.
+     * @param appId - Optional application ID to override the default environment appId.
      */
     initFlow: ({ appId }?: {
         appId?: string;
     }) => void;
     /**
-     * Launches the app.
-     * @param appId The bundle id of your app. Falls back to the appId provided in maestro-ts.config.js.
+     * Launches the application with optional configurations.
+     * @param appId - Optional app ID to use for launching the app.
      */
     launchApp: ({ appId }?: {
         appId?: string;
     }) => void;
     /**
-     * Clear the state of the current app or of the app with the given id.
+     * Clears the state of the application.
+     * @param appId - Optional app ID to clear a specific application's state.
      */
     clearState: ({ appId }?: {
         appId?: string;
     }) => void;
     /**
-     * Clear the entire keychain.
+     * Clears the entire keychain.
      */
     clearKeychain: () => void;
     /**
-     * Tap on an element with the given testId.
+     * Taps on an element by its test ID with optional retry and repeat configurations.
+     * @param id - The test ID of the target element.
+     * @param props - Optional properties to customize the tap action.
      */
-    tapOn: (id: string) => void;
+    tapOn: (id: string, props?: TapProps) => void;
     /**
-     * Tap on a text visible on screen.
+     * Taps on visible text on the screen with optional retry and repeat configurations.
+     * @param text - The visible text to tap on.
+     * @param props - Optional properties to customize the tap action.
      */
-    tapOnText: (text: string) => void;
+    tapOnText: (text: string, props?: TapProps) => void;
     /**
-     * Tap on the given point.
-     * Can either take numbers for dips or strings for percentages.
+     * Taps on a specified point on the screen.
+     * @param point - The x and y coordinates of the tap.
+     * @param props - Optional properties for customizing the tap action.
      */
-    tapOnPoint: ({ x, y }: {
-        x: any;
-        y: any;
-    }) => void;
+    tapOnPoint: (point: PointProps, props?: TapProps) => void;
     /**
-     * Wait for testId to appear and the tap on an element with the given testId.
+     * Waits for an element by testId to appear, then taps on it.
+     * @param id - The testId of the element to wait for and tap.
+     * @param maxWait - Maximum wait time in milliseconds for the element to appear.
+     * @param props - Optional properties to customize the tap action.
      */
-    waitForAndtapOn: (id: string, maxWait: number) => void;
+    waitForAndTapOn: (id: string, maxWait: number, props?: TapProps) => void;
     /**
-     * Long press on an element with the given testId.
+     * Long presses on an element by its testId.
+     * @param id - The testId of the element to long press on.
      */
     longPressOn: (id: string) => void;
     /**
-     * Long press on the given point.
+     * Long presses on a specified point on the screen.
+     * @param point - The x and y coordinates for the long press.
      */
-    longPressOnPoint: ({ x, y }: {
-        x: any;
-        y: any;
-    }) => void;
+    longPressOnPoint: ({ x, y }: PointProps) => void;
     /**
-     * Long press on an element with the given text.
+     * Long presses on a specified text on the screen.
+     * @param text - The text to long press.
      */
     longPressOnText: (text: string) => void;
     /**
-     * Swipe left from center.
+     * Swipes in the specified direction from the center of the screen.
      */
     swipeLeft: () => void;
-    /**
-     * Swipe right from center.
-     */
     swipeRight: () => void;
-    /**
-     * Swipe down from center.
-     */
     swipeDown: () => void;
-    /**
-     * Swipe up from center.
-     */
     swipeUp: () => void;
     /**
-     * Swipe from a start to an end point. Use percentages or dips.
+     * Swipes from a starting to an ending point.
+     * @param start - Starting coordinates of the swipe.
+     * @param end - Ending coordinates of the swipe.
      */
-    swipe: (start: {
-        x: number;
-        y: number;
-    }, end: {
-        x: number;
-        y: number;
-    }) => void;
+    swipe: (start: PointProps, end: PointProps) => void;
     /**
-     * Input a text into the currently focused input or the input with the given testId.
+     * Inputs text into a focused element or the specified input by testId.
+     * @param text - The text to input.
+     * @param id - Optional testId of the target input element.
      */
     inputText: (text: string, id?: string) => void;
     /**
-     * Input random name into focused input or the one with given testId.
+     * Inputs a random name into a focused input or specified by testId.
+     * @param id - Optional testId of the target input element.
      */
     inputRandomName: (id?: string) => void;
     /**
-     * Input random number into focused input or the one with given testId.
+     * Inputs a random number into a focused input or specified by testId.
+     * @param id - Optional testId of the target input element.
      */
     inputRandomNumber: (id?: string) => void;
     /**
-     * Copies text of an element with the given testId.
+     * Copies text from an element by its testId.
+     * @param id - The testId of the element.
      */
     copyTextFrom: (id: string) => void;
     /**
-     * Input random email into focused input or the one with given testId.
+     * Inputs a random email into a focused input or specified by testId.
+     * @param id - Optional testId of the target input element.
      */
     inputRandomEmail: (id?: string) => void;
     /**
-     * Input random text into focused input or the one with given testId.
+     * Inputs random text into a focused input or specified by testId.
+     * @param id - Optional testId of the target input element.
      */
     inputRandomText: (id?: string) => void;
     /**
-     * Erase a number of characters from the focused input or the input with the given testId.
+     * Erases a specified number of characters from an input.
+     * @param chars - Number of characters to erase.
+     * @param id - Optional testId of the target input element.
      */
     eraseText: (chars: number, id?: string) => void;
     /**
-     * Open a url / deepLink.
+     * Opens a specified URL or deep link.
+     * @param url - The URL or deep link to open.
      */
     openLink: (url: string) => void;
     /**
-     * Use the configured deepLinkBase or appId to navigate to the given path.
-     * Only works if deepLinking is set up correctly.
+     * Navigates to a specific path using the deep link base.
+     * @param path - The path to navigate.
      */
     navigate: (path: string) => void;
     /**
-     * Assert an element with the given testId is visible.
-     * @param enabled Whether the view should also be enabled.
+     * Asserts that an element by testId is visible.
+     * @param id - The testId of the element.
+     * @param enabled - Optional; checks if the element is enabled.
      */
-    assertVisible: (id: string, enabled: boolean) => void;
+    assertVisible: (id: string, enabled?: boolean) => void;
     /**
-     * Assert the element with the given testId is not visible.
+     * Asserts that an element by testId is not visible.
+     * @param id - The testId of the element.
      */
     assertNotVisible: (id: string) => void;
     /**
-     * Scroll down.
+     * Scrolls the screen.
      */
     scroll: () => void;
     /**
-     * Scroll until the element with the given testId is visible.
+     * Scrolls until an element with the given testId is visible.
+     * @param id - The testId of the element.
      */
     scrollUntilVisible: (id: string) => void;
     /**
-     * Waits until an ongoing animation/video is fully finished and screen becomes static.
-     * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
+     * Waits until an animation/video finishes and screen becomes static.
+     * @param maxWait - Optional; max timeout after which flow continues.
      */
-    waitForAnimationEnd: (maxWait: number) => void;
+    waitForAnimationEnd: (maxWait?: number) => void;
     /**
-     * Wait a max of milliseconds until the element with the given testId is visible.
+     * Waits until an element by testId is visible.
+     * @param id - The testId of the element.
+     * @param maxWait - Max wait time in milliseconds.
      */
     waitUntilVisible: (id: string, maxWait: number) => void;
     /**
-     * Wait a max of milliseconds until the element with the given testId is no longer visible.
+     * Waits until an element by testId is not visible.
+     * @param id - The testId of the element.
+     * @param maxWait - Max wait time in milliseconds.
      */
     waitUntilNotVisible: (id: string, maxWait: number) => void;
     /**
-     * Wait a number of milliseconds.
-     * This is an anti-pattern, try to fall back to other waiting methods if possible.
+     * Waits a specified number of milliseconds.
+     * @param ms - Number of milliseconds to wait.
      */
     wait: (ms: number) => void;
     /**
-     * Dismiss the software keyboard.
+     * Dismisses the software keyboard.
      */
     hideKeyboard: () => void;
     /**
-     * Take a screenshot and store at the path with the given name.
+     * Takes a screenshot and stores it with the specified filename.
+     * @param fileName - The name to save the screenshot under.
      */
     screenshot: (fileName: string) => void;
     /**
-     * Press the enter key on the software keyboard.
+     * Presses the enter key on the software keyboard.
      */
     pressEnter: () => void;
     /**
-     * Press the home button.
+     * Presses the home button on the device.
      */
     pressHomeButton: () => void;
     /**
-     * Press the lock button.
+     * Presses the lock button on the device.
      */
     pressLockButton: () => void;
     /**
-     * Press android back button.
+     * Presses the Android back button.
      */
     back: () => void;
     /**
-     * Decrease device volume.
+     * Decreases the device volume.
      */
     volumeDown: () => void;
     /**
-     * Increase device volume.
+     * Increases the device volume.
      */
     volumeUp: () => void;
     /**
-     * Stop the current app or the one with the given appId.
+     * Stops the current app or specified app ID.
+     * @param appId - Optional; the app ID to stop.
      */
     stopApp: ({ appId }?: {
         appId?: string;
     }) => void;
     /**
-     * Repeats the given actions a given number of times.
+     * Repeats specified actions a given number of times.
+     * @param times - Number of repetitions.
+     * @param func - Actions to repeat.
      */
-    repeat: (times: number, func: () => any) => void;
+    repeat: (times: number, func: () => void) => void;
     /**
-     * Repeats the given actions while the element with the given testId is visible.
+     * Repeats actions while an element by testId is visible.
+     * @param id - The testId of the element.
+     * @param func - Actions to repeat.
      */
-    repeatWhileVisible: (id: string, func: () => any) => void;
+    repeatWhileVisible: (id: string, func: () => void) => void;
     /**
-     * Repeats the given actions while the element with the given testId is not visible.
+     * Repeats actions while an element by testId is not visible.
+     * @param id - The testId of the element.
+     * @param func - Actions to repeat.
      */
-    repeatWhileNotVisible: (id: string, func: () => any) => void;
+    repeatWhileNotVisible: (id: string, func: () => void) => void;
     /**
-     * Insert inline yaml code. Good for specialized commands.
+     * Inserts inline YAML code for specialized commands.
+     * @param yaml - The inline YAML to insert.
      */
     yaml: (yaml: string) => string;
     /**
-     * Check if a condition is true.
+     * Checks if a condition is true.
+     * @param condition - The condition to assert.
      */
     assertTrue: (condition: string) => void;
 };

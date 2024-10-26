@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MaestroTranslators Tap Command Snapshots > assertNotVisible 1`] = `
+"- assertNotVisible:
+    id: "testId"
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > assertVisible with enabled flag 1`] = `
+"- assertVisible:
+    id: "testId"
+    enabled: true
+"
+`;
+
+exports[`MaestroTranslators Tap Command Snapshots > assertVisible without enabled flag 1`] = `
+"- assertVisible:
+    id: "testId"
+"
+`;
