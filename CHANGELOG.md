@@ -3,6 +3,7 @@
 ## v1.0.6
 
 - Refactored commands and added optional props that are availoable in maestro, updated the readme and added a commands section for more information on available commands
+- added git hub actions for pr pipeline
 
 ### ❤️ Contributors
 
