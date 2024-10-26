@@ -57,7 +57,7 @@ export const MaestroTranslators = {
   /**
    * Tap on a text visible on screen.
    */
-  tapOnText: (text) => {
+  tapOnText: (text: string) => {
     addOut(`- tapOn: ${text}\n`);
   },
   /**
@@ -70,7 +70,7 @@ export const MaestroTranslators = {
   /**
    * Wait for testId to appear and the tap on an element with the given testId.
    */
-  waitForAndtapOn: (id, maxWait) => {
+  waitForAndtapOn: (id: string, maxWait: number) => {
     addOut(
       "- extendedWaitUntil:\n" +
         "    visible:\n" +
@@ -82,7 +82,7 @@ export const MaestroTranslators = {
   /**
    * Long press on an element with the given testId.
    */
-  longPressOn: (id) => {
+  longPressOn: (id: string) => {
     addOut(`- longPressOn:\n    id: "${id}"\n`);
   },
   /**
@@ -94,7 +94,7 @@ export const MaestroTranslators = {
   /**
    * Long press on an element with the given text.
    */
-  longPressOnText: (text) => {
+  longPressOnText: (text: string) => {
     addOut(`- longPressOn: ${text}\n`);
   },
   /**
@@ -180,21 +180,21 @@ export const MaestroTranslators = {
   /**
    * Open a url / deepLink.
    */
-  openLink: (url) => {
+  openLink: (url: string) => {
     addOut(`- openLink: ${url}\n`);
   },
   /**
    * Use the configured deepLinkBase or appId to navigate to the given path.
    * Only works if deepLinking is set up correctly.
    */
-  navigate: (path) => {
+  navigate: (path: string) => {
     addOut(`- openLink: ${process.env["deepLinkBase"]}${path}\n`);
   },
   /**
    * Assert an element with the given testId is visible.
    * @param enabled Whether the view should also be enabled.
    */
-  assertVisible: (id, enabled) => {
+  assertVisible: (id: string, enabled: boolean) => {
     if (enabled)
       addOut(`- assertVisible:\n    id: "${id}"\n    enabled: true\n`);
     addOut(`- assertVisible:\n    id: "${id}"\n`);
@@ -202,7 +202,7 @@ export const MaestroTranslators = {
   /**
    * Assert the element with the given testId is not visible.
    */
-  assertNotVisible: (id) => {
+  assertNotVisible: (id: string) => {
     addOut(`- assertNotVisible:\n    id: "${id}"\n`);
   },
   /**
@@ -214,22 +214,24 @@ export const MaestroTranslators = {
   /**
    * Scroll until the element with the given testId is visible.
    */
-  scrollUntilVisible: (id) => {
+  scrollUntilVisible: (id: string) => {
     addOut(`- scrollUntilVisible:\n    element:\n      id: "${id}"\n`);
   },
   /**
-   * Wait a max of n ms or until the current animation has ended.
+   * Waits until an ongoing animation/video is fully finished and screen becomes static.
+   * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
    */
-  waitForAnimationEnd: (continueAfter?: boolean) => {
-    if (!continueAfter) {
-      addOut("- waitForAnimationToEnd\n");
-    }
-    addOut(`- waitForAnimationToEnd:\n    timeout: ${continueAfter}\n`);
+  waitForAnimationEnd: (maxWait: number) => {
+    const command = maxWait 
+      ? `- waitForAnimationToEnd:\n    timeout: ${maxWait}\n`
+      : "- waitForAnimationToEnd\n";
+    
+    addOut(command);
   },
   /**
    * Wait a max of milliseconds until the element with the given testId is visible.
    */
-  waitUntilVisible: (id, maxWait) => {
+  waitUntilVisible: (id: string, maxWait: number) => {
     addOut(
       "- extendedWaitUntil:\n" +
         "    visible:\n" +
@@ -240,7 +242,7 @@ export const MaestroTranslators = {
   /**
    * Wait a max of milliseconds until the element with the given testId is no longer visible.
    */
-  waitUntilNotVisible: (id, maxWait) => {
+  waitUntilNotVisible: (id: string, maxWait: number) => {
     addOut(
       "- extendedWaitUntil:\n" +
         "    notVisible:\n" +
@@ -252,7 +254,7 @@ export const MaestroTranslators = {
    * Wait a number of milliseconds.
    * This is an anti-pattern, try to fall back to other waiting methods if possible.
    */
-  wait: (ms) => {
+  wait: (ms: number) => {
     addOut(
       "- swipe:\n" +
         "    start: -1, -1\n" +
@@ -269,7 +271,7 @@ export const MaestroTranslators = {
   /**
    * Take a screenshot and store at the path with the given name.
    */
-  screenshot: (fileName) => {
+  screenshot: (fileName: string) => {
     addOut(`- takeScreenshot: ${fileName}\n`);
   },
   /**
@@ -319,7 +321,7 @@ export const MaestroTranslators = {
   /**
    * Repeats the given actions a given number of times.
    */
-  repeat: (times, func) => {
+  repeat: (times: number, func: () => any) => {
     const out = handleNest(func);
     const commands = `- repeat:
     times: ${times}
@@ -330,7 +332,7 @@ export const MaestroTranslators = {
   /**
    * Repeats the given actions while the element with the given testId is visible.
    */
-  repeatWhileVisible: (id, func) => {
+  repeatWhileVisible: (id: string, func: () => any) => {
     const out = handleNest(func);
     addOut(`- repeat:
     while:
@@ -342,7 +344,7 @@ export const MaestroTranslators = {
   /**
    * Repeats the given actions while the element with the given testId is not visible.
    */
-  repeatWhileNotVisible: (id, func) => {
+  repeatWhileNotVisible: (id: string, func: () => any) => {
     const out = handleNest(func);
     addOut(`- repeat:
     while:
