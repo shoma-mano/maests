@@ -112,10 +112,10 @@ export const MaestroTranslators = {
   /**
    * Waits for an element by testId to appear, then taps on it.
    * @param id - The testId of the element to wait for and tap.
-   * @param maxWait - Maximum wait time in milliseconds for the element to appear.
+   * @param maxWait - Optional Maximum wait time in milliseconds for the element to appear, maestro defaults to 5 seconds
    * @param props - Optional properties to customize the tap action.
    */
-  waitForAndTapOn: (id: string, maxWait: number, props: TapProps = {}) => {
+  waitForAndTapOn: (id: string, maxWait?: number, props: TapProps = {}) => {
     let command = `- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${maxWait}\n`;
     command += `- tapOn:\n    id: "${id}"\n`;
     command += formatTapProps(props);
