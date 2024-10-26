@@ -1,37 +1,40 @@
-# This package is inspired by [maestro-ts](https://github.com/johkade/maestro-ts)
+# A TypeScript-based solution inspired by [maestro-ts](https://github.com/johkade/maestro-ts) for writing and running Maestro flows in a modular and reusable way.
 
 # ✅ Features
 
-・You can write Maestro flows in TypeScript.  
-・Break down Flow into smaller, reusable modules  
-・Automatically load environment variables from .env  
-・No need to use runScript or runFlow anymore
+ - You can write Maestro flows in TypeScript.  
+ - Break down Flow into smaller, reusable modules  
+ - Automatically load environment variables from .env  
+ - No need to use runScript or runFlow anymore
 
 ## Usage
 
-### Install
+#### 📦 Installation
 
 ```sh:
-pnpm -D add maests
+  pnpm -D add maests
 ```
 
-### Create E2E folder
+### 🚀 Getting Started
 
-In your app, create a folder your tests will live in.
-This time, we will use `my-app/test/e2e`.
+## Step 1: Set up your E2E folder
 
-### Create your first flow
+Create a directory for your tests within your app (e.g., `my-app/test/e2e`). All flows will be placed here.
 
-Create a file called `<flow-name>.maestro.ts` in `my-app/test/e2e`.
+## Step 2: Create your first flow
+
+Inside my-app/test/e2e, create a new file <flow-name>.maestro.ts:
+
 
 ```typescript
 import { M } from "maests";
 
-M.initFlow("com.myTeam.myApp");
+M.initFlow({ appId: "com.myTeam.myApp" });
 M.tapOn("someTestId");
+
 ```
 
-### Compiling and running your flows
+# Initializing and Configuring Flows
 
 Now, from your e2e test folder, generate the yaml flows and run them.
 
@@ -57,3 +60,10 @@ export const openMyApp = () => {
 import { openMyApp } from "./utils/openMyApp";
 openMyApp();
 ```
+
+### 🛠️ Commands
+This package offers a rich set of commands to cover various actions in your flows, including initializing flows, performing taps and presses, swiping, asserting conditions, and more.
+
+For a detailed list of all commands with examples, refer to the [Commands Documentation](./example/commands.md).
+
+
