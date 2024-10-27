@@ -1,7 +1,8 @@
 import { M } from "maests";
 import { join } from "path";
+import { openApp } from "./openApp";
 
-M.initFlow({ appId: "com.my.app" });
+openApp();
 M.runScript({ path: join(__dirname, "script.ts") });
 M.launchApp({ appId: "com.my.app" });
-M.stopApp();
+// M.stopApp();
