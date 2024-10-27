@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.0.5
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.4...v2.0.5)
+
+### 🩹 Fixes
+
+- Fix runScript bug ([c63dcbc](https://github.com/shoma-mano/maests/commit/c63dcbc))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.0.4
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.0.2...v2.0.4)
