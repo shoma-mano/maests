@@ -81,26 +81,24 @@ ${nested.replaceAll(/\n/g,`${space}\n`)}`;
       write: false,
     });
 
-    const code = outputFiles[0].text;
+    let code = outputFiles[0].text;
     // delete comment lines
-    const transformed = code.replace(/^\s*\/\/.*/gm, "\n");
-    console.log(transformed);
-
-    const envInjected = transformed.replace(
-      /process\.env\.([^\n\s]*)/g,
-      (_, p1) => {
-        if (!p1.startsWith("MAESTRO_")) {
-          console.warn(
-            "Environment variable that is not started with MAESTRO_ will be ignored:",
-            p1
-          );
-        }
-        return p1;
+    code = code.replace(/^\s*\/\/.*/gm, "\n");
+    // remove space around :
+    code = code.replace(/\s*:\s*/g, ":");
+    // inject env variables
+    code = code.replace(/process\.env\.([^\n\s]*)/g, (_, p1) => {
+      if (!p1.startsWith("MAESTRO_")) {
+        console.warn(
+          "Environment variable that is not started with MAESTRO_ will be ignored:",
+          p1
+        );
       }
-    );
+      return p1;
+    });
 
     // prettier-ignore
-    const command =`- evalScript: \${${envInjected.replaceAll("\n","")}}\n`
+    const command =`- evalScript: \${${code.replaceAll("\n","")}}\n`
     addOut(command);
   },
   /**
