@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.0.2
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.1...v2.0.2)
+
+### 🏡 Chore
+
+- Update README.md ([fd3acb0](https://github.com/shoma-mano/maests/commit/fd3acb0))
+- Update playground ([f854e39](https://github.com/shoma-mano/maests/commit/f854e39))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.0.1
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.0.0...v2.0.1)
