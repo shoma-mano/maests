@@ -1,16 +1,13 @@
 #!/usr/bin/env node
 import fs, { writeFileSync } from "fs";
 import path, { join } from "path";
-import { fileURLToPath } from "url";
 import createJiti from "jiti";
 import dotenv from "dotenv";
 import { consola } from "consola";
 import { rewriteCode } from "./rewriteCode";
 import { defineCommand, runMain } from "citty";
-
-const filePath = fileURLToPath(import.meta.url);
-const yamlFlowDir = path.join(filePath, "../");
-if (!fs.existsSync(yamlFlowDir)) fs.mkdirSync(yamlFlowDir);
+import { createOutPath } from "./utils";
+import { execSync } from "child_process";
 
 const main = defineCommand({
   args: {
@@ -20,39 +17,31 @@ const main = defineCommand({
     },
   },
   async run({ args }) {
-    const dotEnvPath = getDotEnvPath();
-    if (dotEnvPath) {
-      consola.info(`Found .env file at ${dotEnvPath}`);
-      dotenv.config({ path: dotEnvPath });
-    }
-
-    const path = args.path;
-    let code = fs.readFileSync(path, "utf-8");
-    code = rewriteCode({ code, flowName: path });
+    loadEnv();
+    const flowPath = args.path;
+    const outPath = createOutPath(flowPath);
+    let code = fs.readFileSync(flowPath, "utf-8");
+    code = rewriteCode({ code, outPath });
 
     const tempFilePath = join(
       process.cwd(),
-      `${path.replace(".maestro.ts", ".temp.ts")}`
+      `${flowPath.replace(".maestro.ts", ".temp.ts")}`
     );
     writeFileSync(tempFilePath, code);
-    // createYamlFile(path);
 
     const cwd = process.cwd();
     const jiti = createJiti(cwd, { interopDefault: true, esmResolve: true });
-    try {
-      await jiti(tempFilePath);
-      consola.success(`Created ${path} ✔`);
-    } catch (error) {
-      console.log("error", error);
-      consola.error(error);
-    }
+    await jiti(tempFilePath);
+    consola.success(`Created ${outPath} ✔`);
+    execSync(`maestro test ${outPath}`, { stdio: "inherit" });
+
     // remove temp file
     fs.unlinkSync(tempFilePath);
   },
 });
-runMain(main);
+if (!import.meta.vitest) runMain(main);
 
-function getDotEnvPath() {
+function loadEnv() {
   let currentPath = process.cwd();
   let dotEnvPath = "";
   while (currentPath !== "/") {
@@ -63,9 +52,8 @@ function getDotEnvPath() {
     }
     currentPath = path.join(currentPath, "../");
   }
-  return dotEnvPath;
-}
-
-function createYamlFile(flowPath: string) {
-  const targetPath = path.join(yamlFlowDir, flowPath);
+  if (dotEnvPath) {
+    consola.info(`Found .env file at ${dotEnvPath}`);
+    dotenv.config({ path: dotEnvPath });
+  }
 }
