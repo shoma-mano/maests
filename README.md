@@ -4,8 +4,12 @@
 
 ・You can write Maestro flows in TypeScript.  
 ・Break down Flow into smaller, reusable modules  
-・Automatically load environment variables from .env  
-・No need to use runScript or runFlow anymore
+・Automatically load environment variables from .env
+
+# 🚀 Road Map
+
+- Directly executing TypeScript test file without converting TypeScript to yaml.
+- Handling runScript or runFlow by imported reusable modules like normal TypeScript.
 
 ## Usage
 
