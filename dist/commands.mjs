@@ -74,22 +74,19 @@ ${nested.replaceAll(/\n/g, `${space}
       legalComments: "none",
       write: false
     });
-    const code = outputFiles[0].text;
-    const transformed = code.replace(/^\s*\/\/.*/gm, "\n");
-    console.log(transformed);
-    const envInjected = transformed.replace(
-      /process\.env\.([^\n\s]*)/g,
-      (_, p1) => {
-        if (!p1.startsWith("MAESTRO_")) {
-          console.warn(
-            "Environment variable that is not started with MAESTRO_ will be ignored:",
-            p1
-          );
-        }
-        return p1;
+    let code = outputFiles[0].text;
+    code = code.replace(/^\s*\/\/.*/gm, "\n");
+    code = code.replace(/\s*:\s*/g, ":");
+    code = code.replace(/process\.env\.([^\n\s]*)/g, (_, p1) => {
+      if (!p1.startsWith("MAESTRO_")) {
+        console.warn(
+          "Environment variable that is not started with MAESTRO_ will be ignored:",
+          p1
+        );
       }
-    );
-    const command = `- evalScript: \${${envInjected.replaceAll("\n", "")}}
+      return p1;
+    });
+    const command = `- evalScript: \${${code.replaceAll("\n", "")}}
 `;
     addOut(command);
   },
