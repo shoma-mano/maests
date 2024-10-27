@@ -20,16 +20,30 @@ const addOut = (command) => {
     nestedCommands[nestLevel - 1] += command;
   } else out += command;
 };
+const space = "    ";
 const envAppId = process.env["appId"];
 export const MaestroTranslators = {
   /**
    * Should be called at the start of every test flow.
    * In the config object, you can define the appId to use.
    */
-  initFlow: ({ appId } = {}) => {
-    addOut(`appId: ${appId ?? envAppId}
----
-`);
+  initFlow: ({
+    appId,
+    onFlowStart
+  } = {}) => {
+    const appIdCommand = `appId: ${appId ?? envAppId}
+`;
+    let commands = appIdCommand;
+    if (onFlowStart) {
+      const nested = handleNest(onFlowStart);
+      const flowCommand = `onFlowStart:
+${nested.replaceAll(/\n/g, `${space}
+`)}`;
+      commands += flowCommand;
+    }
+    const separetor = "---\n";
+    commands += separetor;
+    addOut(commands);
   },
   /**
    * Launches the app.
@@ -90,7 +104,7 @@ export const MaestroTranslators = {
    */
   tapOn: (id) => {
     addOut(`- tapOn:
-    id: "${id}"
+${space}id: "${id}"
 `);
   },
   /**

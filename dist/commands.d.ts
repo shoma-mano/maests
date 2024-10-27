@@ -5,8 +5,9 @@ export declare const MaestroTranslators: {
      * Should be called at the start of every test flow.
      * In the config object, you can define the appId to use.
      */
-    initFlow: ({ appId }?: {
+    initFlow: ({ appId, onFlowStart, }?: {
         appId?: string;
+        onFlowStart?: () => void;
     }) => void;
     /**
      * Launches the app.

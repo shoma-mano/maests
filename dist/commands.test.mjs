@@ -1,13 +1,23 @@
 import { join } from "path";
 import { M, out, resetOut } from "./commands.mjs";
+afterEach(resetOut);
 it("commands", () => {
-  M.initFlow({ appId: "com.my.app" });
+  M.initFlow({
+    appId: "com.my.app",
+    onFlowStart: () => {
+      M.tapOn("test");
+      M.runScript({ path: join(__dirname, "../playground/e2e/script.ts") });
+    }
+  });
   expect(out).toMatchInlineSnapshot(`
     "appId: com.my.app
+    onFlowStart:
+    - tapOn:    
+        id: "test"    
+    - evalScript: \${var hello = () => {  console.log("Hello, world!");};var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log(result.userId);console.log(MAESTRO_APP_ID);hello();}    
     ---
     "
   `);
-  resetOut();
 });
 it("execute repeat twice", () => {
   M.repeat(3, () => {
@@ -55,6 +65,9 @@ it("double nested repeat", () => {
   `);
 });
 it("runScript", () => {
-  M.runScript({ path: join(__dirname, "../example/script.ts") });
-  expect(out).toMatchInlineSnapshot(`"- evalScript: \${const res = http.get(\`https://jsonplaceholder.typicode.com/todos/1\`, {  headers: {    "Content-Type": "application/json"  }});console.log(MAESTRO_PROFILE);output.result = res.body;}"`);
+  M.runScript({ path: join(__dirname, "../playground/e2e/script.ts") });
+  expect(out).toMatchInlineSnapshot(`
+    "- evalScript: \${var hello = () => {  console.log("Hello, world!");};var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log(result.userId);console.log(MAESTRO_APP_ID);hello();}
+    "
+  `);
 });

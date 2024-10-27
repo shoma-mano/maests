@@ -1,6 +1,6 @@
 {
   "name": "maests",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "An executable compiler for creating Maestro's yaml-flows with typescript.",
   "type": "module",
   "main": "./dist/commands.mjs",
