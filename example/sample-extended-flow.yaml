@@ -107,8 +107,6 @@ appId: com.app.app
     end: -1, -100
     duration: 1000
 - waitForAnimationToEnd
-- waitForAnimationToEnd:
-    timeout: undefined
 - extendedWaitUntil:
     visible:
         id: "element-id"

@@ -1,10 +1,10 @@
 // nested commands
-let isNested = false;
+let nestLevel = 0;
 let nestedCommands = "";
 const handleNest = (func: () => any) => {
-  isNested = true;
+  nestLevel++;
   func();
-  isNested = false;
+  nestLevel--;
   const out = nestedCommands;
   nestedCommands = "";
   return out;
@@ -15,7 +15,7 @@ export const resetOut = () => {
   out = "";
 };
 const addOut = (command: string) => {
-  if (isNested) nestedCommands += command;
+  if (nestLevel) nestedCommands += command;
   else out += command;
 };
 
@@ -41,6 +41,17 @@ export const MaestroTranslators = {
   clearState: ({ appId }: { appId?: string } = {}) => {
     if (appId) addOut(`- clearState: ${appId ?? envAppId}\n`);
     addOut("- clearState\n");
+  },
+  /**
+   * Clear the state of the current app or of the app with the given id.
+   */
+  runScript: ({ path }: { path?: string } = {}) => {
+    // prettier-ignore
+    const out = 
+`- runScript: 
+     file: ${path}
+`;
+    addOut(out);
   },
   /**
    * Clear the entire keychain.
@@ -222,10 +233,10 @@ export const MaestroTranslators = {
    * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
    */
   waitForAnimationEnd: (maxWait: number) => {
-    const command = maxWait 
+    const command = maxWait
       ? `- waitForAnimationToEnd:\n    timeout: ${maxWait}\n`
       : "- waitForAnimationToEnd\n";
-    
+
     addOut(command);
   },
   /**
@@ -318,29 +329,41 @@ export const MaestroTranslators = {
     if (appId) addOut(`- stopApp: ${appId}\n`);
     addOut("- stopApp\n");
   },
+
   /**
    * Repeats the given actions a given number of times.
    */
   repeat: (times: number, func: () => any) => {
     const out = handleNest(func);
-    const commands = `- repeat:
-    times: ${times}
-    commands:
-        ${out.replace(/\n(?=.*[\n])/g, "\n        ")}`;
+    // prettier-ignore
+    const commands = 
+
+`- repeat:
+     times: ${times}
+     commands:
+        ${indentExceptLastLineBreak(out)}`;
+
     addOut(commands);
   },
+
   /**
    * Repeats the given actions while the element with the given testId is visible.
    */
   repeatWhileVisible: (id: string, func: () => any) => {
     const out = handleNest(func);
-    addOut(`- repeat:
-    while:
-        visible:
-            id: "${id}"
-    commands:
-        ${out.replace(/\n(?=.*[\n])/g, "\n        ")}`);
+    // prettier-ignore
+    const commands =
+
+`- repeat:
+     while:
+         visible:
+             id: "${id}"
+     commands:
+        ${indentExceptLastLineBreak(out)}`;
+
+    addOut(commands);
   },
+
   /**
    * Repeats the given actions while the element with the given testId is not visible.
    */
@@ -353,6 +376,7 @@ export const MaestroTranslators = {
     commands:
         ${out.replace(/\n(?=.*[\n])/g, "\n        ")}`);
   },
+
   /**
    * Insert inline yaml code. Good for specialized commands.
    */
@@ -364,6 +388,11 @@ export const MaestroTranslators = {
     addOut(`- assertTrue: ${condition}\n`);
   },
 };
+
+// utils
+function indentExceptLastLineBreak(str: string) {
+  return str.replace(/\n(?=.*[\n])/g, "\n        ");
+}
 
 export { MaestroTranslators as M };
 export { writeYaml } from "./write-yaml";
