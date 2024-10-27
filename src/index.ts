@@ -55,10 +55,7 @@ const main = async () => {
     code = rewriteCode({ code, flowPath: fp, distPath });
 
     // write code to a temp file
-    const tempFilePath = path.join(
-      process.cwd(),
-      `${fp.replace(".maestro.ts", ".temp.ts")}`
-    );
+    const tempFilePath = path.join(process.cwd(), fp);
     writeFileSync(tempFilePath, code);
 
     const cwd = process.cwd();
