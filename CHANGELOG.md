@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.0.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.0...v2.0.1)
+
+### 🏡 Chore
+
+- Update README.md ([5d501a9](https://github.com/shoma-mano/maests/commit/5d501a9))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.0.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v1.0.6...v2.0.0)
