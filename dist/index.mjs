@@ -44,7 +44,10 @@ const main = async () => {
   for (const fp of flowPaths) {
     let code = fs.readFileSync(fp, "utf-8");
     code = rewriteCode({ code, flowPath: fp, distPath });
-    const tempFilePath = path.join(process.cwd(), fp);
+    const tempFilePath = path.join(
+      process.cwd(),
+      `${fp.replace(".maestro.ts", ".temp.ts")}`
+    );
     writeFileSync(tempFilePath, code);
     const cwd = process.cwd();
     const jiti = createJiti(cwd, { interopDefault: true });

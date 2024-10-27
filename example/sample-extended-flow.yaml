@@ -116,8 +116,8 @@ appId: com.app.app
         id: "element-id"
     timeout: 5000
 - repeat:
-    times: 3
-    commands:
+     times: 3
+     commands:
         - tapOn:
             id: "hello"
         - tapOn:
@@ -125,10 +125,10 @@ appId: com.app.app
         - tapOn:
             id: "friend"
 - repeat:
-    while:
-        visible:
-            id: "element-id"
-    commands:
+     while:
+         visible:
+             id: "element-id"
+     commands:
         - tapOn:
             id: "hello"
         - tapOn:
