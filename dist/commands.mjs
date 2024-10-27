@@ -1,5 +1,4 @@
-import { transformSync } from "esbuild";
-import { readFileSync } from "fs";
+import { buildSync } from "esbuild";
 let nestLevel = 0;
 let nestedCommands = [];
 const handleNest = (func) => {
@@ -53,14 +52,27 @@ export const MaestroTranslators = {
    * runScript.
    */
   runScript: ({ path }) => {
-    const code = readFileSync(path, "utf8");
-    const { code: transformed } = transformSync(code, {
-      loader: "ts"
+    const { outputFiles } = buildSync({
+      entryPoints: [path],
+      bundle: true,
+      format: "esm",
+      sourcemap: false,
+      legalComments: "none",
+      write: false
     });
+    const code = outputFiles[0].text;
+    const transformed = code.replace(/^\s*\/\/.*/gm, "\n");
+    console.log(transformed);
     const envInjected = transformed.replace(
       /process\.env\.([^\n\s]*)/g,
       (_, p1) => {
-        return `MAESTRO_${p1}`.toUpperCase();
+        if (!p1.startsWith("MAESTRO_")) {
+          console.warn(
+            "Environment variable that is not started with MAESTRO_ will be ignored:",
+            p1
+          );
+        }
+        return p1;
       }
     );
     const command = `- evalScript: \${${envInjected.replaceAll("\n", "")}}

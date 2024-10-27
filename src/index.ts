@@ -40,6 +40,7 @@ const main = defineCommand({
       });
     } catch (e) {
       console.error(e);
+    } finally {
       fs.unlinkSync(tempFilePath);
     }
   },
