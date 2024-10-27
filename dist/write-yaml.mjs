@@ -1,7 +1,15 @@
-import { writeFileSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { out, resetOut } from "./commands.mjs";
-export const writeYaml = (path) => {
+import { dirname } from "path";
+export const writeYaml = (outPath) => {
   console.log("out", out);
-  writeFileSync(`./${path.replace(".maestro.ts", ".yaml")}`, out);
+  writeFileWithDirectorySync(outPath, out);
   resetOut();
 };
+function writeFileWithDirectorySync(filePath, data) {
+  const dir = dirname(filePath);
+  if (!existsSync(dir)) {
+    mkdirSync(dir, { recursive: true });
+  }
+  writeFileSync(filePath, data);
+}
