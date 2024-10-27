@@ -22,10 +22,10 @@ export declare const MaestroTranslators: {
         appId?: string;
     }) => void;
     /**
-     * Clear the state of the current app or of the app with the given id.
+     * runScript.
      */
-    runScript: ({ path }?: {
-        path?: string;
+    runScript: ({ path }: {
+        path: string;
     }) => void;
     /**
      * Clear the entire keychain.
@@ -225,3 +225,9 @@ export declare const MaestroTranslators: {
 };
 export { MaestroTranslators as M };
 export { writeYaml } from "./write-yaml";
+declare global {
+    namespace http {
+        const get: (...args: any) => any;
+    }
+    const output: Record<string, string>;
+}

@@ -1,11 +1,14 @@
+import { transformSync } from "esbuild";
+import { readFileSync } from "fs";
 let nestLevel = 0;
-let nestedCommands = "";
+let nestedCommands = [];
 const handleNest = (func) => {
   nestLevel++;
   func();
+  const out2 = nestedCommands[nestLevel - 1];
+  console.log("out", out2);
+  nestedCommands[nestLevel - 1] = "";
   nestLevel--;
-  const out2 = nestedCommands;
-  nestedCommands = "";
   return out2;
 };
 export let out = "";
@@ -13,8 +16,10 @@ export const resetOut = () => {
   out = "";
 };
 const addOut = (command) => {
-  if (nestLevel) nestedCommands += command;
-  else out += command;
+  if (nestLevel) {
+    if (!nestedCommands[nestLevel - 1]) nestedCommands[nestLevel - 1] = "";
+    nestedCommands[nestLevel - 1] += command;
+  } else out += command;
 };
 const envAppId = process.env["appId"];
 export const MaestroTranslators = {
@@ -45,13 +50,22 @@ export const MaestroTranslators = {
     addOut("- clearState\n");
   },
   /**
-   * Clear the state of the current app or of the app with the given id.
+   * runScript.
    */
-  runScript: ({ path } = {}) => {
-    const out2 = `- runScript: 
-     file: ${path}
+  runScript: ({ path }) => {
+    const code = readFileSync(path, "utf8");
+    const { code: transformed } = transformSync(code, {
+      loader: "ts"
+    });
+    const envInjected = transformed.replace(
+      /process\.env\.([^\n\s]*)/g,
+      (_, p1) => {
+        return `MAESTRO_${p1}`.toUpperCase();
+      }
+    );
+    const command = `- evalScript: \${${envInjected.replaceAll("\n", "")}}
 `;
-    addOut(out2);
+    addOut(command);
   },
   /**
    * Clear the entire keychain.

@@ -25,18 +25,23 @@ const main = defineCommand({
 
     const tempFilePath = join(
       process.cwd(),
-      `${flowPath.replace(".maestro.ts", ".temp.ts")}`
+      `${flowPath.replace(".ts", ".temp.ts")}`
     );
     writeFileSync(tempFilePath, code);
 
-    const cwd = process.cwd();
-    const jiti = createJiti(cwd, { interopDefault: true, esmResolve: true });
-    await jiti(tempFilePath);
-    consola.success(`Created ${outPath} ✔`);
-    execSync(`maestro test ${outPath}`, { stdio: "inherit" });
-
-    // remove temp file
-    fs.unlinkSync(tempFilePath);
+    try {
+      const cwd = process.cwd();
+      const jiti = createJiti(cwd, { interopDefault: true, esmResolve: true });
+      await jiti(tempFilePath);
+      consola.success(`Created ${outPath} ✔`);
+      execSync(`maestro test ${outPath}`, {
+        stdio: "inherit",
+        env: process.env,
+      });
+    } catch (e) {
+      console.error(e);
+      fs.unlinkSync(tempFilePath);
+    }
   },
 });
 if (!import.meta.vitest) runMain(main);

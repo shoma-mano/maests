@@ -50,6 +50,9 @@ importers:
       expo-web-browser:
         specifier: ~14.0.0
         version: 14.0.0(expo@52.0.0-preview.5(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(react-native@0.76.0(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1))(react-native@0.76.0(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))
+      maests:
+        specifier: link:..
+        version: link:..
       react:
         specifier: 18.3.1
         version: 18.3.1
