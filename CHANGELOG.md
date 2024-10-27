@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v2.0.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v1.0.6...v2.0.0)
+
+### 🩹 Fixes
+
+- Support double level nesting ([c305dc8](https://github.com/shoma-mano/maests/commit/c305dc8))
+
+### 💅 Refactors
+
+- Change rewriteCode to import maests by module name ([4ac7323](https://github.com/shoma-mano/maests/commit/4ac7323))
+
+### 🏡 Chore
+
+- Update README.md ([b582292](https://github.com/shoma-mano/maests/commit/b582292))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v1.0.6
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v1.0.5...v1.0.6)
