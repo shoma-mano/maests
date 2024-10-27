@@ -1,1 +1,1 @@
-export declare const writeYaml: (path: string) => void;
+export declare const writeYaml: (outPath?: string) => void;
