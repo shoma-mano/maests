@@ -1,5 +1,4 @@
-import { buildSync, transformSync } from "esbuild";
-import { readFileSync } from "fs";
+import { buildSync } from "esbuild";
 
 // nested commands
 let nestLevel = 0;
@@ -25,14 +24,34 @@ const addOut = (command: string) => {
   } else out += command;
 };
 
+const space = "    ";
+
 const envAppId = process.env["appId"];
 export const MaestroTranslators = {
   /**
    * Should be called at the start of every test flow.
    * In the config object, you can define the appId to use.
    */
-  initFlow: ({ appId }: { appId?: string } = {}) => {
-    addOut(`appId: ${appId ?? envAppId}\n---\n`);
+  initFlow: ({
+    appId,
+    onFlowStart,
+  }: { appId?: string; onFlowStart?: () => void } = {}) => {
+    const appIdCommand = `appId: ${appId ?? envAppId}\n`;
+    let commands = appIdCommand;
+    if (onFlowStart) {
+      const nested = handleNest(onFlowStart);
+      // prettier-ignore
+      const flowCommand = 
+`onFlowStart:
+${nested.replaceAll(/\n/g,`${space}\n`)}`;
+
+      commands += flowCommand;
+    }
+
+    const separetor = "---\n";
+    commands += separetor;
+
+    addOut(commands);
   },
   /**
    * Launches the app.
@@ -94,7 +113,7 @@ export const MaestroTranslators = {
    * Tap on an element with the given testId.
    */
   tapOn: (id: string) => {
-    addOut(`- tapOn:\n    id: "${id}"\n`);
+    addOut(`- tapOn:\n${space}id: "${id}"\n`);
   },
   /**
    * Tap on a text visible on screen.
