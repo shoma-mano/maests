@@ -1,6 +1,6 @@
 appId: com.my.app
 ---
-- evalScript: ${const result = http.get(  "https://jsonplaceholder.typicode.com/todos/1");output.userId = result.userId.toString();}
+- evalScript: ${import { hello } from "./test";const body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;const result = json(body);console.log(result.userId);hello();}
 - launchApp:
     appId: "com.my.app"
 - stopApp
