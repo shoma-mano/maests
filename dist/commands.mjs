@@ -1,9 +1,9 @@
-let isNested = false;
+let nestLevel = 0;
 let nestedCommands = "";
 const handleNest = (func) => {
-  isNested = true;
+  nestLevel++;
   func();
-  isNested = false;
+  nestLevel--;
   const out2 = nestedCommands;
   nestedCommands = "";
   return out2;
@@ -13,7 +13,7 @@ export const resetOut = () => {
   out = "";
 };
 const addOut = (command) => {
-  if (isNested) nestedCommands += command;
+  if (nestLevel) nestedCommands += command;
   else out += command;
 };
 const envAppId = process.env["appId"];
@@ -43,6 +43,15 @@ export const MaestroTranslators = {
     if (appId) addOut(`- clearState: ${appId ?? envAppId}
 `);
     addOut("- clearState\n");
+  },
+  /**
+   * Clear the state of the current app or of the app with the given id.
+   */
+  runScript: ({ path } = {}) => {
+    const out2 = `- runScript: 
+     file: ${path}
+`;
+    addOut(out2);
   },
   /**
    * Clear the entire keychain.
@@ -385,9 +394,9 @@ export const MaestroTranslators = {
   repeat: (times, func) => {
     const out2 = handleNest(func);
     const commands = `- repeat:
-    times: ${times}
-    commands:
-        ${out2.replace(/\n(?=.*[\n])/g, "\n        ")}`;
+     times: ${times}
+     commands:
+        ${indentExceptLastLineBreak(out2)}`;
     addOut(commands);
   },
   /**
@@ -395,12 +404,13 @@ export const MaestroTranslators = {
    */
   repeatWhileVisible: (id, func) => {
     const out2 = handleNest(func);
-    addOut(`- repeat:
-    while:
-        visible:
-            id: "${id}"
-    commands:
-        ${out2.replace(/\n(?=.*[\n])/g, "\n        ")}`);
+    const commands = `- repeat:
+     while:
+         visible:
+             id: "${id}"
+     commands:
+        ${indentExceptLastLineBreak(out2)}`;
+    addOut(commands);
   },
   /**
    * Repeats the given actions while the element with the given testId is not visible.
@@ -427,5 +437,8 @@ export const MaestroTranslators = {
 `);
   }
 };
+function indentExceptLastLineBreak(str) {
+  return str.replace(/\n(?=.*[\n])/g, "\n        ");
+}
 export { MaestroTranslators as M };
 export { writeYaml } from "./write-yaml.mjs";

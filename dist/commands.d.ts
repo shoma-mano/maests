@@ -22,6 +22,12 @@ export declare const MaestroTranslators: {
         appId?: string;
     }) => void;
     /**
+     * Clear the state of the current app or of the app with the given id.
+     */
+    runScript: ({ path }?: {
+        path?: string;
+    }) => void;
+    /**
      * Clear the entire keychain.
      */
     clearKeychain: () => void;
