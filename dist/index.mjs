@@ -30,7 +30,7 @@ const main = defineCommand({
     const jiti = createJiti(cwd, { interopDefault: true, esmResolve: true });
     await jiti(tempFilePath);
     consola.success(`Created ${outPath} \u2714`);
-    execSync(`maestro ${outPath}`, { stdio: "inherit" });
+    execSync(`maestro test ${outPath}`, { stdio: "inherit" });
     fs.unlinkSync(tempFilePath);
   }
 });
