@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import fs, { writeFileSync } from "fs";
+import fs, { existsSync, mkdirSync, writeFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import createJiti from "jiti";
@@ -9,13 +9,57 @@ import { consola } from "consola";
 import { rewriteCode } from "./rewriteCode";
 
 const filePath = fileURLToPath(import.meta.url);
-const distPath = path.join(filePath, "../");
+const yamlFlowDir = path.join(filePath, "../");
+if (!fs.existsSync(yamlFlowDir)) fs.mkdirSync(yamlFlowDir);
 
-// create a temp folders for later
-const tempPath = distPath;
-if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath);
+const main = async () => {
+  const dotEnvPath = getDotEnvPath();
+  if (dotEnvPath) {
+    consola.info(`Found .env file at ${dotEnvPath}`);
+    dotenv.config({ path: dotEnvPath });
+  }
+  // Find flows
+  const flowFileNames: string[] = [];
+  fs.readdirSync(".").forEach((fileName) => {
+    if (fileName.includes(".maestro.")) return flowFileNames.push(fileName);
+  });
 
-const getDotEnvPath = () => {
+  const flowsCount = flowFileNames.length;
+  if (!flowsCount) {
+    consola.warn("No flows found - are you in the right directory?");
+    return consola.info(
+      "File names for flows should follow the pattern `my-flow.maestro.ts`"
+    );
+  }
+  consola.info(`Found ${flowsCount} flows.`);
+
+  if (!existsSync("maests")) mkdirSync("maests");
+  for (const flowName of flowFileNames) {
+    let code = fs.readFileSync(flowName, "utf-8");
+    code = rewriteCode({ code, flowName: flowName });
+
+    const tempFilePath = path.join(
+      process.cwd(),
+      `${flowName.replace(".maestro.ts", ".temp.ts")}`
+    );
+    writeFileSync(tempFilePath, code);
+
+    const cwd = process.cwd();
+    const jiti = createJiti(cwd, { interopDefault: true, esmResolve: true });
+    try {
+      await jiti(tempFilePath);
+      consola.success(`Created ${flowName} ✔`);
+    } catch (error) {
+      console.log("error", error);
+      consola.error(error);
+    }
+    // remove temp file
+    fs.unlinkSync(tempFilePath);
+  }
+};
+main();
+
+function getDotEnvPath() {
   let currentPath = process.cwd();
   let dotEnvPath = "";
   while (currentPath !== "/") {
@@ -27,51 +71,6 @@ const getDotEnvPath = () => {
     currentPath = path.join(currentPath, "../");
   }
   return dotEnvPath;
-};
-const dotEnvPath = getDotEnvPath();
-if (dotEnvPath) {
-  consola.info(`Found .env file at ${dotEnvPath}`);
-  dotenv.config({ path: dotEnvPath });
 }
 
-const main = async () => {
-  // Find flows
-  const flowPaths: string[] = [];
-  fs.readdirSync(".").forEach((fileName) => {
-    if (fileName.includes(".maestro.")) return flowPaths.push(fileName);
-  });
-
-  const flowsCount = flowPaths.length;
-  if (!flowsCount) {
-    consola.warn("No flows found - are you in the right directory?");
-    return consola.info(
-      "File names for flows should follow the pattern `my-flow.maestro.ts`"
-    );
-  }
-  consola.info(`Found ${flowsCount} flows.`);
-
-  for (const fp of flowPaths) {
-    let code = fs.readFileSync(fp, "utf-8");
-    code = rewriteCode({ code, flowPath: fp, distPath });
-
-    // write code to a temp file
-    const tempFilePath = path.join(
-      process.cwd(),
-      `${fp.replace(".maestro.ts", ".temp.ts")}`
-    );
-    writeFileSync(tempFilePath, code);
-
-    const cwd = process.cwd();
-    const jiti = createJiti(cwd, { interopDefault: true });
-    try {
-      await jiti(tempFilePath);
-      consola.success(`Created ${fp} ✔`);
-    } catch (error) {
-      consola.error(error);
-    }
-    // remove temp file
-    fs.unlinkSync(tempFilePath);
-  }
-};
-
-main();
+function createFile(filePath: string) {}
