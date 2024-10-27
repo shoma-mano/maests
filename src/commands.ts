@@ -414,7 +414,7 @@ export { writeYaml } from "./write-yaml";
 
 declare global {
   namespace http {
-    const get: (...args: any) => any;
+    const get: (...args: any) => { body: any };
   }
 
   const output: Record<string, string>;
