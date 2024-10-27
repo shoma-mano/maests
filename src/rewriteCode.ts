@@ -15,7 +15,9 @@ export const rewriteCode = ({
 
 if (import.meta.vitest) {
   it("rewrites code", () => {
-    const flow = `import { M } from "maests";
+    // prettier-ignore
+    const flow = 
+`import { M } from "maests";
 M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
 
     const result = rewriteCode({

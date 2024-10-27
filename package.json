@@ -47,6 +47,7 @@
   "homepage": "https://github.com/shoma-mano/maests#readme",
   "license": "MIT",
   "dependencies": {
+    "citty": "^0.1.6",
     "dotenv": "^16.4.5",
     "jiti": "^1.21.6"
   },
