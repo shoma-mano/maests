@@ -3,6 +3,7 @@ import { out, resetOut } from "./commands.mjs";
 import { dirname } from "path";
 export const writeYaml = (outPath) => {
   console.log("out", out);
+  console.log("outPath", outPath);
   writeFileWithDirectorySync(outPath, out);
   resetOut();
 };

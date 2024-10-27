@@ -4,6 +4,7 @@ import { dirname } from "path";
 
 export const writeYaml = (outPath?: string) => {
   console.log("out", out);
+  console.log("outPath", outPath);
   writeFileWithDirectorySync(outPath, out);
   resetOut();
 };

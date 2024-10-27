@@ -1,3 +1,4 @@
+import { join } from "path";
 import { M, out, resetOut } from "./commands.mjs";
 it("commands", () => {
   M.initFlow({ appId: "com.my.app" });
@@ -7,6 +8,8 @@ it("commands", () => {
     "
   `);
   resetOut();
+});
+it("execute repeat twice", () => {
   M.repeat(3, () => {
     M.tapOn("test");
   });
@@ -26,8 +29,11 @@ it("commands", () => {
                 id: "test"
     "
   `);
-  resetOut();
+});
+it("double nested repeat", () => {
   M.repeat(3, () => {
+    M.tapOn("test");
+    M.tapOn("test");
     M.repeat(3, () => {
       M.tapOn("test");
     });
@@ -36,6 +42,10 @@ it("commands", () => {
     "- repeat:
          times: 3
          commands:
+            - tapOn:
+                id: "test"
+            - tapOn:
+                id: "test"
             - repeat:
                  times: 3
                  commands:
@@ -43,4 +53,8 @@ it("commands", () => {
                         id: "test"
     "
   `);
+});
+it("runScript", () => {
+  M.runScript({ path: join(__dirname, "../example/script.ts") });
+  expect(out).toMatchInlineSnapshot(`"- evalScript: \${const res = http.get(\`https://jsonplaceholder.typicode.com/todos/1\`, {  headers: {    "Content-Type": "application/json"  }});console.log(MAESTRO_PROFILE);output.result = res.body;}"`);
 });

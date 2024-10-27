@@ -1,0 +1,6 @@
+appId: com.my.app
+---
+- evalScript: ${console.log("hello");}
+- launchApp:
+    appId: "com.my.app"
+- stopApp
