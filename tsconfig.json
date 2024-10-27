@@ -10,5 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "types": ["vitest/importMeta", "vitest/globals"]
   },
-  "include": ["src/**/*", "maestro.d.ts", "**/maestro-ext.d.ts", "playground"]
+  "include": ["src/**/*", "maestro.d.ts", "**/maestro-ext.d.ts", "playground"],
+  "exclude": ["node_modules", "dist"]
 }
