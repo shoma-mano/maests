@@ -1,5 +1,3 @@
-import { createOutPath } from "./utils";
-
 export const rewriteCode = ({
   code,
   outPath,
@@ -16,7 +14,8 @@ export const rewriteCode = ({
 };
 
 if (import.meta.vitest) {
-  it("rewrites code", () => {
+  it("rewrites code", async () => {
+    const { createOutPath } = await import("./utils");
     // prettier-ignore
     const flow = 
 `import { M } from "maests";
