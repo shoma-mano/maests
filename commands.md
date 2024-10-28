@@ -45,19 +45,18 @@ The `TapProps` interface defines optional properties for customizing tap actions
 
 | Property                | Type     | Default | Description                                                                                                  |
 |-------------------------|----------|---------|--------------------------------------------------------------------------------------------------------------|
-| `retryTapIfNoChange`    | boolean  | `true`  | If set to `true`, the tap action will be retried if no change is detected on the first attempt.              |
+| `index`                 | number   | `true`  | If set to `true`, the tap action will be retried if no change is detected on the first attempt.              |
+| `retryTapIfNoChange`    | boolean  | -       | index of the element you wish to interact with                                                               |
 | `repeat`                | number   | -       | Specifies the number of times to repeat the tap action.                                                      |
 | `waitToSettleTimeoutMs` | number   | -       | Time in milliseconds to wait for the element to settle after tapping, useful for handling UI transition time. |
 
 #### Example Usage:
 ```typescript
 M.tapOn("submitButton", { retryTapIfNoChange: false, repeat: 2, waitToSettleTimeoutMs: 500 });
+```
 
 ---
 
-### WaitProps
-
-```markdown
 ### WaitProps
 
 The `WaitProps` interface provides optional properties for configuring wait behavior in specific commands, such as `waitForAndTapOn`, `waitUntilVisible`, and `waitUntilNotVisible`.
@@ -69,13 +68,12 @@ The `WaitProps` interface provides optional properties for configuring wait beha
 #### Example Usage:
 ```typescript
 M.waitForAndTapOn("startButton", { maxWait: 3000 });
-
+```
 
 ---
 
 ### PointProps
 
-```markdown
 ### PointProps
 
 The `PointProps` interface specifies coordinates for point-based tap or long-press actions, enabling precise control of on-screen actions.
