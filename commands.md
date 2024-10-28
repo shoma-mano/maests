@@ -74,8 +74,6 @@ M.waitForAndTapOn("startButton", { maxWait: 3000 });
 
 ### PointProps
 
-### PointProps
-
 The `PointProps` interface specifies coordinates for point-based tap or long-press actions, enabling precise control of on-screen actions.
 
 | Property | Type                | Description                                                                      |
