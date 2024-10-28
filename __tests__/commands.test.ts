@@ -1,5 +1,5 @@
 import { join } from "path";
-import { M, out, resetOut } from "./commands";
+import { M, out, resetOut } from "../src/commands";
 
 afterEach(resetOut);
 it("commands", () => {
