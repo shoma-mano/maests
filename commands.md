@@ -86,7 +86,7 @@ The `PointProps` interface specifies coordinates for point-based tap or long-pre
 #### Example Usage:
 ```typescript
 M.tapOnPoint({ x: "50%", y: "50%" }, { waitToSettleTimeoutMs: 200 });
-
+```
 
 - **Tap on Element by ID**
 
