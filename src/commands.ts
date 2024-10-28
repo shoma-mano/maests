@@ -1,4 +1,4 @@
-import { TapProps, PointProps } from "./types";
+import { TapProps, PointProps, WaitProps } from "./command-props";
 
 // Nested command handling
 let isNested = false;
@@ -35,11 +35,15 @@ const formatTapProps = ({
   waitToSettleTimeoutMs,
 }: TapProps): string => {
   let propsCommand = "";
-  if (retryTapIfNoChange) propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}\n`;
+
+  if (retryTapIfNoChange === false) propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}\n`;
   if (typeof repeat === "number") propsCommand += `    repeat: ${repeat}\n`;
   if (typeof waitToSettleTimeoutMs === "number") propsCommand += `    waitToSettleTimeoutMs: ${waitToSettleTimeoutMs}\n`;
+
   return propsCommand;
 };
+
+type WaitAndTapProps = TapProps & WaitProps;
 
 // Main translator functions
 const envAppId = process.env["appId"];
@@ -112,10 +116,11 @@ export const MaestroTranslators = {
   /**
    * Waits for an element by testId to appear, then taps on it.
    * @param id - The testId of the element to wait for and tap.
-   * @param maxWait - Optional Maximum wait time in milliseconds for the element to appear, maestro defaults to 5 seconds
-   * @param props - Optional properties to customize the tap action.
+   * @param props - Optional wait and tap properties, including maxWait for wait-based actions.
    */
-  waitForAndTapOn: (id: string, maxWait?: number, props: TapProps = {}) => {
+  waitForAndTapOn: (id: string, props: WaitAndTapProps = {}) => {
+    const { maxWait = 5000 } = props; // Default maxWait only for this function
+
     let command = `- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${maxWait}\n`;
     command += `- tapOn:\n    id: "${id}"\n`;
     command += formatTapProps(props);
@@ -271,9 +276,9 @@ export const MaestroTranslators = {
 
   /**
    * Waits until an animation/video finishes and screen becomes static.
-   * @param maxWait - Optional; max timeout after which flow continues.
+   * @param maxWait - Optional: Max timeout after which flow continues. Defaults to 5000ms
    */
-  waitForAnimationEnd: (maxWait?: number) => {
+  waitForAnimationEnd: (maxWait: number = 5000) => {
     const command = maxWait ? `- waitForAnimationToEnd:\n    timeout: ${maxWait}\n` : "- waitForAnimationToEnd\n";
     addOut(command);
   },
