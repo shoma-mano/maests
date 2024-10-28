@@ -130,9 +130,9 @@ ${space}id: "${id}"
     id: "${id}"
 `);
   },
-  longPressOnPoint: ({ x, y }) => {
+  longPressOnPoint: (pointProps) => {
     addOut(`- longPressOn:
-    point: ${x},${y}
+    point: ${pointProps.x},${pointProps.y}
 `);
   },
   longPressOnText: (text) => {

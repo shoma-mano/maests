@@ -3,7 +3,7 @@ import { MaestroTranslators, resetOut, out } from "../src/commands";
 
 const getOutput = () => {
   const currentOutput = out;
-  resetOut(); // Reset output for clean snapshots in each test
+  resetOut();
   return currentOutput;
 };
 
@@ -14,21 +14,35 @@ describe("MaestroTranslators Application Launch Commands Snapshots", () => {
 
   it("initFlow with appId", () => {
     MaestroTranslators.initFlow({ appId: "testAppId" });
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "appId: testAppId
+      ---
+      "
+    `);
   });
 
   it("launchApp with appId", () => {
     MaestroTranslators.launchApp({ appId: "testAppId" });
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- launchApp:
+          appId: "testAppId"
+      "
+    `);
   });
 
   it("clearState with appId", () => {
     MaestroTranslators.clearState({ appId: "testAppId" });
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- clearState: testAppId
+      "
+    `);
   });
 
   it("clearKeychain", () => {
     MaestroTranslators.clearKeychain();
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- clearKeychain
+      "
+    `);
   });
 });

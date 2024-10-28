@@ -22,7 +22,7 @@ export declare const MaestroTranslators: {
     tapOnPoint: (point: PointProps, props?: TapProps) => void;
     waitForAndTapOn: (id: string, props?: WaitAndTapProps) => void;
     longPressOn: (id: string) => void;
-    longPressOnPoint: ({ x, y }: PointProps) => void;
+    longPressOnPoint: (pointProps: PointProps) => void;
     longPressOnText: (text: string) => void;
     swipeLeft: () => void;
     swipeRight: () => void;

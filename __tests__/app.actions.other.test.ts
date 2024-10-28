@@ -3,7 +3,7 @@ import { MaestroTranslators, resetOut, out } from "../src/commands";
 
 const getOutput = () => {
   const currentOutput = out;
-  resetOut(); // Reset output for clean snapshots in each test
+  resetOut();
   return currentOutput;
 };
 
@@ -13,17 +13,30 @@ describe("MaestroTranslators Input Command Snapshots", () => {
   });
 
   it("inputText in focused element", () => {
-    MaestroTranslators.inputText("sample text");
-    expect(getOutput()).toMatchSnapshot();
+    MaestroTranslators.inputText("focused text");
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- inputText: focused text
+      "
+    `);
   });
 
   it("inputText in element by id", () => {
     MaestroTranslators.inputText("sample text", "textId");
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- tapOn:
+          id: "textId"
+      - inputText: sample text
+      "
+    `);
   });
 
   it("inputText with text and id", () => {
     MaestroTranslators.inputText("example text", "testInput");
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- tapOn:
+          id: "testInput"
+      - inputText: example text
+      "
+    `);
   });
 });

@@ -1,4 +1,6 @@
-import { TapProps, PointProps } from "./command-props";
+import { TapProps, PointProps, WaitProps } from "./command-props";
+
+type WaitAndTapProps = TapProps & WaitProps;
 
 export interface NestedOrBase {
   /**
@@ -18,10 +20,9 @@ export interface NestedOrBase {
   /**
    * Waits for an element by testId to appear, then taps on it.
    * @param id - Required: The testId of the element to wait for and tap.
-   * @param maxWait - Required: Maximum wait time in milliseconds for the element to appear, maestro defaults to 5 seconds
-   * @param props - Optional: Properties to customize the tap action.
+   * @param props - Properties for wait and tap actions, combining both WaitProps and TapProps.
    */
-  waitForAndTapOn(id: string, maxWait: number, props?: TapProps): void;
+  waitForAndTapOn(id: string, props?: WaitAndTapProps): void;
 
   /**
    * Performs a long press on an element identified by its testId.

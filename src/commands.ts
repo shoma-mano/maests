@@ -131,8 +131,8 @@ export const MaestroTranslators = {
     addOut(`- longPressOn:\n    id: "${id}"\n`);
   },
 
-  longPressOnPoint: ({ x, y }: PointProps) => {
-    addOut(`- longPressOn:\n    point: ${x},${y}\n`);
+  longPressOnPoint: (pointProps: PointProps) => {
+    addOut(`- longPressOn:\n    point: ${pointProps.x},${pointProps.y}\n`);
   },
 
   longPressOnText: (text: string) => {
