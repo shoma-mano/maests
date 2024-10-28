@@ -35,9 +35,63 @@
 
 ### Taps and Presses**
 
+Taps and Presses have optional properties available for configuring various Maestro commands, designed to enhance the flexibility and customization of user interactions. The properties are described below.
+
+#### Properties
+
+### TapProps
+
+The `TapProps` interface defines optional properties for customizing tap actions in Maestro commands, such as `tapOn`, `tapOnText`, and `tapOnPoint`.
+
+| Property                | Type     | Default | Description                                                                                                  |
+|-------------------------|----------|---------|--------------------------------------------------------------------------------------------------------------|
+| `retryTapIfNoChange`    | boolean  | `true`  | If set to `true`, the tap action will be retried if no change is detected on the first attempt.              |
+| `repeat`                | number   | -       | Specifies the number of times to repeat the tap action.                                                      |
+| `waitToSettleTimeoutMs` | number   | -       | Time in milliseconds to wait for the element to settle after tapping, useful for handling UI transition time. |
+
+#### Example Usage:
+```typescript
+M.tapOn("submitButton", { retryTapIfNoChange: false, repeat: 2, waitToSettleTimeoutMs: 500 });
+
+---
+
+### WaitProps
+
+```markdown
+### WaitProps
+
+The `WaitProps` interface provides optional properties for configuring wait behavior in specific commands, such as `waitForAndTapOn`, `waitUntilVisible`, and `waitUntilNotVisible`.
+
+| Property   | Type    | Default | Description                                                                                     |
+|------------|---------|---------|-------------------------------------------------------------------------------------------------|
+| `maxWait`  | number  | 5000    | The maximum time (in milliseconds) to wait for an element or condition before continuing.       |
+
+#### Example Usage:
+```typescript
+M.waitForAndTapOn("startButton", { maxWait: 3000 });
+
+
+---
+
+### PointProps
+
+```markdown
+### PointProps
+
+The `PointProps` interface specifies coordinates for point-based tap or long-press actions, enabling precise control of on-screen actions.
+
+| Property | Type                | Description                                                                      |
+|----------|----------------------|----------------------------------------------------------------------------------|
+| `x`      | `number | string`   | The x-coordinate for the point to tap on. Can be an absolute number or percentage.|
+| `y`      | `number | string`   | The y-coordinate for the point to tap on. Can be an absolute number or percentage.|
+
+#### Example Usage:
+```typescript
+M.tapOnPoint({ x: "50%", y: "50%" }, { waitToSettleTimeoutMs: 200 });
+
+
 - **Tap on Element by ID**
 
-Note, `{ retryTapIfNoChange: true, repeat: 2, waitToSettleTimeoutMs: 500 }` are all optional parameters:
 ```typescript
     M.tapOn("submitButton", { retryTapIfNoChange: true, repeat: 2, waitToSettleTimeoutMs: 500 })
 ```

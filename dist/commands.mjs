@@ -22,7 +22,7 @@ const formatTapProps = ({
   waitToSettleTimeoutMs
 }) => {
   let propsCommand = "";
-  if (retryTapIfNoChange) propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}
+  if (retryTapIfNoChange === false) propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}
 `;
   if (typeof repeat === "number") propsCommand += `    repeat: ${repeat}
 `;
@@ -104,10 +104,10 @@ export const MaestroTranslators = {
   /**
    * Waits for an element by testId to appear, then taps on it.
    * @param id - The testId of the element to wait for and tap.
-   * @param maxWait - Optional Maximum wait time in milliseconds for the element to appear, maestro defaults to 5 seconds
-   * @param props - Optional properties to customize the tap action.
+   * @param props - Optional wait and tap properties, including maxWait for wait-based actions.
    */
-  waitForAndTapOn: (id, maxWait, props = {}) => {
+  waitForAndTapOn: (id, props = {}) => {
+    const { maxWait = 5e3 } = props;
     let command = `- extendedWaitUntil:
     visible:
         id: "${id}"
@@ -296,9 +296,9 @@ export const MaestroTranslators = {
   },
   /**
    * Waits until an animation/video finishes and screen becomes static.
-   * @param maxWait - Optional; max timeout after which flow continues.
+   * @param maxWait - Optional: Max timeout after which flow continues. Defaults to 5000ms
    */
-  waitForAnimationEnd: (maxWait) => {
+  waitForAnimationEnd: (maxWait = 5e3) => {
     const command = maxWait ? `- waitForAnimationToEnd:
     timeout: ${maxWait}
 ` : "- waitForAnimationToEnd\n";

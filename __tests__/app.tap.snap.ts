@@ -32,7 +32,11 @@ describe("MaestroTranslators Tap Command Snapshots", () => {
     expect(getOutput()).toMatchSnapshot();
   });
 
-  // Wait-and-Tap Commands
+  it("tapOn with all properties", () => {
+    MaestroTranslators.tapOn("testId", { retryTapIfNoChange: false});
+    expect(getOutput()).toMatchSnapshot();
+  });
+
   it("waitForAndTapOn with id and maxWait", () => {
     MaestroTranslators.waitForAndTapOn("testId", 3000);
     expect(getOutput()).toMatchSnapshot();

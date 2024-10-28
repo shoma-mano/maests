@@ -11,7 +11,6 @@ exports[`MaestroTranslators Other Actions Snapshots > repeat command 1`] = `
     commands:
         - tapOn:
             id: "nestedId"
-            retryTapIfNoChange: true
         "
 `;
 
@@ -23,7 +22,6 @@ exports[`MaestroTranslators Other Actions Snapshots > repeatWhileNotVisible comm
     commands:
         - tapOn:
             id: "nestedId"
-            retryTapIfNoChange: true
         "
 `;
 
@@ -35,7 +33,6 @@ exports[`MaestroTranslators Other Actions Snapshots > repeatWhileVisible command
     commands:
         - tapOn:
             id: "nestedId"
-            retryTapIfNoChange: true
         "
 `;
 
@@ -51,6 +48,7 @@ exports[`MaestroTranslators Other Actions Snapshots > waitForAnimationEnd with t
 `;
 
 exports[`MaestroTranslators Other Actions Snapshots > waitForAnimationEnd without timeout 1`] = `
-"- waitForAnimationToEnd
+"- waitForAnimationToEnd:
+    timeout: 5000
 "
 `;
