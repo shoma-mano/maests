@@ -5,7 +5,6 @@ const handleNest = (func) => {
   nestLevel++;
   func();
   const out2 = nestedCommands[nestLevel - 1];
-  console.log("out", out2);
   nestedCommands[nestLevel - 1] = "";
   nestLevel--;
   return out2;
@@ -20,17 +19,30 @@ const addOut = (command) => {
     nestedCommands[nestLevel - 1] += command;
   } else out += command;
 };
+function indentExceptLastLineBreak(str) {
+  return str.replace(/\n(?=.*[\n])/g, "\n        ");
+}
 const space = "    ";
+const formatTapProps = ({
+  index,
+  retryTapIfNoChange = true,
+  repeat,
+  waitToSettleTimeoutMs
+}) => {
+  let propsCommand = "";
+  if (typeof index === "number") propsCommand += `    index: ${index}
+`;
+  if (retryTapIfNoChange === false) propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}
+`;
+  if (typeof repeat === "number") propsCommand += `    repeat: ${repeat}
+`;
+  if (typeof waitToSettleTimeoutMs === "number") propsCommand += `    waitToSettleTimeoutMs: ${waitToSettleTimeoutMs}
+`;
+  return propsCommand;
+};
 const envAppId = process.env["appId"];
 export const MaestroTranslators = {
-  /**
-   * Should be called at the start of every test flow.
-   * In the config object, you can define the appId to use.
-   */
-  initFlow: ({
-    appId,
-    onFlowStart
-  } = {}) => {
+  initFlow: ({ appId, onFlowStart } = {}) => {
     const appIdCommand = `appId: ${appId ?? envAppId}
 `;
     let commands = appIdCommand;
@@ -41,30 +53,19 @@ ${nested.replaceAll(/\n/g, `${space}
 `)}`;
       commands += flowCommand;
     }
-    const separetor = "---\n";
-    commands += separetor;
+    const separator = "---\n";
+    commands += separator;
     addOut(commands);
   },
-  /**
-   * Launches the app.
-   * @param appId The bundle id of your app. Falls back to the appId provided in maestro-ts.config.js.
-   */
   launchApp: ({ appId } = {}) => {
     addOut(`- launchApp:
     appId: "${appId ?? envAppId}"
 `);
   },
-  /**
-   * Clear the state of the current app or of the app with the given id.
-   */
   clearState: ({ appId } = {}) => {
-    if (appId) addOut(`- clearState: ${appId ?? envAppId}
-`);
-    addOut("- clearState\n");
+    addOut(appId ? `- clearState: ${appId}
+` : "- clearState\n");
   },
-  /**
-   * runScript.
-   */
   runScript: ({ path }) => {
     const { outputFiles } = buildSync({
       entryPoints: [path],
@@ -75,14 +76,10 @@ ${nested.replaceAll(/\n/g, `${space}
       write: false
     });
     let code = outputFiles[0].text;
-    code = code.replace(/^\s*\/\/.*/gm, "\n");
-    code = code.replace(/\s*:\s*/g, ":");
+    code = code.replace(/^\s*\/\/.*/gm, "\n").replace(/\s*:\s*/g, ":");
     code = code.replace(/process\.env\.([^\n\s]*)/g, (_, p1) => {
       if (!p1.startsWith("MAESTRO_")) {
-        console.warn(
-          "Environment variable that is not started with MAESTRO_ will be ignored:",
-          p1
-        );
+        console.warn("Environment variable that is not started with MAESTRO_ will be ignored:", p1);
       }
       return p1;
     });
@@ -90,344 +87,200 @@ ${nested.replaceAll(/\n/g, `${space}
 `;
     addOut(command);
   },
-  /**
-   * Clear the entire keychain.
-   */
   clearKeychain: () => {
     addOut("- clearKeychain\n");
   },
-  /**
-   * Tap on an element with the given testId.
-   */
-  tapOn: (id) => {
-    addOut(`- tapOn:
+  tapOn: (id, props = {}) => {
+    let command = `- tapOn:
 ${space}id: "${id}"
-`);
+`;
+    command += formatTapProps(props);
+    addOut(command);
   },
-  /**
-   * Tap on a text visible on screen.
-   */
-  tapOnText: (text) => {
-    addOut(`- tapOn: ${text}
-`);
+  tapOnText: (text, props = {}) => {
+    let command = `- tapOn:
+    text: "${text}"
+`;
+    command += formatTapProps(props);
+    addOut(command);
   },
-  /**
-   * Tap on the given point.
-   * Can either take numbers for dips or strings for percentages.
-   */
-  tapOnPoint: ({ x, y }) => {
-    addOut(`- tapOn:
+  tapOnPoint: (point, props = {}) => {
+    const { x, y } = point;
+    let command = `- tapOn:
     point: ${x},${y}
-`);
+`;
+    command += formatTapProps(props);
+    addOut(command);
   },
-  /**
-   * Wait for testId to appear and the tap on an element with the given testId.
-   */
-  waitForAndtapOn: (id, maxWait) => {
-    addOut(
-      `- extendedWaitUntil:
+  waitForAndTapOn: (id, props = {}) => {
+    const { maxWait = 5e3 } = props;
+    let command = `- extendedWaitUntil:
     visible:
         id: "${id}"
     timeout: ${maxWait}
-`
-    );
-    addOut(`- tapOn:
+`;
+    command += `- tapOn:
     id: "${id}"
-`);
+`;
+    command += formatTapProps(props);
+    addOut(command);
   },
-  /**
-   * Long press on an element with the given testId.
-   */
   longPressOn: (id) => {
     addOut(`- longPressOn:
     id: "${id}"
 `);
   },
-  /**
-   * Long press on the given point.
-   */
   longPressOnPoint: ({ x, y }) => {
     addOut(`- longPressOn:
-    point: ${x}, ${y}
+    point: ${x},${y}
 `);
   },
-  /**
-   * Long press on an element with the given text.
-   */
   longPressOnText: (text) => {
     addOut(`- longPressOn: ${text}
 `);
   },
-  /**
-   * Swipe left from center.
-   */
-  swipeLeft: () => {
-    addOut("- swipe:\n    direction: LEFT\n    duration: 400\n");
-  },
-  /**
-   * Swipe right from center.
-   */
-  swipeRight: () => {
-    addOut("- swipe:\n    direction: RIGHT\n    duration: 400\n");
-  },
-  /**
-   * Swipe down from center.
-   */
-  swipeDown: () => {
-    addOut("- swipe:\n    direction: DOWN\n    duration: 400\n");
-  },
-  /**
-   * Swipe up from center.
-   */
-  swipeUp: () => {
-    addOut("- swipe:\n    direction: UP\n    duration: 400\n");
-  },
-  /**
-   * Swipe from a start to an end point. Use percentages or dips.
-   */
+  swipeLeft: () => addOut("- swipe:\n    direction: LEFT\n    duration: 400\n"),
+  swipeRight: () => addOut("- swipe:\n    direction: RIGHT\n    duration: 400\n"),
+  swipeDown: () => addOut("- swipe:\n    direction: DOWN\n    duration: 400\n"),
+  swipeUp: () => addOut("- swipe:\n    direction: UP\n    duration: 400\n"),
   swipe: (start, end) => {
-    addOut(
-      `- swipe:
+    addOut(`- swipe:
     start: ${start.x}, ${start.y}
     end: ${end.x}, ${end.y}
-`
-    );
-  },
-  /**
-   * Input a text into the currently focused input or the input with the given testId.
-   */
-  inputText: (text, id) => {
-    if (!id) addOut(`- inputText: ${text}
 `);
-    addOut(`- tapOn:
+  },
+  inputText: (text, id) => {
+    addOut(id ? `- tapOn:
     id: "${id}"
 - inputText: ${text}
+` : `- inputText: ${text}
 `);
   },
-  /**
-   * Input random name into focused input or the one with given testId.
-   */
   inputRandomName: (id) => {
-    if (!id) addOut(`- inputRandomPersonName
-`);
-    addOut(`- tapOn:
+    addOut(id ? `- tapOn:
     id: "${id}"
 - inputRandomPersonName
+` : `- inputRandomPersonName
 `);
   },
-  /**
-   * Input random number into focused input or the one with given testId.
-   */
   inputRandomNumber: (id) => {
-    if (!id) addOut(`- inputRandomNumber
-`);
-    addOut(`- tapOn:
+    addOut(id ? `- tapOn:
     id: "${id}"
 - inputRandomNumber
+` : `- inputRandomNumber
 `);
   },
-  /**
-   * Copies text of an element with the given testId.
-   */
   copyTextFrom: (id) => {
     addOut(`- copyTextFrom:
     id: "${id}"
 `);
   },
-  /**
-   * Input random email into focused input or the one with given testId.
-   */
   inputRandomEmail: (id) => {
-    if (!id) addOut(`- inputRandomEmail
-`);
-    addOut(`- tapOn:
+    addOut(id ? `- tapOn:
     id: "${id}"
 - inputRandomEmail
+` : `- inputRandomEmail
 `);
   },
-  /**
-   * Input random text into focused input or the one with given testId.
-   */
   inputRandomText: (id) => {
-    if (!id) addOut(`- inputRandomText
-`);
-    addOut(`- tapOn:
+    addOut(id ? `- tapOn:
     id: "${id}"
 - inputRandomText
+` : `- inputRandomText
 `);
   },
-  /**
-   * Erase a number of characters from the focused input or the input with the given testId.
-   */
   eraseText: (chars, id) => {
-    if (!id) addOut(`- eraseText: ${chars ?? 50}
-`);
-    addOut(`- tapOn:
+    addOut(id ? `- tapOn:
     id: "${id}"
 - eraseText: ${chars ?? 50}
+` : `- eraseText: ${chars ?? 50}
 `);
   },
-  /**
-   * Open a url / deepLink.
-   */
   openLink: (url) => {
     addOut(`- openLink: ${url}
 `);
   },
-  /**
-   * Use the configured deepLinkBase or appId to navigate to the given path.
-   * Only works if deepLinking is set up correctly.
-   */
   navigate: (path) => {
     addOut(`- openLink: ${process.env["deepLinkBase"]}${path}
 `);
   },
-  /**
-   * Assert an element with the given testId is visible.
-   * @param enabled Whether the view should also be enabled.
-   */
-  assertVisible: (id, enabled) => {
-    if (enabled)
-      addOut(`- assertVisible:
+  assertVisible: (id, enabled = false) => {
+    addOut(enabled ? `- assertVisible:
     id: "${id}"
     enabled: true
-`);
-    addOut(`- assertVisible:
+` : `- assertVisible:
     id: "${id}"
 `);
   },
-  /**
-   * Assert the element with the given testId is not visible.
-   */
   assertNotVisible: (id) => {
     addOut(`- assertNotVisible:
     id: "${id}"
 `);
   },
-  /**
-   * Scroll down.
-   */
   scroll: () => {
-    addOut(`- scroll
-`);
+    addOut("- scroll\n");
   },
-  /**
-   * Scroll until the element with the given testId is visible.
-   */
   scrollUntilVisible: (id) => {
     addOut(`- scrollUntilVisible:
     element:
       id: "${id}"
 `);
   },
-  /**
-   * Waits until an ongoing animation/video is fully finished and screen becomes static.
-   * Can have an optional timeout (in milliseconds) after which the command is marked as successful and flow continues.
-   */
-  waitForAnimationEnd: (maxWait) => {
-    const command = maxWait ? `- waitForAnimationToEnd:
+  waitForAnimationEnd: (maxWait = 5e3) => {
+    addOut(maxWait ? `- waitForAnimationToEnd:
     timeout: ${maxWait}
-` : "- waitForAnimationToEnd\n";
-    addOut(command);
+` : "- waitForAnimationToEnd\n");
   },
-  /**
-   * Wait a max of milliseconds until the element with the given testId is visible.
-   */
   waitUntilVisible: (id, maxWait) => {
-    addOut(
-      `- extendedWaitUntil:
+    addOut(`- extendedWaitUntil:
     visible:
         id: "${id}"
     timeout: ${maxWait ?? 5e3}
-`
-    );
+`);
   },
-  /**
-   * Wait a max of milliseconds until the element with the given testId is no longer visible.
-   */
   waitUntilNotVisible: (id, maxWait) => {
-    addOut(
-      `- extendedWaitUntil:
+    addOut(`- extendedWaitUntil:
     notVisible:
         id: "${id}"
     timeout: ${maxWait ?? 5e3}
-`
-    );
+`);
   },
-  /**
-   * Wait a number of milliseconds.
-   * This is an anti-pattern, try to fall back to other waiting methods if possible.
-   */
   wait: (ms) => {
-    addOut(
-      `- swipe:
+    addOut(`- swipe:
     start: -1, -1
     end: -1, -100
     duration: ${ms}
-`
-    );
+`);
   },
-  /**
-   * Dismiss the software keyboard.
-   */
   hideKeyboard: () => {
     addOut("- hideKeyboard\n");
   },
-  /**
-   * Take a screenshot and store at the path with the given name.
-   */
   screenshot: (fileName) => {
     addOut(`- takeScreenshot: ${fileName}
 `);
   },
-  /**
-   * Press the enter key on the software keyboard.
-   */
   pressEnter: () => {
     addOut("- pressKey: Enter\n");
   },
-  /**
-   * Press the home button.
-   */
   pressHomeButton: () => {
     addOut("- pressKey: Home\n");
   },
-  /**
-   * Press the lock button.
-   */
   pressLockButton: () => {
     addOut("- pressKey: Lock\n");
   },
-  /**
-   * Press android back button.
-   */
   back: () => {
     addOut("- pressKey: back\n");
   },
-  /**
-   * Decrease device volume.
-   */
   volumeDown: () => {
     addOut("- pressKey: volume down\n");
   },
-  /**
-   * Increase device volume.
-   */
   volumeUp: () => {
     addOut("- pressKey: volume up\n");
   },
-  /**
-   * Stop the current app or the one with the given appId.
-   */
   stopApp: ({ appId } = {}) => {
-    appId = appId ?? envAppId;
-    if (appId) addOut(`- stopApp: ${appId}
-`);
-    addOut("- stopApp\n");
+    addOut(appId ? `- stopApp: ${appId}
+` : "- stopApp\n");
   },
-  /**
-   * Repeats the given actions a given number of times.
-   */
   repeat: (times, func) => {
     const out2 = handleNest(func);
     const commands = `- repeat:
@@ -436,9 +289,6 @@ ${space}id: "${id}"
         ${indentExceptLastLineBreak(out2)}`;
     addOut(commands);
   },
-  /**
-   * Repeats the given actions while the element with the given testId is visible.
-   */
   repeatWhileVisible: (id, func) => {
     const out2 = handleNest(func);
     const commands = `- repeat:
@@ -449,9 +299,6 @@ ${space}id: "${id}"
         ${indentExceptLastLineBreak(out2)}`;
     addOut(commands);
   },
-  /**
-   * Repeats the given actions while the element with the given testId is not visible.
-   */
   repeatWhileNotVisible: (id, func) => {
     const out2 = handleNest(func);
     addOut(`- repeat:
@@ -461,21 +308,12 @@ ${space}id: "${id}"
     commands:
         ${out2.replace(/\n(?=.*[\n])/g, "\n        ")}`);
   },
-  /**
-   * Insert inline yaml code. Good for specialized commands.
-   */
   yaml: (yaml) => `${yaml}
 `,
-  /**
-   * Check if a condition is true.
-   */
   assertTrue: (condition) => {
     addOut(`- assertTrue: ${condition}
 `);
   }
 };
-function indentExceptLastLineBreak(str) {
-  return str.replace(/\n(?=.*[\n])/g, "\n        ");
-}
 export { MaestroTranslators as M };
 export { writeYaml } from "./write-yaml.mjs";
