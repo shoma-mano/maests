@@ -45,10 +45,10 @@ The `TapProps` interface defines optional properties for customizing tap actions
 
 | Property                | Type     | Default | Description                                                                                                  |
 |-------------------------|----------|---------|--------------------------------------------------------------------------------------------------------------|
-| `index`                 | number   | `true`  | If set to `true`, the tap action will be retried if no change is detected on the first attempt.              |
-| `retryTapIfNoChange`    | boolean  | -       | index of the element you wish to interact with                                                               |
+| `index`                 | number   | -       | index of the element you wish to interact with                                                               |
+| `retryTapIfNoChange`    | boolean  | -       | If set to `true`, the tap action will be retried if no change is detected on the first attempt.                                                                                                                                                      |
 | `repeat`                | number   | -       | Specifies the number of times to repeat the tap action.                                                      |
-| `waitToSettleTimeoutMs` | number   | -       | Time in milliseconds to wait for the element to settle after tapping, useful for handling UI transition time. |
+| `waitToSettleTimeoutMs` | number   | -       | Time in milliseconds to wait for the element to settle after tapping, useful for handling UI transition time.|
 
 #### Example Usage:
 ```typescript
@@ -297,41 +297,3 @@ M.tapOnPoint({ x: "50%", y: "50%" }, { waitToSettleTimeoutMs: 200 });
     M.wait(1000);
 });
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
