@@ -9,7 +9,7 @@
 
 - Ian Ross Hamilton <ian.ross.hamilton@gmail.com>
 
-[compare changes](https://github.com/shoma-mano/maests/compare/v1.0.5.v1.1.6)
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.5.v2.0.6)
 
 ### ❤️ Contributors
 
