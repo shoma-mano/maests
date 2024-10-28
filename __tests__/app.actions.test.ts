@@ -3,7 +3,7 @@ import { MaestroTranslators, resetOut, out } from "../src/commands";
 
 const getOutput = () => {
   const currentOutput = out;
-  resetOut(); // Reset output for clean snapshots in each test
+  resetOut();
   return currentOutput;
 };
 
@@ -14,34 +14,49 @@ describe("MaestroTranslators Actions - Swipe/Scroll Command Snapshots", () => {
 
   it("swipeLeft", () => {
     MaestroTranslators.swipeLeft();
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- swipe:
+          direction: LEFT
+          duration: 400
+      "
+    `);
   });
 
   it("swipeRight", () => {
     MaestroTranslators.swipeRight();
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- swipe:
+          direction: RIGHT
+          duration: 400
+      "
+    `);
   });
 
   it("swipe from start to end", () => {
     MaestroTranslators.swipe({ x: "0%", y: "0%" }, { x: "100%", y: "100%" });
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- swipe:
+          start: 0%, 0%
+          end: 100%, 100%
+      "
+    `);
   });
 
   it("scroll", () => {
     MaestroTranslators.scroll();
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- scroll
+      "
+    `);
   });
 
   it("scrollUntilVisible", () => {
     MaestroTranslators.scrollUntilVisible("testId");
-    expect(getOutput()).toMatchSnapshot();
-  });
-
-  it("swipe command from start to end with percentage coordinates", () => {
-    MaestroTranslators.swipe(
-      { x: "0%", y: "0%" },
-      { x: "100%", y: "100%" }
-    );
-    expect(getOutput()).toMatchSnapshot();
+    expect(getOutput()).toMatchInlineSnapshot(`
+      "- scrollUntilVisible:
+          element:
+            id: "testId"
+      "
+    `);
   });
 });
