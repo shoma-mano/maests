@@ -1,30 +1,28 @@
 export const rewriteCode = ({
   code,
-  flowPath,
-  distPath
+  outPath
 }) => {
   code = code.replace(
-    /import.*["']maests.*\n/g,
-    `import { M, writeYaml } from '${distPath}/commands'
-`
+    /import.*["']maests.*/,
+    `import { M, writeYaml } from 'maests'`
   );
   code += `
-writeYaml("${flowPath}")`;
+writeYaml("${outPath}")`;
   return code;
 };
 if (void 0) {
-  it("rewrites code", () => {
+  it("rewrites code", async () => {
+    const { createOutPath } = await null;
     const flow = `import { M } from "maests";
 M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
     const result = rewriteCode({
       code: flow,
-      flowPath: "my-flow.maestro.ts",
-      distPath: "/dist"
+      outPath: createOutPath("my-flow.maestro.ts")
     });
     expect(result).toMatchInlineSnapshot(`
-      "import { M, writeYaml } from '/dist/commands'
+      "import { M, writeYaml } from 'maests'
       M.initFlow({ appId: "com.my.app", NAME: "Maestro" });
-      writeYaml("my-flow.maestro.ts")"
+      writeYaml("${createOutPath("my-flow.maestro.ts")}")"
     `);
   });
 }

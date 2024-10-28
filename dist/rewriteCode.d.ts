@@ -1,5 +1,4 @@
-export declare const rewriteCode: ({ code, flowPath, distPath, }: {
+export declare const rewriteCode: ({ code, outPath, }: {
     code: string;
-    flowPath: string;
-    distPath: string;
+    outPath: string;
 }) => string;
