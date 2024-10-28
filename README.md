@@ -2,17 +2,17 @@
 
 # ✅ Features
 
- - You can write Maestro flows in TypeScript.  
- - Break down Flow into smaller, reusable modules  
- - Automatically load environment variables from .env  
- - No need to use runScript or runFlow anymore
+- You can write Maestro flows in TypeScript and execute directly.
+- Break down Flow into smaller, reusable modules
+- Automatically load environment variables from .env
+- Handling runScript with type.
 
 ## Usage
 
 #### 📦 Installation
 
 ```sh:
-  pnpm -D add maests
+pnpm -D add maests
 ```
 
 ### 🚀 Getting Started
@@ -39,26 +39,48 @@ M.tapOn("someTestId");
 Now, from your e2e test folder, generate the yaml flows and run them.
 
 ```sh
-cd test/e2e && npx maests
-maestro test my-first-flow.yaml
+npx maests my-first-flow.ts
 ```
 
-### More Example usage
+## Utils
 
-Here's a short sample flow that uses a utility flow. For more extensive examples, check out [the examples](example/sample-flow.maestro.ts)
+### runScript
+
+`flow.ts`
 
 ```typescript
-// test/e2e/utils/openMyApp.ts
 import { M } from "maests";
 
-export const openMyApp = () => {
-  M.initFlow("com.myTeam.myApp");
-  M.tapOn("someTestId");
-};
+M.runScript("./script.ts");
+```
 
-// test/e2e/`<flow-name>.maestro.ts
-import { openMyApp } from "./utils/openMyApp";
-openMyApp();
+`script.ts`
+
+```typescript
+import type { APIResult } from "./type";
+import { hello } from "./hello";
+
+// typed http request
+const body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;
+const result = json<APIResult>(body);
+console.log(result.userId);
+
+// you can use environment variables
+console.log(process.env.MAESTRO_APP_ID);
+
+// you can use imported functions
+hello();
+```
+
+## More Example
+
+You can try maests by simulator in [playground](playground)
+
+```shell
+cd playground
+pnpm install
+npx expo run:android
+npx maests e2e/sampleFlow.ts
 ```
 
 ### 🛠️ Commands

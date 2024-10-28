@@ -7,12 +7,13 @@ export declare const MaestroTranslators: {
      * Initializes the test flow with an optional application ID.
      * @param appId - Optional application ID to override the default environment appId.
      */
-    initFlow: ({ appId }?: {
+    initFlow: ({ appId, onFlowStart, }?: {
         appId?: string;
+        onFlowStart?: () => void;
     }) => void;
     /**
-     * Launches the application with optional configurations.
-     * @param appId - Optional app ID to use for launching the app.
+     * Launches the app.
+     * @param appId The bundle id of your app. Falls back to the appId provided in maestro-ts.config.js.
      */
     launchApp: ({ appId }?: {
         appId?: string;
@@ -26,6 +27,13 @@ export declare const MaestroTranslators: {
     }) => void;
     /**
      * Clears the entire keychain.
+     * runScript.
+     */
+    runScript: ({ path }: {
+        path: string;
+    }) => void;
+    /**
+     * Clear the entire keychain.
      */
     clearKeychain: () => void;
     /**
@@ -240,3 +248,12 @@ export declare const MaestroTranslators: {
 };
 export { MaestroTranslators as M };
 export { writeYaml } from "./write-yaml";
+declare global {
+    namespace http {
+        const get: (...args: any) => {
+            body: string;
+        };
+    }
+    const json: <T extends any>(str: string) => T;
+    const output: Record<string, string>;
+}

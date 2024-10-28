@@ -8,9 +8,15 @@ importers:
 
   .:
     dependencies:
+      citty:
+        specifier: ^0.1.6
+        version: 0.1.6
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      esbuild:
+        specifier: ^0.24.0
+        version: 0.24.0
       jiti:
         specifier: ^1.21.6
         version: 1.21.6

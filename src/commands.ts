@@ -1,14 +1,22 @@
+import { buildSync } from "esbuild";
 import { TapProps, PointProps, WaitProps } from "./command-props";
 
 // Nested command handling
 let isNested = false;
 let nestedCommands = "";
+import { buildSync } from "esbuild";
+import { TapProps, PointProps, WaitProps } from "./command-props";
+
+// nested commands
+let nestLevel = 0;
+let nestedCommands = [];
 const handleNest = (func: () => any) => {
-  isNested = true;
+  nestLevel++;
   func();
-  isNested = false;
-  const out = nestedCommands;
-  nestedCommands = "";
+  const out = nestedCommands[nestLevel - 1];
+  console.log("out", out);
+  nestedCommands[nestLevel - 1] = "";
+  nestLevel--;
   return out;
 };
 
@@ -17,9 +25,13 @@ export const resetOut = () => {
   out = "";
 };
 const addOut = (command: string) => {
-  if (isNested) nestedCommands += command;
-  else out += command;
+  if (nestLevel) {
+    if (!nestedCommands[nestLevel - 1]) nestedCommands[nestLevel - 1] = "";
+    nestedCommands[nestLevel - 1] += command;
+  } else out += command;
 };
+
+const space = "    ";
 
 // Helper function to format optional tap properties
 /**
@@ -52,8 +64,26 @@ export const MaestroTranslators = {
    * Initializes the test flow with an optional application ID.
    * @param appId - Optional application ID to override the default environment appId.
    */
-  initFlow: ({ appId }: { appId?: string } = {}) => {
-    addOut(`appId: ${appId ?? envAppId}\n---\n`);
+  initFlow: ({
+    appId,
+    onFlowStart,
+  }: { appId?: string; onFlowStart?: () => void } = {}) => {
+    const appIdCommand = `appId: ${appId ?? envAppId}\n`;
+    let commands = appIdCommand;
+    if (onFlowStart) {
+      const nested = handleNest(onFlowStart);
+      // prettier-ignore
+      const flowCommand =
+`onFlowStart:
+${nested.replaceAll(/\n/g,`${space}\n`)}`;
+
+      commands += flowCommand;
+    }
+
+    const separetor = "---\n";
+    commands += separetor;
+
+    addOut(commands);
   },
 
   /**
@@ -74,6 +104,41 @@ export const MaestroTranslators = {
 
   /**
    * Clears the entire keychain.
+   * runScript.
+   */
+  runScript: ({ path }: { path: string }) => {
+    const { outputFiles } = buildSync({
+      entryPoints: [path],
+      bundle: true,
+      format: "esm",
+      sourcemap: false,
+      legalComments: "none",
+
+      write: false,
+    });
+
+    let code = outputFiles[0].text;
+    // delete comment lines
+    code = code.replace(/^\s*\/\/.*/gm, "\n");
+    // remove space around :
+    code = code.replace(/\s*:\s*/g, ":");
+    // inject env variables
+    code = code.replace(/process\.env\.([^\n\s]*)/g, (_, p1) => {
+      if (!p1.startsWith("MAESTRO_")) {
+        console.warn(
+          "Environment variable that is not started with MAESTRO_ will be ignored:",
+          p1
+        );
+      }
+      return p1;
+    });
+
+    // prettier-ignore
+    const command =`- evalScript: \${${code.replaceAll("\n","")}}\n`
+    addOut(command);
+  },
+  /**
+   * Clear the entire keychain.
    */
   clearKeychain: () => {
     addOut("- clearKeychain\n");
@@ -85,7 +150,7 @@ export const MaestroTranslators = {
    * @param props - Optional properties to customize the tap action.
    */
   tapOn: (id: string, props: TapProps = {}) => {
-    let command = `- tapOn:\n    id: "${id}"\n`;
+    let command = `- tapOn:\n${space}id: "${id}"\n`);
     command += formatTapProps(props);
     addOut(command);
   },
@@ -247,9 +312,11 @@ export const MaestroTranslators = {
    * @param id - The testId of the element.
    * @param enabled - Optional; checks if the element is enabled.
    */
-  assertVisible: (id: string, enabled: boolean = false) => {
-    addOut(enabled ? `- assertVisible:\n    id: "${id}"\n    enabled: true\n` : `- assertVisible:\n    id: "${id}"\n`);
-  },
+  assertVisible: (id: string, enabled: boolean) => {
+      if (enabled)
+        addOut(`- assertVisible:\n    id: "${id}"\n    enabled: true\n`);
+      addOut(`- assertVisible:\n    id: "${id}"\n`);
+    },
 
   /**
    * Asserts that an element by testId is not visible.
@@ -279,17 +346,24 @@ export const MaestroTranslators = {
    * @param maxWait - Optional: Max timeout after which flow continues. Defaults to 5000ms
    */
   waitForAnimationEnd: (maxWait: number = 5000) => {
-    const command = maxWait ? `- waitForAnimationToEnd:\n    timeout: ${maxWait}\n` : "- waitForAnimationToEnd\n";
+    const command = maxWait
+        ? `- waitForAnimationToEnd:\n    timeout: ${maxWait}\n`
+        : "- waitForAnimationToEnd\n";
+
     addOut(command);
   },
-
   /**
    * Waits until an element by testId is visible.
    * @param id - The testId of the element.
    * @param maxWait - Max wait time in milliseconds.
    */
   waitUntilVisible: (id: string, maxWait: number) => {
-    addOut(`- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${maxWait ?? 5000}\n`);
+      addOut(
+        "- extendedWaitUntil:\n" +
+          "    visible:\n" +
+          `        id: "${id}"\n` +
+          `    timeout: ${maxWait ?? 5000}\n`
+     );
   },
 
   /**
@@ -298,16 +372,26 @@ export const MaestroTranslators = {
    * @param maxWait - Max wait time in milliseconds.
    */
   waitUntilNotVisible: (id: string, maxWait: number) => {
-    addOut(`- extendedWaitUntil:\n    notVisible:\n        id: "${id}"\n    timeout: ${maxWait ?? 5000}\n`);
-  },
+      addOut(
+        "- extendedWaitUntil:\n" +
+          "    notVisible:\n" +
+          `        id: "${id}"\n` +
+          `    timeout: ${maxWait ?? 5000}\n`
+      );
+    },
 
   /**
    * Waits a specified number of milliseconds.
    * @param ms - Number of milliseconds to wait.
    */
   wait: (ms: number) => {
-    addOut(`- swipe:\n    start: -1, -1\n    end: -1, -100\n    duration: ${ms}\n`);
-  },
+      addOut(
+        "- swipe:\n" +
+          "    start: -1, -1\n" +
+          "    end: -1, -100\n" +
+          `    duration: ${ms}\n`
+      );
+    },
 
   /**
    * Dismisses the software keyboard.
@@ -372,7 +456,8 @@ export const MaestroTranslators = {
    */
   stopApp: ({ appId }: { appId?: string } = {}) => {
     appId = appId ?? envAppId;
-    addOut(appId ? `- stopApp: ${appId}\n` : "- stopApp\n");
+    if (appId) addOut(`- stopApp: ${appId}\n`);
+    addOut("- stopApp\n");
   },
 
   /**
@@ -382,7 +467,15 @@ export const MaestroTranslators = {
    */
   repeat: (times: number, func: () => void) => {
     const out = handleNest(func);
-    addOut(`- repeat:\n    times: ${times}\n    commands:\n        ${out.replace(/\n/g, "\n        ")}`);
+    // prettier-ignore
+    const commands =
+
+`- repeat:
+     times: ${times}
+     commands:
+        ${indentExceptLastLineBreak(out)}`;
+
+    addOut(commands);
   },
 
   /**
@@ -392,7 +485,17 @@ export const MaestroTranslators = {
    */
   repeatWhileVisible: (id: string, func: () => void) => {
     const out = handleNest(func);
-    addOut(`- repeat:\n    while:\n        visible:\n            id: "${id}"\n    commands:\n        ${out.replace(/\n/g, "\n        ")}`);
+    // prettier-ignore
+    const commands =
+
+`- repeat:
+     while:
+         visible:
+             id: "${id}"
+     commands:
+        ${indentExceptLastLineBreak(out)}`;
+
+    addOut(commands);
   },
 
   /**
@@ -402,7 +505,12 @@ export const MaestroTranslators = {
    */
   repeatWhileNotVisible: (id: string, func: () => void) => {
     const out = handleNest(func);
-    addOut(`- repeat:\n    while:\n        notVisible:\n            id: "${id}"\n    commands:\n        ${out.replace(/\n/g, "\n        ")}`);
+    addOut(`- repeat:
+    while:
+        notVisible:
+            id: "${id}"
+    commands:
+        ${out.replace(/\n(?=.*[\n])/g, "\n        ")}`);
   },
 
   /**
@@ -420,5 +528,19 @@ export const MaestroTranslators = {
   },
 };
 
+// utils
+function indentExceptLastLineBreak(str: string) {
+  return str.replace(/\n(?=.*[\n])/g, "\n        ");
+}
+
 export { MaestroTranslators as M };
 export { writeYaml } from "./write-yaml";
+
+declare global {
+  namespace http {
+    const get: (...args: any) => { body: string };
+  }
+
+  const json: <T extends any>(str: string) => T;
+  const output: Record<string, string>;
+}
