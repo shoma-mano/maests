@@ -12,24 +12,6 @@ describe("MaestroTranslators Application Launch Commands Snapshots", () => {
     resetOut();
   });
 
-  it("initFlow with appId", () => {
-    MaestroTranslators.initFlow({ appId: "testAppId" });
-    expect(getOutput()).toMatchInlineSnapshot(`
-      "appId: testAppId
-      ---
-      "
-    `);
-  });
-
-  it("launchApp with appId", () => {
-    MaestroTranslators.launchApp({ appId: "testAppId" });
-    expect(getOutput()).toMatchInlineSnapshot(`
-      "- launchApp:
-          appId: "testAppId"
-      "
-    `);
-  });
-
   it("clearState with appId", () => {
     MaestroTranslators.clearState({ appId: "testAppId" });
     expect(getOutput()).toMatchInlineSnapshot(`

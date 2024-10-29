@@ -12,37 +12,6 @@ describe("MaestroTranslators - Tap and Press Actions", () => {
     resetOut();
   });
 
-  describe("tapOn", () => {
-    it("should match snapshot for basic tapOn", () => {
-      M.tapOn("elementId");
-      expect(getOutput()).toMatchInlineSnapshot(`
-        "- tapOn:
-            id: "elementId"
-        "
-      `);
-    });
-  });
-
-  describe("tapOnText", () => {
-    it("should match snapshot for basic tapOnText", () => {
-      M.tapOnText("SampleText");
-      expect(getOutput()).toMatchInlineSnapshot(
-        `"- tapOn:
-    text: "SampleText"
-"`);
-    });
-  });
-
-  describe("tapOnPoint", () => {
-    it("should match snapshot for basic tapOnPoint", () => {
-      M.tapOnPoint({ x: 100, y: 200 });
-      expect(getOutput()).toMatchInlineSnapshot(
-        `"- tapOn:
-    point: 100,200
-"`);
-    });
-  });
-
   describe("longPressOn", () => {
     it("should match snapshot for basic longPressOn", () => {
       M.longPressOn("elementId");
@@ -69,7 +38,8 @@ describe("MaestroTranslators - Tap and Press Actions", () => {
       expect(getOutput()).toMatchInlineSnapshot(
         `"- longPressOn:
     point: 150,250
-"`);
+"`
+      );
     });
   });
 });

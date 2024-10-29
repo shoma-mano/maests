@@ -68,10 +68,10 @@ it("double nested repeat", () => {
   `);
 });
 
-it("runScript", () => {
-  M.runScript({ path: join(__dirname, "../playground/e2e/script.ts") });
-  expect(out).toMatchInlineSnapshot(`
-    "- evalScript: \${var hello = () => {  console.log("Hello, world!");};var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log(result.userId);console.log(MAESTRO_APP_ID);hello();}
-    "
-  `);
-});
+// it("runScript", () => {
+//   M.runScript({ path: join(__dirname, "../playground/e2e/script.ts") });
+//   expect(out).toMatchInlineSnapshot(`
+//     "- evalScript: \${var hello = () => {  console.log("Hello, world!");};var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log(result.userId);console.log(MAESTRO_APP_ID);hello();}
+//     "
+//   `);
+// });

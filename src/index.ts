@@ -31,7 +31,10 @@ const main = defineCommand({
 
     try {
       const cwd = process.cwd();
-      const jiti = createJiti(cwd, { interopDefault: true, esmResolve: true });
+      const jiti = createJiti(cwd, {
+        esmResolve: true,
+        experimentalBun: true,
+      });
       await jiti(tempFilePath);
       consola.success(`Created ${outPath} ✔`);
       execSync(`maestro test ${outPath}`, {

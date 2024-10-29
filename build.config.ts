@@ -11,6 +11,8 @@ export default defineBuildConfig({
         define: {
           "import.meta.vitest": "undefined",
         },
+        treeShaking: true,
+        format: "esm",
       },
     },
   ],
