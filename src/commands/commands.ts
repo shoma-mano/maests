@@ -1,18 +1,20 @@
-import { buildSync } from "esbuild";
 import { PointProps } from "./command-props";
-import { join } from "path";
 import { tapOn, tapOnPoint, tapOnText, waitForAndTapOn } from "./tap";
+import { runFlow, runScript } from "./run";
+import { clearState, initFlow, launchApp } from "./init";
+import { repeat, repeatWhileVisible, repeatWhileNotVisible } from "./repeat";
+import { parse } from "yaml";
 
 // Nested command handling
 let nestLevel = 0;
 let nestedCommands: string[] = [];
-const handleNest = (func: () => any) => {
+export const handleNest = (func: () => any, parseAsYaml?: boolean) => {
   nestLevel++;
   func();
   const out = nestedCommands[nestLevel - 1];
   nestedCommands[nestLevel - 1] = "";
   nestLevel--;
-  return out;
+  return parseAsYaml ? parse(out) : out;
 };
 
 export let out = "";
@@ -33,112 +35,13 @@ export const addOut = (command: string) => {
 };
 
 // Utility function for indenting except last line break
-function indentExceptLastLineBreak(str: string) {
+export const indentExceptLastLineBreak = (str: string) => {
   return str.replace(/\n(?=.*[\n])/g, "\n        ");
-}
+};
 
 export const space = "    ";
 
-// We should separate these commands into different files later
-const initFlow = ({
-  appId,
-  onFlowStart,
-}: { appId?: string; onFlowStart?: () => void } = {}) => {
-  const appIdCommand = `appId: ${appId ?? envAppId}\n`;
-  let commands = appIdCommand;
-  if (onFlowStart) {
-    const nested = handleNest(onFlowStart);
-    const flowCommand = `onFlowStart:\n${nested.replaceAll(
-      /\n/g,
-      `${space}\n`
-    )}`;
-    commands += flowCommand;
-  }
-  const separator = "---\n";
-  commands += separator;
-  addOut(commands);
-};
-
-if (import.meta.vitest) beforeEach(resetOut);
-
-if (import.meta.vitest) {
-  it("initFlow with appId", () => {
-    initFlow({ appId: "testAppId" });
-    expect(out).toMatchInlineSnapshot(`
-      "appId: testAppId
-      ---
-      "
-    `);
-  });
-}
-
-const launchApp = ({ appId }: { appId?: string } = {}) => {
-  addOut(`- launchApp:\n    appId: "${appId ?? envAppId}"\n`);
-};
-
-if (import.meta.vitest) {
-  it("launchApp with appId", () => {
-    launchApp({ appId: "testAppId" });
-    expect(out).toMatchInlineSnapshot(`
-      "- launchApp:
-          appId: "testAppId"
-      "
-    `);
-  });
-}
-
-const clearState = ({ appId }: { appId?: string } = {}) => {
-  addOut(appId ? `- clearState: ${appId}\n` : "- clearState\n");
-};
-
-if (import.meta.vitest) {
-  it("clearState with appId", () => {
-    clearState({ appId: "testAppId" });
-    expect(out).toMatchInlineSnapshot(`
-      "- clearState: testAppId
-      "
-    `);
-  });
-}
-
-const runScript = ({ path }: { path: string }) => {
-  const { outputFiles } = buildSync({
-    entryPoints: [path],
-    bundle: true,
-    format: "esm",
-    sourcemap: false,
-    legalComments: "none",
-    write: false,
-  });
-
-  let code = outputFiles[0].text;
-  code = code.replace(/^\s*\/\/.*/gm, "\n").replace(/\s*:\s*/g, ":");
-  code = code.replace(/process\.env\.([^\n\s]*)/g, (_, p1) => {
-    if (!p1.startsWith("MAESTRO_")) {
-      console.warn(
-        "Environment variable that is not started with MAESTRO_ will be ignored:",
-        p1
-      );
-    }
-    return p1;
-  });
-
-  const command = `- evalScript: \${${code.replaceAll("\n", "")}}\n`;
-  addOut(command);
-};
-
-if (import.meta.vitest) {
-  it("runScript", () => {
-    runScript({ path: join(__dirname, "../../playground/e2e/script.ts") });
-    expect(out).toMatchInlineSnapshot(`
-      "- evalScript: \${var hello = () => {  console.log("Hello, world!");};var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log(result.userId);console.log(MAESTRO_APP_ID);hello();}
-      "
-    `);
-  });
-}
-
 // Main translator functions
-const envAppId = process.env["appId"];
 export const MaestroTranslators = {
   /**
    * Initializes the test flow with optional configuration.
@@ -159,6 +62,8 @@ export const MaestroTranslators = {
   clearState,
 
   runScript,
+
+  runFlow,
 
   tapOn,
 
@@ -342,31 +247,11 @@ export const MaestroTranslators = {
     addOut(appId ? `- stopApp: ${appId}\n` : "- stopApp\n");
   },
 
-  repeat: (times: number, func: () => void) => {
-    const out = handleNest(func);
-    const commands = `- repeat:\n     times: ${times}\n     commands:\n        ${indentExceptLastLineBreak(
-      out
-    )}`;
-    addOut(commands);
-  },
+  repeat,
 
-  repeatWhileVisible: (id: string, func: () => void) => {
-    const out = handleNest(func);
-    const commands = `- repeat:\n     while:\n         visible:\n             id: "${id}"\n     commands:\n        ${indentExceptLastLineBreak(
-      out
-    )}`;
-    addOut(commands);
-  },
+  repeatWhileVisible,
 
-  repeatWhileNotVisible: (id: string, func: () => void) => {
-    const out = handleNest(func);
-    addOut(
-      `- repeat:\n    while:\n        notVisible:\n            id: "${id}"\n    commands:\n        ${out.replace(
-        /\n(?=.*[\n])/g,
-        "\n        "
-      )}`
-    );
-  },
+  repeatWhileNotVisible,
 
   yaml: (yaml: string) => `${yaml}\n`,
 

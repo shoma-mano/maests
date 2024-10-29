@@ -1,5 +1,5 @@
 import { PointProps, WaitProps } from "./command-props";
-import { addOut, space, resetOut, out, getOutput } from "./commands";
+import { addOut, space, getOutput } from "./commands";
 
 // Helper function to format optional tap properties
 export interface TapOptions {
@@ -17,16 +17,16 @@ const processTapOptions = ({
   waitToSettleTimeoutMs,
 }: TapOptions): string => {
   let propsCommand = "";
-  if (typeof index === "number") propsCommand += `    index: ${index}\n`;
-  if (retryTapIfNoChange === false)
+  if (index) propsCommand += `    index: ${index}\n`;
+  if (retryTapIfNoChange === false) {
     propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}\n`;
-  if (typeof repeat === "number") propsCommand += `    repeat: ${repeat}\n`;
-  if (typeof waitToSettleTimeoutMs === "number")
+  }
+  if (repeat) propsCommand += `    repeat: ${repeat}\n`;
+  if (waitToSettleTimeoutMs) {
     propsCommand += `    waitToSettleTimeoutMs: ${waitToSettleTimeoutMs}\n`;
+  }
   return propsCommand;
 };
-
-if (import.meta.vitest) beforeEach(resetOut);
 
 export const tapOn = (id: string, options: TapOptions = {}) => {
   let command = `- tapOn:\n${space}id: "${id}"\n`;

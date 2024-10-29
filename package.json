@@ -47,7 +47,8 @@
     "citty": "^0.1.6",
     "dotenv": "^16.4.5",
     "esbuild": "^0.24.0",
-    "jiti": "^1.21.6"
+    "jiti": "^1.21.6",
+    "yaml": "^2.6.0"
   },
   "packageManager": "pnpm@9.1.0+sha512.67f5879916a9293e5cf059c23853d571beaf4f753c707f40cb22bed5fb1578c6aad3b6c4107ccb3ba0b35be003eb621a16471ac836c87beb53f9d54bb4612724"
 }
