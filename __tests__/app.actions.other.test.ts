@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { MaestroTranslators, resetOut, out } from "../src/commands";
+import { MaestroTranslators, resetOut, out } from "../src/commands/commands";
 
 const getOutput = () => {
   const currentOutput = out;

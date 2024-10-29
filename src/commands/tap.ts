@@ -1,5 +1,5 @@
-import { PointProps, WaitProps } from "../command-props";
-import { addOut, space, resetOut, out } from "../commands";
+import { PointProps, WaitProps } from "./command-props";
+import { addOut, space, resetOut, out } from "./commands";
 
 // Helper function to format optional tap properties
 export interface TapOptions {

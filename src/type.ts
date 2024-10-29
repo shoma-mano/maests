@@ -1,6 +1,7 @@
-import { TapProps, PointProps, WaitProps } from "./command-props";
+import { PointProps, WaitProps } from "./commands/command-props";
+import { TapOptions } from "./commands/tap";
 
-type WaitAndTapProps = TapProps & WaitProps;
+type WaitAndTapProps = TapOptions & WaitProps;
 
 export interface NestedOrBase {
   /**
@@ -8,14 +9,14 @@ export interface NestedOrBase {
    * @param text - The text to tap on.
    * @param props - Optional tap properties such as retries, repeat count, and timeout.
    */
-  tapOnText(text: string, props?: TapProps): void;
+  tapOnText(text: string, props?: TapOptions): void;
 
   /**
    * Taps on an element specified by a testId.
    * @param id - The testId of the target element.
    * @param props - Optional tap properties for customized tap behavior.
    */
-  tapOn(id: string, props?: TapProps): void;
+  tapOn(id: string, props?: TapOptions): void;
 
   /**
    * Waits for an element by testId to appear, then taps on it.
@@ -41,7 +42,7 @@ export interface NestedOrBase {
    * @param point - Coordinates to tap, can use numbers (dips) or strings (percentages).
    * @param props - Optional tap properties.
    */
-  tapOnPoint(point: PointProps, props?: TapProps): void;
+  tapOnPoint(point: PointProps, props?: TapOptions): void;
 
   /**
    * Performs a long press on a specified point.

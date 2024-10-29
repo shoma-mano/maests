@@ -1,7 +1,7 @@
 import { buildSync } from "esbuild";
 import { PointProps } from "./command-props";
 import { join } from "path";
-import { tapOn, tapOnPoint, tapOnText, waitForAndTapOn } from "./commands/tap";
+import { tapOn, tapOnPoint, tapOnText, waitForAndTapOn } from "./tap";
 
 // Nested command handling
 let nestLevel = 0;
@@ -371,7 +371,7 @@ export const MaestroTranslators = {
 };
 
 export { MaestroTranslators as M };
-export { writeYaml } from "./write-yaml";
+export { writeYaml } from "../write-yaml";
 
 declare global {
   namespace http {
