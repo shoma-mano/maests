@@ -53,6 +53,10 @@ npx expo run:android
 npx maests e2e/sampleFlow.ts
 ```
 
+## 🚨 Trouble Shooting
+
+Most of the issues are caused by Maestro itself rather than this library. You can still check the YAML files that Maestro generated in the "maests" folder. I'll also provide solutions for common Maestro issues later.
+
 ## ⭐️ Contributing
 
 This package is currently under active development, and we welcome contributions from everyone!
