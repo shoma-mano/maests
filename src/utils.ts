@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync } from "fs";
 import path, { join } from "path";
 import { fileURLToPath } from "url";
-import { out, resetOut } from "./commands";
+import { out, resetOut } from "./commands/commands";
 
 const filePath = fileURLToPath(import.meta.url);
 export const yamlFlowDir = path.join(process.cwd(), "maests");

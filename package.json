@@ -3,18 +3,14 @@
   "version": "2.0.6",
   "description": "An executable compiler for creating Maestro's yaml-flows with typescript.",
   "type": "module",
-  "main": "./dist/commands.mjs",
+  "main": "dist/commands/commands.mjs",
+  "types": "dist/commands/commands.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/commands.mjs",
-      "types": "./dist/commands.d.ts"
-    },
-    "./dev": {
-      "import": "./src/commands.ts",
-      "types": "./dist/commands.d.ts"
+      "import": "./dist/commands/commands.mjs",
+      "types": "./dist/commands/commands.d.ts"
     }
   },
-  "types": "./dist/commands.d.ts",
   "bin": {
     "maests": "./dist/index.mjs"
   },
