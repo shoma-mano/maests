@@ -50,7 +50,7 @@ pnpm build
 cd playground
 pnpm install
 npx expo run:android
-npx ma🛹ests e2e/sampleFlow.ts
+npx maests e2e/sampleFlow.ts
 ```
 
 ## ⭐️ Contributing
