@@ -1,16 +1,3 @@
-# Changelog
-
-## v1.0.6
-
-- Refactored commands and added optional props that are availoable in maestro, updated the readme and added a commands section for more information on available commands
-- added git hub actions for pr pipeline
-
-### ❤️ Contributors
-
-- Ian Ross Hamilton <ian.ross.hamilton@gmail.com>
-
-[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.5.v2.0.6)
-
 ### ❤️ Contributors
 
 - Shoma-mano <ms2geki@gmail.com>
@@ -110,7 +97,6 @@
 
 ## v1.0.1
 
-
 ### 🏡 Chore
 
 - Update-readme.md ([23876f4](https://github.com/shoma-mano/maests/commit/23876f4))
@@ -118,4 +104,3 @@
 ### ❤️ Contributors
 
 - Shoma-mano <ms2geki@gmail.com>
-

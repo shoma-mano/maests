@@ -69,6 +69,10 @@ hello();
 You can try maests by simulator in [playground](playground)
 
 ```shell
+# build maests
+pnpm install
+pnpm build
+# try maests in playground
 cd playground
 pnpm install
 npx expo run:android
