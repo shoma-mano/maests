@@ -7,8 +7,13 @@
 - Update README.md ([02a9ca9](https://github.com/shoma-mano/maests/commit/02a9ca9))
 - Add dist to gitignore ([2a581dc](https://github.com/shoma-mano/maests/commit/2a581dc))
 
+### ⭐️ Feature
+
+- [Feature/meastro commands/unit tests/gh actions](https://github.com/shoma-mano/maests/pull/6)
+
 ### ❤️ Contributors
 
+- Ian Ross Hamilton <ian.ross.hamilton@gmail.com>
 - Shoma-mano <ms2geki@gmail.com>
 
 ### ❤️ Contributors
