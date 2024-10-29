@@ -1,214 +1,230 @@
+import { TapProps, PointProps, WaitProps } from "./command-props";
+type WaitAndTapProps = TapProps & WaitProps;
 export interface NestedOrBase {
     /**
-     * Tap on a text visible on screen.
+     * Taps on a visible text element on the screen.
+     * @param text - The text to tap on.
+     * @param props - Optional tap properties such as retries, repeat count, and timeout.
      */
-    tapOnText(text: string): void;
+    tapOnText(text: string, props?: TapProps): void;
     /**
-     * Tap on an element with the given testId.
+     * Taps on an element specified by a testId.
+     * @param id - The testId of the target element.
+     * @param props - Optional tap properties for customized tap behavior.
      */
-    tapOn(testId: string): void;
+    tapOn(id: string, props?: TapProps): void;
     /**
-     * Wait for testId to appear and the tap on an element with the given testId.
+     * Waits for an element by testId to appear, then taps on it.
+     * @param id - Required: The testId of the element to wait for and tap.
+     * @param props - Properties for wait and tap actions, combining both WaitProps and TapProps.
      */
-    waitForAndtapOn(testId: string, maxWait: number): void;
+    waitForAndTapOn(id: string, props?: WaitAndTapProps): void;
     /**
-     * Long press on an element with the given testId.
+     * Performs a long press on an element identified by its testId.
+     * @param id - The testId of the element to long press.
      */
-    longPressOn(testId: string): string;
+    longPressOn(id: string): void;
     /**
-     * Long press on an element with the given text.
+     * Performs a long press on a text element visible on the screen.
+     * @param text - The visible text to long press.
      */
-    longPressOnText(text: string): string;
+    longPressOnText(text: string): void;
     /**
-     * Tap on the given point.
-     * Can either take numbers for dips or strings for percentages.
-     * @example
-     * M.tapOnPoint({ x: "50%", y: "50%"}) // tap middle of the screen.
+     * Taps on a specific point on the screen.
+     * @param point - Coordinates to tap, can use numbers (dips) or strings (percentages).
+     * @param props - Optional tap properties.
      */
-    tapOnPoint(point: {
-        x: number | string;
-        y: number | string;
-    }): string;
+    tapOnPoint(point: PointProps, props?: TapProps): void;
     /**
-     * Long press on the given point.
+     * Performs a long press on a specified point.
+     * @param point - The x and y coordinates to long press.
      */
-    longPressOnPoint(point: {
-        x: number | string;
-        y: number | string;
-    }): string;
+    longPressOnPoint(point: PointProps): void;
     /**
-     * Input a text into the currently focused input or the input with the given testId.
+     * Swipes left from the screen center.
      */
-    inputText(text: string, testId?: string): string;
+    swipeLeft(): void;
     /**
-     * Erase a number of characters from the focused input or the input with the given testId.
+     * Swipes right from the screen center.
      */
-    eraseText(characters: number, testId?: string): string;
+    swipeRight(): void;
     /**
-     * Open a url / deepLink.
+     * Swipes down from the screen center.
      */
-    openLink(url: string): string;
+    swipeDown(): void;
     /**
-     * Assert an element with the given testId is visible.
-     * @param enabled Whether the view should also be enabled.
+     * Swipes up from the screen center.
      */
-    assertVisible(testId: string, enabled?: boolean): string;
+    swipeUp(): void;
     /**
-     * Assert the element with the given testId is not visible.
+     * Swipes from a specified start point to an end point.
+     * @param start - Starting coordinates for the swipe.
+     * @param end - Ending coordinates for the swipe.
      */
-    assertNotVisible(testId: string): string;
+    swipe(start: PointProps, end: PointProps): void;
     /**
-     * Scroll down.
+     * Inputs text into the focused or specified input element.
+     * @param text - The text to input.
+     * @param id - Optional testId of the input element.
      */
-    scroll(): string;
+    inputText(text: string, id?: string): void;
     /**
-     * Scroll until the element with the given testId is visible.
+     * Inputs a random name into the focused or specified input element.
+     * @param id - Optional testId of the input element.
      */
-    scrollUntilVisible(testId: string): string;
+    inputRandomName(id?: string): void;
     /**
-     * Input random number into focused input or the one with given testId.
+     * Inputs a random number into the focused or specified input element.
+     * @param id - Optional testId of the input element.
      */
-    inputRandomNumber(testId?: string): string;
+    inputRandomNumber(id?: string): void;
     /**
-     * Input random name into focused input or the one with given testId.
+     * Copies text from an element identified by its testId.
+     * @param id - The testId of the element to copy text from.
      */
-    inputRandomName(testId?: string): string;
+    copyTextFrom(id: string): void;
     /**
-     * Input random email into focused input or the one with given testId.
+     * Inputs a random email address into the focused or specified input element.
+     * @param id - Optional testId of the input element.
      */
-    inputRandomEmail(testId?: string): string;
+    inputRandomEmail(id?: string): void;
     /**
-     * Input random text into focused input or the one with given testId.
+     * Inputs random text into the focused or specified input element.
+     * @param id - Optional testId of the input element.
      */
-    inputRandomText(testId?: string): string;
+    inputRandomText(id?: string): void;
     /**
-     * Use the configured deepLinkBase or appId to navigate to the given path.
-     * Only works if deepLinking is set up correctly.
+     * Erases a specified number of characters from the focused or specified input element.
+     * @param chars - Number of characters to erase.
+     * @param id - Optional testId of the input element.
      */
-    navigate(path: string): string;
+    eraseText(chars: number, id?: string): void;
     /**
-     * Repeats the given actions a given number of times.
+     * Opens a specified URL or deep link.
+     * @param url - The URL or deep link to open.
      */
-    repeat(times: number, fn: () => void): string;
+    openLink(url: string): void;
     /**
-     * Repeats the given actions while the element with the given testId is visible.
+     * Navigates to a specified path using the deep link base.
+     * @param path - The path to navigate to.
      */
-    repeatWhileVisible(id: string, fn: () => void): string;
+    navigate(path: string): void;
     /**
-     * Repeats the given actions while the element with the given testId is not visible.
+     * Asserts that an element with the given testId is visible.
+     * @param id - The testId of the element to check.
+     * @param enabled - If true, checks that the element is both visible and enabled.
      */
-    repeatWhileNotVisible(id: string, fn: () => void): string;
+    assertVisible(id: string, enabled?: boolean): void;
     /**
-     * Wait a number of milliseconds.
-     * This is an anti-pattern, try to fall back to other waiting methods if possible.
+     * Asserts that an element with the given testId is not visible.
+     * @param id - The testId of the element to check.
      */
-    wait(ms: number): string;
+    assertNotVisible(id: string): void;
     /**
-     * Wait a max of n ms or until the current animation has ended.
+     * Scrolls down on the screen.
      */
-    waitForAnimationEnd(continueAfter?: number): string;
+    scroll(): void;
     /**
-     * Wait a max of milliseconds until the element with the given testId is visible.
+     * Scrolls until an element with the given testId is visible.
+     * @param id - The testId of the element to scroll until visible.
      */
-    waitUntilVisible(testId: string, maxWait?: number): string;
+    scrollUntilVisible(id: string): void;
     /**
-     * Wait a max of milliseconds until the element with the given testId is no longer visible.
+     * Waits until an ongoing animation or video ends.
+     * @param maxWait - Optional timeout (in milliseconds) to wait before proceeding.
      */
-    waitUntilNotVisible(testId: string, maxWait?: number): string;
+    waitForAnimationEnd(maxWait: number): void;
     /**
-     * Take a screenshot and store at the path with the given name.
+     * Waits until an element with the given testId is visible.
+     * @param id - The testId of the element to wait for.
+     * @param maxWait - Maximum wait time (in milliseconds) for the element to appear.
      */
-    screenshot(fileName: string): string;
+    waitUntilVisible(id: string, maxWait: number): void;
     /**
-     * Press the enter key on the software keyboard.
+     * Waits until an element with the given testId is no longer visible.
+     * @param id - The testId of the element to wait for.
+     * @param maxWait - Maximum wait time (in milliseconds) for the element to disappear.
      */
-    pressEnter(): string;
+    waitUntilNotVisible(id: string, maxWait: number): void;
     /**
-     * Dismiss the software keyboard.
+     * Waits for a specified number of milliseconds.
+     * @param ms - The number of milliseconds to wait.
      */
-    hideKeyboard(): string;
+    wait(ms: number): void;
     /**
-     * Swipe left from center.
+     * Dismisses the software keyboard.
      */
-    swipeLeft(): string;
+    hideKeyboard(): void;
     /**
-     * Swipe right from center.
+     * Takes a screenshot and stores it with the specified filename.
+     * @param fileName - The name to save the screenshot as.
      */
-    swipeRight(): string;
+    screenshot(fileName: string): void;
     /**
-     * Swipe down from center.
+     * Presses the enter key on the software keyboard.
      */
-    swipeDown(): string;
+    pressEnter(): void;
     /**
-     * Swipe up from center.
+     * Presses the home button on the device.
      */
-    swipeUp(): string;
+    pressHomeButton(): void;
     /**
-     * Swipe from a start to an end point. Use percentages or dips.
-     * @example
-     * // swipe from left top corner to right bottom corner.
-     * M.swipe({x: "0%", y: "0%"}, {x: "100%", y: "100%"})
+     * Presses the lock button on the device.
      */
-    swipe(start: {
-        x: string | number;
-        y: string | number;
-    }, end: {
-        x: string | number;
-        y: string | number;
-    }): string;
+    pressLockButton(): void;
     /**
-     * Insert inline yaml code. Good for specialized commands.
-     * @example
-     * M.yaml(`
-     * - tapOn:
-     *     point: 50%,50%
-     * `)
+     * Presses the back button on Android devices.
      */
-    yaml(yaml: string): string;
+    back(): void;
     /**
-     * Check if a condition is true.
+     * Increases the device volume.
      */
-    assertTrue(condition: string): string;
+    volumeUp(): void;
     /**
-     * Copies text of an element with the given testId.
+     * Decreases the device volume.
      */
-    copyTextFrom(testId: string): string;
+    volumeDown(): void;
     /**
-     * Press android back button.
+     * Repeats a set of actions a specified number of times.
+     * @param times - Number of times to repeat.
+     * @param func - The function containing actions to repeat.
      */
-    back(): string;
+    repeat(times: number, func: () => void): void;
     /**
-     * Press the home button.
+     * Repeats a set of actions while an element with the given testId is visible.
+     * @param id - The testId of the element.
+     * @param func - The function containing actions to repeat.
      */
-    pressHomeButton(): string;
+    repeatWhileVisible(id: string, func: () => void): void;
     /**
-     * Press the lock button.
+     * Repeats a set of actions while an element with the given testId is not visible.
+     * @param id - The testId of the element.
+     * @param func - The function containing actions to repeat.
      */
-    pressLockButton(): string;
+    repeatWhileNotVisible(id: string, func: () => void): void;
     /**
-     * Increase device volume.
+     * Inserts inline YAML code for specialized commands.
+     * @param yaml - The YAML code to insert.
      */
-    volumeUp(): string;
+    yaml(yaml: string): void;
     /**
-     * Decrease device volume.
+     * Asserts that a specified condition is true.
+     * @param condition - The condition to assert.
      */
-    volumeDown(): string;
+    assertTrue(condition: string): void;
 }
 export interface All extends NestedOrBase {
     /**
-     * Should be called at the start of every test flow.
-     * In the config object, you can define the appId to use, plus a set of environment variables.
+     * Initializes the test flow with optional configuration.
+     * @param config - Optional configuration with appId and other environment variables.
      */
     initFlow(config?: {
         appId?: string;
         [key: string]: string | number;
     }): void;
     /**
-     * Launches the app.
-     * @param appId The bundle id of your app. Falls back to the appId provided in maestro-ts.config.js.
-     * @param clearState Whether to clear the app state before starting.
-     * @param clearKeychain Whether to clear the entire Keychain before starting.
-     * @param stopApp Whether to stop the app before starting - default: true.
+     * Launches the application with optional configuration settings.
+     * @param config - Configuration options for appId, state clearing, keychain clearing, and app stopping.
      */
     launchApp(config?: {
         appId?: string;
@@ -217,23 +233,26 @@ export interface All extends NestedOrBase {
         stopApp?: boolean;
     }): void;
     /**
-     * Clear the state of the current app or of the app with the given id.
+     * Clears the state of the current app or the specified app by appId.
+     * @param appId - Optional appId to clear state for a specific app.
      */
-    clearState(appId?: string): string;
+    clearState(appId?: string): void;
     /**
-     * Clear the entire keychain.
+     * Clears the entire keychain.
      */
-    clearKeychain(): string;
+    clearKeychain(): void;
     /**
-     * Run a subFlow.
-     * @param path Path to the subFlow.
-     * @param env Map of env variables for the subFlow.
+     * Runs a sub-flow defined by a path with optional environment variables.
+     * @param path - The path to the sub-flow.
+     * @param env - Optional map of environment variables for the sub-flow.
      */
     runFlow(path: string, env?: {
         [key: string]: string | number;
-    }): string;
+    }): void;
     /**
-     * Stop the current app or the one with the given appId.
+     * Stops the current app or the specified app by appId.
+     * @param appId - Optional appId to specify which app to stop.
      */
-    stopApp(appId?: string): string;
+    stopApp(appId?: string): void;
 }
+export {};
