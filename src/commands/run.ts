@@ -33,9 +33,9 @@ if (import.meta.vitest) {
   it("runScript", () => {
     runScript({ path: join(__dirname, "../../playground/e2e/script.ts") });
     expect(getOutput()).toMatchInlineSnapshot(`
-        "- evalScript: \${var hello = () => {  console.log("Hello, world!");};var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log(result.userId);console.log(MAESTRO_APP_ID);hello();}
-        "
-      `);
+      "- evalScript: \${var hello = () => "Hello, World!";var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log("id " + result.userId);console.log("appId from env " + MAESTRO_APP_ID);console.log("imported file " + hello());}
+      "
+    `);
   });
 }
 
