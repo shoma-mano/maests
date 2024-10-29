@@ -1,3 +1,16 @@
+## v2.0.6
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.5...v2.0.6)
+
+### 🏡 Chore
+
+- Update README.md ([02a9ca9](https://github.com/shoma-mano/maests/commit/02a9ca9))
+- Add dist to gitignore ([2a581dc](https://github.com/shoma-mano/maests/commit/2a581dc))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ### ❤️ Contributors
 
 - Shoma-mano <ms2geki@gmail.com>
