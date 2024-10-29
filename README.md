@@ -84,3 +84,7 @@ npx maests e2e/sampleFlow.ts
 This package offers a rich set of commands to cover various actions in your flows, including initializing flows, performing taps and presses, swiping, asserting conditions, and more.
 
 For a detailed list of all commands with examples, refer to the [Commands Documentation](./commands.md).
+
+### Contributing
+
+This package is currently under active development, and we welcome contributions from everyone!

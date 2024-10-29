@@ -4,5 +4,3 @@ import { openApp } from "./openApp";
 
 openApp();
 M.runScript({ path: join(__dirname, "script.ts") });
-M.launchApp({ appId: "com.my.app" });
-// M.stopApp();
