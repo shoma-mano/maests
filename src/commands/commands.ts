@@ -19,6 +19,11 @@ export let out = "";
 export const resetOut = () => {
   out = "";
 };
+export const getOutput = () => {
+  const currentOutput = out;
+  resetOut();
+  return currentOutput;
+};
 
 export const addOut = (command: string) => {
   if (nestLevel) {
@@ -124,7 +129,7 @@ const runScript = ({ path }: { path: string }) => {
 
 if (import.meta.vitest) {
   it("runScript", () => {
-    runScript({ path: join(__dirname, "../playground/e2e/script.ts") });
+    runScript({ path: join(__dirname, "../../playground/e2e/script.ts") });
     expect(out).toMatchInlineSnapshot(`
       "- evalScript: \${var hello = () => {  console.log("Hello, world!");};var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log(result.userId);console.log(MAESTRO_APP_ID);hello();}
       "

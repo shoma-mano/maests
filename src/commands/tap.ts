@@ -1,5 +1,5 @@
 import { PointProps, WaitProps } from "./command-props";
-import { addOut, space, resetOut, out } from "./commands";
+import { addOut, space, resetOut, out, getOutput } from "./commands";
 
 // Helper function to format optional tap properties
 export interface TapOptions {
@@ -37,7 +37,7 @@ export const tapOn = (id: string, options: TapOptions = {}) => {
 if (import.meta.vitest) {
   it("should match snapshot for basic tapOn", () => {
     tapOn("elementId");
-    expect(out).toMatchInlineSnapshot(`
+    expect(getOutput()).toMatchInlineSnapshot(`
         "- tapOn:
             id: "elementId"
         "
@@ -49,9 +49,9 @@ if (import.meta.vitest) {
       repeat: 2,
       waitToSettleTimeoutMs: 1000,
     });
-    expect(out).toMatchInlineSnapshot(`
+    expect(getOutput()).toMatchInlineSnapshot(`
       "- tapOn:
-          id: "elementId"
+          id: "elementId With Options"
           index: 1
           retryTapIfNoChange: false
           repeat: 2
@@ -70,7 +70,7 @@ export const tapOnText = (text: string, options: TapOptions = {}) => {
 if (import.meta.vitest) {
   it("should match snapshot for basic tapOnText", () => {
     tapOnText("SampleText");
-    expect(out).toMatchInlineSnapshot(`
+    expect(getOutput()).toMatchInlineSnapshot(`
       "- tapOn:
           text: "SampleText"
       "
@@ -88,7 +88,7 @@ export const tapOnPoint = (point: PointProps, options: TapOptions = {}) => {
 if (import.meta.vitest) {
   it("should match snapshot for basic tapOnPoint", () => {
     tapOnPoint({ x: 100, y: 200 });
-    expect(out).toMatchInlineSnapshot(`
+    expect(getOutput()).toMatchInlineSnapshot(`
       "- tapOn:
           point: 100,200
       "
@@ -113,7 +113,7 @@ if (import.meta.vitest) {
       waitToSettleTimeoutMs: 1000,
       maxWait: 10000,
     });
-    expect(out).toMatchInlineSnapshot(`
+    expect(getOutput()).toMatchInlineSnapshot(`
       "- extendedWaitUntil:
           visible:
               id: "elementId With Options"
