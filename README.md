@@ -1,6 +1,6 @@
 # A TypeScript-based solution inspired by [maestro-ts](https://github.com/johkade/maestro-ts) for writing and running Maestro flows in a modular and reusable way.
 
-# ✅ Features
+## ✅ Features
 
 - You can write Maestro flows in TypeScript and execute directly.
 - Break down Flow into smaller, reusable modules

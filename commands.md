@@ -1,7 +1,5 @@
 # Measts Commands
 
-# Measts Commands
-
 ## Table of Contents
 
 - [Initialize Flow](#initialize-flow)
