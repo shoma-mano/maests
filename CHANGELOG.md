@@ -1,3 +1,31 @@
+## v2.0.7
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.6...v2.0.7)
+
+### 🩹 Fixes
+
+- Test ([748d42a](https://github.com/shoma-mano/maests/commit/748d42a))
+- Action ([31b9601](https://github.com/shoma-mano/maests/commit/31b9601))
+
+### 💅 Refactors
+
+- Breakdown commands to multiple files ([ed99c5f](https://github.com/shoma-mano/maests/commit/ed99c5f))
+- Breakdown commands to multiple files ([722a99b](https://github.com/shoma-mano/maests/commit/722a99b))
+
+### 🏡 Chore
+
+- Edit CHANGELOG.md manually ([c10044d](https://github.com/shoma-mano/maests/commit/c10044d))
+- Delete dist ([e10b1ae](https://github.com/shoma-mano/maests/commit/e10b1ae))
+- Add dist to gitignore ([c562517](https://github.com/shoma-mano/maests/commit/c562517))
+- Update README.md ([5f4dd76](https://github.com/shoma-mano/maests/commit/5f4dd76))
+- Update README.md ([e9b039c](https://github.com/shoma-mano/maests/commit/e9b039c))
+- Update README.md ([19e5e95](https://github.com/shoma-mano/maests/commit/19e5e95))
+- Update README.md ([c81eb7f](https://github.com/shoma-mano/maests/commit/c81eb7f))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.0.6
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.0.5...v2.0.6)
