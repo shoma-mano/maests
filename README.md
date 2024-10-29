@@ -7,17 +7,15 @@
 - Automatically load environment variables from .env
 - Handling runScript with type.
 
-## Usage
+## 🚀 Getting Started
 
-#### 📦 Installation
+### Installation
 
 ```sh:
 pnpm -D add maests
 ```
 
-### 🚀 Getting Started
-
-## Step 1: Create your first flow
+### Step 1: Create your first flow
 
 Create a new file <flow-name>.ts:
 
@@ -28,43 +26,19 @@ M.initFlow({ appId: "com.myTeam.myApp" });
 M.tapOn("someTestId");
 ```
 
-## Step 2: Execute Test
+### Step 2: Execute Test
 
 ```sh
 npx maests my-first-flow.ts
 ```
 
-## Utils
+## 🛠️ Commands
 
-### runScript
+This package offers a rich set of commands to cover various actions in your flows, including initializing flows, performing taps and presses, swiping, asserting conditions, and more.
 
-`flow.ts`
+For a detailed list of all commands with examples, refer to the [Commands Documentation](./commands.md).
 
-```typescript
-import { M } from "maests";
-
-M.runScript("./script.ts");
-```
-
-`script.ts`
-
-```typescript
-import type { APIResult } from "./type";
-import { hello } from "./hello";
-
-// typed http request
-const body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;
-const result = json<APIResult>(body);
-console.log(result.userId);
-
-// you can use environment variables
-console.log(process.env.MAESTRO_APP_ID);
-
-// you can use imported functions
-hello();
-```
-
-## More Example
+## 🛹 Playground
 
 You can try maests by simulator in [playground](playground)
 
@@ -76,15 +50,9 @@ pnpm build
 cd playground
 pnpm install
 npx expo run:android
-npx maests e2e/sampleFlow.ts
+npx ma🛹ests e2e/sampleFlow.ts
 ```
 
-### 🛠️ Commands
-
-This package offers a rich set of commands to cover various actions in your flows, including initializing flows, performing taps and presses, swiping, asserting conditions, and more.
-
-For a detailed list of all commands with examples, refer to the [Commands Documentation](./commands.md).
-
-### Contributing
+## ⭐️ Contributing
 
 This package is currently under active development, and we welcome contributions from everyone!
