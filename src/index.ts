@@ -15,6 +15,11 @@ const main = defineCommand({
       type: "positional",
       required: true,
     },
+    device: {
+      type: "string",
+      alias: "d",
+      description: "Device to run the test on",
+    },
   },
   async run({ args }) {
     loadEnv();
@@ -37,10 +42,15 @@ const main = defineCommand({
       });
       await jiti(tempFilePath);
       consola.success(`Created ${outPath} ✔`);
-      execSync(`maestro test ${outPath}`, {
-        stdio: "inherit",
-        env: process.env,
-      });
+      execSync(
+        `maestro ${
+          args.device ? `--device ${args.device}` : ""
+        } test  ${outPath}`,
+        {
+          stdio: "inherit",
+          env: process.env,
+        }
+      );
     } catch (e) {
       console.error(e);
     } finally {
