@@ -14,8 +14,9 @@ export const rewriteCode = ({
 };
 
 if (import.meta.vitest) {
+  const { createOutPath } = await import("./utils");
+
   it("rewrites code", async () => {
-    const { createOutPath } = await import("./utils");
     // prettier-ignore
     const flow = 
 `import { M } from "maests";
