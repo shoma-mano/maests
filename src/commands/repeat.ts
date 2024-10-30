@@ -1,17 +1,11 @@
+import { stringify } from "yaml";
 import { handleNest, addOut, getOut } from "../out";
-import { indentExceptLastLineBreak, M } from "./commands";
+import { M } from "./commands";
 
 export const repeat = (times: number, func: () => any) => {
-  const out = handleNest(func);
-  // prettier-ignore
-  const commands = 
-
-`- repeat:
-     times: ${times}
-     commands:
-        ${indentExceptLastLineBreak(out)}`;
-
-  addOut(commands);
+  const out = handleNest(func, true);
+  const cmd = [{ repeat: { times, commands: out } }];
+  addOut(stringify(cmd));
 };
 
 if (import.meta.vitest) {
@@ -26,46 +20,52 @@ if (import.meta.vitest) {
 
     expect(getOut()).toMatchInlineSnapshot(`
       "- repeat:
-           times: 3
-           commands:
-              - tapOn:
-                  id: "test"
-                  retryTapIfNoChange: true
-              - tapOn:
-                  id: "test"
-                  retryTapIfNoChange: true
-              - repeat:
-                   times: 3
-                   commands:
-                      - tapOn:
-                          id: "test"
-                          retryTapIfNoChange: true
+          times: 3
+          commands:
+            - tapOn:
+                id: test
+                retryTapIfNoChange: true
+            - tapOn:
+                id: test
+                retryTapIfNoChange: true
+            - repeat:
+                times: 3
+                commands:
+                  - tapOn:
+                      id: test
+                      retryTapIfNoChange: true
       "
     `);
   });
 }
 
-export const repeatWhileVisible = (id: string, func: () => any) => {
-  const out = handleNest(func);
-  // prettier-ignore
-  const commands =
+export const repeatWhileVisible = (text: string, func: () => any) => {
+  const out = handleNest(func, true);
 
-`- repeat:
-     while:
-         visible:
-             id: "${id}"
-     commands:
-        ${indentExceptLastLineBreak(out)}`;
-
-  addOut(commands);
+  const cmd = [{ repeat: { while: { visible: text }, commands: out } }];
+  addOut(stringify(cmd));
 };
 
-export const repeatWhileNotVisible = (id: string, func: () => any) => {
-  const out = handleNest(func);
-  addOut(`- repeat:
-    while:
-        notVisible:
-            id: "${id}"
-    commands:
-        ${out.replace(/\n(?=.*[\n])/g, "\n        ")}`);
+if (import.meta.vitest) {
+  it("repeatWhileVisible", () => {
+    repeatWhileVisible("test", () => {
+      M.tapOn("test");
+    });
+
+    expect(getOut()).toMatchInlineSnapshot(`
+      "- repeat:
+          while:
+            visible: test
+          commands:
+            - tapOn:
+                id: test
+                retryTapIfNoChange: true
+      "
+    `);
+  });
+}
+
+export const repeatWhileNotVisible = (text: string, func: () => any) => {
+  const out = handleNest(func, true);
+  const cmd = [{ repeat: { while: { notVisible: text }, commands: out } }];
 };

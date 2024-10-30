@@ -1,3 +1,4 @@
+import { stringify } from "yaml";
 import { addOut, getOut } from "../out";
 import { WaitProps, PointProps } from "../type";
 import { space } from "./commands";
@@ -11,26 +12,17 @@ export interface TapOptions {
 }
 export type WaitAndTapProps = TapOptions & WaitProps;
 
-const processTapOptions = ({
-  index,
-  retryTapIfNoChange = true,
-  repeat,
-  waitToSettleTimeoutMs,
-}: TapOptions): string => {
-  let propsCommand = "";
-  if (index) propsCommand += `    index: ${index}\n`;
-  propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}\n`;
-  if (repeat) propsCommand += `    repeat: ${repeat}\n`;
-  if (waitToSettleTimeoutMs) {
-    propsCommand += `    waitToSettleTimeoutMs: ${waitToSettleTimeoutMs}\n`;
-  }
-  return propsCommand;
-};
-
 export const tapOn = (id: string, options: TapOptions = {}) => {
-  let command = `- tapOn:\n${space}id: "${id}"\n`;
-  command += processTapOptions(options);
-  addOut(command);
+  const commands = [
+    {
+      tapOn: {
+        id,
+        retryTapIfNoChange: true,
+        ...options,
+      },
+    },
+  ];
+  addOut(stringify(commands));
 };
 
 if (import.meta.vitest) {
@@ -38,7 +30,7 @@ if (import.meta.vitest) {
     tapOn("elementId");
     expect(getOut()).toMatchInlineSnapshot(`
       "- tapOn:
-          id: "elementId"
+          id: elementId
           retryTapIfNoChange: true
       "
     `);
@@ -51,9 +43,9 @@ if (import.meta.vitest) {
     });
     expect(getOut()).toMatchInlineSnapshot(`
       "- tapOn:
-          id: "elementId With Options"
-          index: 1
+          id: elementId With Options
           retryTapIfNoChange: false
+          index: 1
           repeat: 2
           waitToSettleTimeoutMs: 1000
       "
@@ -62,9 +54,16 @@ if (import.meta.vitest) {
 }
 
 export const tapOnText = (text: string, options: TapOptions = {}) => {
-  let command = `- tapOn:\n    text: "${text}"\n`;
-  command += processTapOptions(options);
-  addOut(command);
+  const command = [
+    {
+      tapOn: {
+        text,
+        retryTapIfNoChange: true,
+        ...options,
+      },
+    },
+  ];
+  addOut(stringify(command));
 };
 
 if (import.meta.vitest) {
@@ -72,7 +71,7 @@ if (import.meta.vitest) {
     tapOnText("SampleText");
     expect(getOut()).toMatchInlineSnapshot(`
       "- tapOn:
-          text: "SampleText"
+          text: SampleText
           retryTapIfNoChange: true
       "
     `);
@@ -81,9 +80,16 @@ if (import.meta.vitest) {
 
 export const tapOnPoint = (point: PointProps, options: TapOptions = {}) => {
   const { x, y } = point;
-  let command = `- tapOn:\n    point: ${x},${y}\n`;
-  command += processTapOptions(options);
-  addOut(command);
+  const command = [
+    {
+      tapOn: {
+        point: `${x},${y}`,
+        retryTapIfNoChange: true,
+        ...options,
+      },
+    },
+  ];
+  addOut(stringify(command));
 };
 
 if (import.meta.vitest) {
@@ -101,9 +107,24 @@ if (import.meta.vitest) {
 export const waitForAndTapOn = (id: string, options: WaitAndTapProps = {}) => {
   const { maxWait = 5000 } = options;
   let command = `- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${maxWait}\n`;
-  command += `- tapOn:\n    id: "${id}"\n`;
-  command += processTapOptions(options);
-  addOut(command);
+  const cmd = {
+    extendWaitUntil: {
+      visible: {
+        id: id,
+      },
+      timeout: maxWait,
+    },
+  };
+
+  const cmd2 = {
+    tapOn: {
+      id,
+      retryTapIfNoChange: true,
+      ...options,
+    },
+  };
+
+  addOut(stringify([cmd, cmd2]));
 };
 
 if (import.meta.vitest) {
@@ -116,16 +137,17 @@ if (import.meta.vitest) {
       maxWait: 10000,
     });
     expect(getOut()).toMatchInlineSnapshot(`
-      "- extendedWaitUntil:
+      "- extendWaitUntil:
           visible:
-              id: "elementId With Options"
+            id: elementId With Options
           timeout: 10000
       - tapOn:
-          id: "elementId With Options"
-          index: 1
+          id: elementId With Options
           retryTapIfNoChange: false
+          index: 1
           repeat: 2
           waitToSettleTimeoutMs: 1000
+          maxWait: 10000
       "
     `);
   });
