@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { MaestroTranslators } from "../src/commands/commands";
+import { M } from "../src/commands/commands";
 import { out, resetOut } from "../src/out";
 
 const getOutput = () => {
@@ -14,7 +14,7 @@ describe("MaestroTranslators Input Command Snapshots", () => {
   });
 
   it("inputText in focused element", () => {
-    MaestroTranslators.inputText("focused text");
+    M.inputText("focused text");
     expect(getOutput()).toMatchInlineSnapshot(`
       "- inputText: focused text
       "
@@ -22,7 +22,7 @@ describe("MaestroTranslators Input Command Snapshots", () => {
   });
 
   it("inputText in element by id", () => {
-    MaestroTranslators.inputText("sample text", "textId");
+    M.inputText("sample text", "textId");
     expect(getOutput()).toMatchInlineSnapshot(`
       "- tapOn:
           id: "textId"
@@ -32,7 +32,7 @@ describe("MaestroTranslators Input Command Snapshots", () => {
   });
 
   it("inputText with text and id", () => {
-    MaestroTranslators.inputText("example text", "testInput");
+    M.inputText("example text", "testInput");
     expect(getOutput()).toMatchInlineSnapshot(`
       "- tapOn:
           id: "testInput"
