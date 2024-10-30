@@ -1,5 +1,5 @@
 import { stringify } from "yaml";
-import { addOut, getOut } from "./commands";
+import { addOut, getOut } from "../out";
 
 type AssertProps = {
   text?: string;

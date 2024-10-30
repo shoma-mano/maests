@@ -1,5 +1,13 @@
-import { PointProps, WaitProps } from "./commands/command-props";
 import { TapOptions } from "./commands/tap";
+
+export interface WaitProps {
+  maxWait?: number;
+}
+
+export interface PointProps {
+  x: number | string;
+  y: number | string;
+}
 
 type WaitAndTapProps = TapOptions & WaitProps;
 

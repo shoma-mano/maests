@@ -1,10 +1,5 @@
-import {
-  handleNest,
-  indentExceptLastLineBreak,
-  addOut,
-  getOut,
-  M,
-} from "./commands";
+import { handleNest, addOut, getOut } from "../out";
+import { indentExceptLastLineBreak, M } from "./commands";
 
 export const repeat = (times: number, func: () => any) => {
   const out = handleNest(func);

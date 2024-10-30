@@ -1,39 +1,10 @@
-import { PointProps } from "./command-props";
 import { tapOn, tapOnPoint, tapOnText, waitForAndTapOn } from "./tap";
 import { runFlow, runScript } from "./run";
 import { clearState, initFlow, launchApp } from "./init";
 import { repeat, repeatWhileVisible, repeatWhileNotVisible } from "./repeat";
-import { parse } from "yaml";
 import { assertNotVisible, assertVisible } from "./assert";
-
-// Nested command handling
-let nestLevel = 0;
-let nestedCommands: string[] = [];
-export const handleNest = (func: () => any, parseAsYaml?: boolean) => {
-  nestLevel++;
-  func();
-  const out = nestedCommands[nestLevel - 1];
-  nestedCommands[nestLevel - 1] = "";
-  nestLevel--;
-  return parseAsYaml ? parse(out) : out;
-};
-
-export let out = "";
-export const resetOut = () => {
-  out = "";
-};
-export const getOut = () => {
-  const currentOutput = out;
-  resetOut();
-  return currentOutput;
-};
-
-export const addOut = (command: string) => {
-  if (nestLevel) {
-    if (!nestedCommands[nestLevel - 1]) nestedCommands[nestLevel - 1] = "";
-    nestedCommands[nestLevel - 1] += command;
-  } else out += command;
-};
+import { addOut } from "../out";
+import { PointProps } from "../type";
 
 // Utility function for indenting except last line break
 export const indentExceptLastLineBreak = (str: string) => {

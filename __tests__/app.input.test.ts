@@ -1,4 +1,5 @@
-import { M, resetOut, out } from "../src/commands/commands";
+import { M } from "../src/commands/commands";
+import { out, resetOut } from "../src/out";
 
 const getOutput = () => {
   const result = out;
