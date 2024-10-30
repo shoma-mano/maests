@@ -1,4 +1,4 @@
 export type ElementMatcher = {
-  id: string;
-  text: string;
+  id?: string;
+  text?: string;
 };

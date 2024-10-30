@@ -8,5 +8,13 @@ M.runFlow({
   flow: () => {
     // use variables set in script.ts
     M.assertVisible({ id: getOutput("id") });
+    M.repeatWhileNotVisible(
+      {
+        text: "4",
+      },
+      () => {
+        M.tapOnText("Increment");
+      }
+    );
   },
 });

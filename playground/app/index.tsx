@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Text, View } from "react-native";
 
 export default function Index() {
+  const [count, setCount] = useState(0);
   return (
     <View
       style={{
@@ -10,6 +12,8 @@ export default function Index() {
       }}
     >
       <Text data-testid="test">Edit app/index.tsx to edit this screen.</Text>
+      <Text>{count}</Text>
+      <Text onPress={() => setCount(count + 1)}>Increment</Text>
     </View>
   );
 }

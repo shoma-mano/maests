@@ -7,3 +7,11 @@ appId: com.my.app
     commands:
       - assertVisible:
           id: ${output.id}
+      - repeat:
+          while:
+            notVisible:
+              text: "4"
+          commands:
+            - tapOn:
+                text: Increment
+                retryTapIfNoChange: true
