@@ -1,3 +1,19 @@
+## v2.2.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.1.2...v2.2.0)
+
+### 🚀 Enhancements
+
+- Support matcher in repeat commands ([6c45563](https://github.com/shoma-mano/maests/commit/6c45563))
+
+### 💅 Refactors
+
+- Use yaml stringify as possible ([0ab0c3a](https://github.com/shoma-mano/maests/commit/0ab0c3a))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.1.2
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.1.1...v2.1.2)
