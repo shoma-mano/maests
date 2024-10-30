@@ -1,4 +1,5 @@
-import { handleNest, space, addOut, getOut } from "./commands";
+import { handleNest, addOut, getOut } from "../out";
+import { space } from "./commands";
 
 const envAppId = process.env["appId"];
 

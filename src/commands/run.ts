@@ -1,7 +1,8 @@
 import { buildSync } from "esbuild";
 import { join } from "path";
 import { stringify } from "yaml";
-import { addOut, getOut, handleNest, M } from "./commands";
+import { M } from "./commands";
+import { addOut, getOut, handleNest } from "../out";
 
 export const runScript = ({ path }: { path: string }) => {
   const { outputFiles } = buildSync({

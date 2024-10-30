@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { out, resetOut } from "./commands/commands";
 import { dirname } from "path";
+import { out, resetOut } from "./out";
 
 export const writeYaml = (outPath?: string) => {
   console.log("out", out);

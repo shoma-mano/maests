@@ -1,0 +1,13 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 59678285189a10c3acd7eddbaeed663ca94f679b..23977afe8662f3289679f5fb36bc5cc61eb826ac 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -609,7 +609,7 @@ async function mkdist(options = {}) {
+     (o) => o.extension === ".mjs" || o.extension === ".js"
+   )) {
+     output.contents = output.contents.replace(
+-      /(import|export)(\s+(?:.+|{[\s\w,]+})\s+from\s+["'])(.*)(["'])/g,
++      /(import|export)(\s+(?:.*|{[\s\w,]+})?\s*(?:from)?\s*["'])(.*)(["'])/g,
+       (_, type, head, id, tail) => type + head + resolveId(output.path, id, esmResolveExtensions) + tail
+     ).replace(
+       /import\((["'])(.*)(["'])\)/g,

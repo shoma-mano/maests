@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  mkdist:
+    hash: hasuisjyeozivxgqzvfvs3uqaq
+    path: patches/mkdist.patch
+
 importers:
 
   .:
@@ -3139,7 +3144,7 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
-  mkdist@1.6.0(typescript@5.5.4):
+  mkdist@1.6.0(patch_hash=hasuisjyeozivxgqzvfvs3uqaq)(typescript@5.5.4):
     dependencies:
       autoprefixer: 10.4.20(postcss@8.4.47)
       citty: 0.1.6
@@ -3578,7 +3583,7 @@ snapshots:
       hookable: 5.5.3
       jiti: 1.21.6
       magic-string: 0.30.12
-      mkdist: 1.6.0(typescript@5.5.4)
+      mkdist: 1.6.0(patch_hash=hasuisjyeozivxgqzvfvs3uqaq)(typescript@5.5.4)
       mlly: 1.7.2
       pathe: 1.1.2
       pkg-types: 1.2.1
