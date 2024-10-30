@@ -1,3 +1,4 @@
+// this file will be deleted in the future
 import { TapOptions } from "./commands/tap";
 
 export interface WaitProps {

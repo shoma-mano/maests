@@ -1,6 +1,7 @@
 import { stringify } from "yaml";
 import { handleNest, addOut, getOut } from "../out";
 import { M } from "./commands";
+import { ElementMatcher } from "./type";
 
 export const repeat = (times: number, func: () => any) => {
   const out = handleNest(func, true);
@@ -39,10 +40,13 @@ if (import.meta.vitest) {
   });
 }
 
-export const repeatWhileVisible = (text: string, func: () => any) => {
+export const repeatWhileVisible = (
+  matcher: ElementMatcher,
+  func: () => any
+) => {
   const out = handleNest(func, true);
 
-  const cmd = [{ repeat: { while: { visible: text }, commands: out } }];
+  const cmd = [{ repeat: { while: { visible: matcher }, commands: out } }];
   addOut(stringify(cmd));
 };
 
@@ -65,7 +69,11 @@ if (import.meta.vitest) {
   });
 }
 
-export const repeatWhileNotVisible = (text: string, func: () => any) => {
+export const repeatWhileNotVisible = (
+  matcher: ElementMatcher,
+  func: () => any
+) => {
   const out = handleNest(func, true);
-  const cmd = [{ repeat: { while: { notVisible: text }, commands: out } }];
+  const cmd = [{ repeat: { while: { notVisible: matcher }, commands: out } }];
+  addOut(stringify(cmd));
 };
