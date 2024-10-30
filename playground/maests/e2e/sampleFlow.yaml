@@ -2,8 +2,8 @@ appId: com.my.app
 ---
 - launchApp:
     appId: "com.my.app"
-- evalScript: ${var hello = () => "Hello, World!";var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log("id " + result.userId);console.log("appId from env " + MAESTRO_APP_ID);console.log("imported file " + hello());}
+- evalScript: ${var hello = () => "Hello, World!";var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log("id " + result.userId);console.log("appId from env " + MAESTRO_APP_ID);console.log("imported file " + hello());output.id = "com.android.systemui:id/battery";}
 - runFlow:
     commands:
       - assertVisible:
-          id: com.android.systemui:id/battery
+          id: ${output.id}

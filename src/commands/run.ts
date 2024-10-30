@@ -1,7 +1,7 @@
 import { buildSync } from "esbuild";
 import { join } from "path";
 import { stringify } from "yaml";
-import { addOut, getOutput, handleNest, M } from "./commands";
+import { addOut, getOut, handleNest, M } from "./commands";
 
 export const runScript = ({ path }: { path: string }) => {
   const { outputFiles } = buildSync({
@@ -31,9 +31,11 @@ export const runScript = ({ path }: { path: string }) => {
 
 if (import.meta.vitest) {
   it("runScript", () => {
-    runScript({ path: join(__dirname, "../../playground/e2e/script.ts") });
-    expect(getOutput()).toMatchInlineSnapshot(`
-      "- evalScript: \${var hello = () => "Hello, World!";var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log("id " + result.userId);console.log("appId from env " + MAESTRO_APP_ID);console.log("imported file " + hello());}
+    runScript({
+      path: join(__dirname, "../../playground/e2e/utils/script.ts"),
+    });
+    expect(getOut()).toMatchInlineSnapshot(`
+      "- evalScript: \${var hello = () => "Hello, World!";var body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;var result = json(body);console.log("id " + result.userId);console.log("appId from env " + MAESTRO_APP_ID);console.log("imported file " + hello());output.id = "com.android.systemui:id/battery";}
       "
     `);
   });
@@ -71,7 +73,7 @@ if (import.meta.vitest) {
         notVisible: "elementId",
       },
     });
-    expect(getOutput()).toMatchInlineSnapshot(`
+    expect(getOut()).toMatchInlineSnapshot(`
       "- runFlow:
           when:
             notVisible: elementId

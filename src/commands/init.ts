@@ -1,4 +1,4 @@
-import { handleNest, space, addOut, getOutput } from "./commands";
+import { handleNest, space, addOut, getOut } from "./commands";
 
 const envAppId = process.env["appId"];
 
@@ -24,7 +24,7 @@ export const initFlow = ({
 if (import.meta.vitest) {
   it("initFlow with appId", () => {
     initFlow({ appId: "testAppId" });
-    expect(getOutput()).toMatchInlineSnapshot(`
+    expect(getOut()).toMatchInlineSnapshot(`
         "appId: testAppId
         ---
         "
@@ -39,7 +39,7 @@ export const launchApp = ({ appId }: { appId?: string } = {}) => {
 if (import.meta.vitest) {
   it("launchApp with appId", () => {
     launchApp({ appId: "testAppId" });
-    expect(getOutput()).toMatchInlineSnapshot(`
+    expect(getOut()).toMatchInlineSnapshot(`
         "- launchApp:
             appId: "testAppId"
         "
@@ -54,7 +54,7 @@ export const clearState = ({ appId }: { appId?: string } = {}) => {
 if (import.meta.vitest) {
   it("clearState with appId", () => {
     clearState({ appId: "testAppId" });
-    expect(getOutput()).toMatchInlineSnapshot(`
+    expect(getOut()).toMatchInlineSnapshot(`
         "- clearState: testAppId
         "
       `);
