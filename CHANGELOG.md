@@ -1,3 +1,16 @@
+## v2.1.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.1.0...v2.1.1)
+
+### 💅 Refactors
+
+- Add patch for mkdist and refactored code ([d55581c](https://github.com/shoma-mano/maests/commit/d55581c))
+- Expose only methods users use ([4a0b717](https://github.com/shoma-mano/maests/commit/4a0b717))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.1.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.0.8...v2.1.0)
