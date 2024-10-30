@@ -1,3 +1,15 @@
+## v2.1.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.0.8...v2.1.0)
+
+### 🚀 Enhancements
+
+- Enhance assert visible ([489ab49](https://github.com/shoma-mano/maests/commit/489ab49))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.0.8
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.0.7...v2.0.8)
