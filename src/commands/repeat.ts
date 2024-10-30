@@ -2,7 +2,7 @@ import {
   handleNest,
   indentExceptLastLineBreak,
   addOut,
-  getOutput,
+  getOut,
   M,
 } from "./commands";
 
@@ -29,7 +29,7 @@ if (import.meta.vitest) {
       });
     });
 
-    expect(getOutput()).toMatchInlineSnapshot(`
+    expect(getOut()).toMatchInlineSnapshot(`
     "- repeat:
          times: 3
          commands:

@@ -4,6 +4,7 @@ import { runFlow, runScript } from "./run";
 import { clearState, initFlow, launchApp } from "./init";
 import { repeat, repeatWhileVisible, repeatWhileNotVisible } from "./repeat";
 import { parse } from "yaml";
+import { assertNotVisible, assertVisible } from "./assert";
 
 // Nested command handling
 let nestLevel = 0;
@@ -21,7 +22,7 @@ export let out = "";
 export const resetOut = () => {
   out = "";
 };
-export const getOutput = () => {
+export const getOut = () => {
   const currentOutput = out;
   resetOut();
   return currentOutput;
@@ -48,13 +49,11 @@ export const MaestroTranslators = {
    * @param config - Optional configuration with appId and other environment variables.
    */
   initFlow,
-
   /**
    * Launches the application with optional configuration settings.
    * @param config - Configuration options for appId, state clearing, keychain clearing, and app stopping.
    */
   launchApp,
-
   /**
    * Clears the state of the current app or the specified app by appId.
    * @param appId - Optional appId to clear state for a specific app.
@@ -161,17 +160,9 @@ export const MaestroTranslators = {
     addOut(`- openLink: ${process.env["deepLinkBase"]}${path}\n`);
   },
 
-  assertVisible: (id: string, enabled: boolean = false) => {
-    addOut(
-      enabled
-        ? `- assertVisible:\n    id: "${id}"\n    enabled: true\n`
-        : `- assertVisible:\n    id: "${id}"\n`
-    );
-  },
+  assertVisible,
 
-  assertNotVisible: (id: string) => {
-    addOut(`- assertNotVisible:\n    id: "${id}"\n`);
-  },
+  assertNotVisible,
 
   scroll: () => {
     addOut("- scroll\n");
@@ -263,6 +254,10 @@ export const MaestroTranslators = {
 export { MaestroTranslators as M };
 export { writeYaml } from "../write-yaml";
 
+// utils for user
+export const getOutput = (key: string) => "${output." + key + "}";
+
+// runScript Types
 declare global {
   namespace http {
     const get: (...args: any) => { body: string };

@@ -7,7 +7,7 @@ export const rewriteCode = ({
 }) => {
   code = code.replace(
     /import.*["']maests.*/,
-    `import { M, writeYaml } from 'maests'`
+    `import { M, writeYaml , getOutput } from 'maests'`
   );
   code += `\nwriteYaml("${outPath}")`;
   return code;
@@ -22,15 +22,16 @@ if (import.meta.vitest) {
 `import { M } from "maests";
 M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
 
+    const outPath = createOutPath("my-flow.maestro.ts");
     const result = rewriteCode({
       code: flow,
-      outPath: createOutPath("my-flow.maestro.ts"),
+      outPath,
     });
 
     expect(result).toMatchInlineSnapshot(`
-      "import { M, writeYaml } from 'maests'
+      "import { M, writeYaml , getOutput } from 'maests'
       M.initFlow({ appId: "com.my.app", NAME: "Maestro" });
-      writeYaml("${createOutPath("my-flow.maestro.ts")}")"
+      writeYaml("${outPath}")"
     `);
   });
 }
