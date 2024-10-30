@@ -3,25 +3,43 @@ import { handleNest, addOut, getOut } from "../out";
 import { M } from "./commands";
 import { ElementMatcher } from "./type";
 
-export const repeat = (times: number, func: () => any) => {
+type RepeatProps = {
+  times?: number;
+  while?: { visible?: ElementMatcher; notVisible?: ElementMatcher };
+};
+
+export const repeat = (props: RepeatProps, func: () => any) => {
   const out = handleNest(func, true);
-  const cmd = [{ repeat: { times, commands: out } }];
+  const cmd = [{ repeat: { ...props, commands: out } }];
   addOut(stringify(cmd));
 };
 
 if (import.meta.vitest) {
   it("double nested repeat", () => {
-    repeat(3, () => {
-      M.tapOn("test");
-      M.tapOn("test");
-      repeat(3, () => {
+    repeat(
+      {
+        times: 3,
+        while: {
+          visible: {
+            text: "test",
+          },
+        },
+      },
+      () => {
         M.tapOn("test");
-      });
-    });
+        M.tapOn("test");
+        repeat({ times: 3 }, () => {
+          M.tapOn("test");
+        });
+      }
+    );
 
     expect(getOut()).toMatchInlineSnapshot(`
       "- repeat:
           times: 3
+          while:
+            visible:
+              text: test
           commands:
             - tapOn:
                 id: test
@@ -46,20 +64,29 @@ export const repeatWhileVisible = (
 ) => {
   const out = handleNest(func, true);
 
-  const cmd = [{ repeat: { while: { visible: matcher }, commands: out } }];
+  const cmd = [
+    { repeat: { times: 10, while: { visible: matcher }, commands: out } },
+  ];
   addOut(stringify(cmd));
 };
 
 if (import.meta.vitest) {
   it("repeatWhileVisible", () => {
-    repeatWhileVisible("test", () => {
-      M.tapOn("test");
-    });
+    repeatWhileVisible(
+      {
+        text: "test",
+      },
+      () => {
+        M.tapOn("test");
+      }
+    );
 
     expect(getOut()).toMatchInlineSnapshot(`
       "- repeat:
+          times: 10
           while:
-            visible: test
+            visible:
+              text: test
           commands:
             - tapOn:
                 id: test
@@ -74,6 +101,8 @@ export const repeatWhileNotVisible = (
   func: () => any
 ) => {
   const out = handleNest(func, true);
-  const cmd = [{ repeat: { while: { notVisible: matcher }, commands: out } }];
+  const cmd = [
+    { repeat: { times: 10, while: { notVisible: matcher }, commands: out } },
+  ];
   addOut(stringify(cmd));
 };
