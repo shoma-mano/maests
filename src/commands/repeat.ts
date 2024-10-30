@@ -25,20 +25,23 @@ if (import.meta.vitest) {
     });
 
     expect(getOut()).toMatchInlineSnapshot(`
-    "- repeat:
-         times: 3
-         commands:
-            - tapOn:
-                id: "test"
-            - tapOn:
-                id: "test"
-            - repeat:
-                 times: 3
-                 commands:
-                    - tapOn:
-                        id: "test"
-    "
-  `);
+      "- repeat:
+           times: 3
+           commands:
+              - tapOn:
+                  id: "test"
+                  retryTapIfNoChange: true
+              - tapOn:
+                  id: "test"
+                  retryTapIfNoChange: true
+              - repeat:
+                   times: 3
+                   commands:
+                      - tapOn:
+                          id: "test"
+                          retryTapIfNoChange: true
+      "
+    `);
   });
 }
 

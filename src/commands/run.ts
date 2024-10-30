@@ -81,11 +81,13 @@ if (import.meta.vitest) {
           commands:
             - tapOn:
                 id: elementId
+                retryTapIfNoChange: true
             - repeat:
                 times: 3
                 commands:
                   - tapOn:
                       id: elementId
+                      retryTapIfNoChange: true
       "
     `);
   });

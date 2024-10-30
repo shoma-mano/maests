@@ -19,9 +19,7 @@ const processTapOptions = ({
 }: TapOptions): string => {
   let propsCommand = "";
   if (index) propsCommand += `    index: ${index}\n`;
-  if (retryTapIfNoChange === false) {
-    propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}\n`;
-  }
+  propsCommand += `    retryTapIfNoChange: ${retryTapIfNoChange}\n`;
   if (repeat) propsCommand += `    repeat: ${repeat}\n`;
   if (waitToSettleTimeoutMs) {
     propsCommand += `    waitToSettleTimeoutMs: ${waitToSettleTimeoutMs}\n`;
@@ -39,10 +37,11 @@ if (import.meta.vitest) {
   it("should match snapshot for basic tapOn", () => {
     tapOn("elementId");
     expect(getOut()).toMatchInlineSnapshot(`
-        "- tapOn:
-            id: "elementId"
-        "
-        `);
+      "- tapOn:
+          id: "elementId"
+          retryTapIfNoChange: true
+      "
+    `);
 
     tapOn("elementId With Options", {
       index: 1,
@@ -74,6 +73,7 @@ if (import.meta.vitest) {
     expect(getOut()).toMatchInlineSnapshot(`
       "- tapOn:
           text: "SampleText"
+          retryTapIfNoChange: true
       "
     `);
   });
@@ -92,6 +92,7 @@ if (import.meta.vitest) {
     expect(getOut()).toMatchInlineSnapshot(`
       "- tapOn:
           point: 100,200
+          retryTapIfNoChange: true
       "
     `);
   });
