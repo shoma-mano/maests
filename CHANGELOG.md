@@ -1,3 +1,15 @@
+## v2.1.2
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.1.1...v2.1.2)
+
+### 🩹 Fixes
+
+- RetryTapIfNoChange by default ([75b1f04](https://github.com/shoma-mano/maests/commit/75b1f04))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.1.1
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.1.0...v2.1.1)
