@@ -9,7 +9,8 @@
     ".": {
       "import": "./dist/commands/commands.mjs",
       "types": "./dist/commands/commands.d.ts"
-    }
+    },
+    "./write-yaml": "./dist/write-yaml.mjs"
   },
   "bin": {
     "maests": "./dist/index.mjs"

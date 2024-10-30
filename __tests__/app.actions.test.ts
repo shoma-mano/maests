@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { MaestroTranslators } from "../src/commands/commands";
+import { M } from "../src/commands/commands";
 import { out, resetOut } from "../src/out";
 
 const getOutput = () => {
@@ -14,7 +14,7 @@ describe("MaestroTranslators Actions - Swipe/Scroll Command Snapshots", () => {
   });
 
   it("swipeLeft", () => {
-    MaestroTranslators.swipeLeft();
+    M.swipeLeft();
     expect(getOutput()).toMatchInlineSnapshot(`
       "- swipe:
           direction: LEFT
@@ -24,7 +24,7 @@ describe("MaestroTranslators Actions - Swipe/Scroll Command Snapshots", () => {
   });
 
   it("swipeRight", () => {
-    MaestroTranslators.swipeRight();
+    M.swipeRight();
     expect(getOutput()).toMatchInlineSnapshot(`
       "- swipe:
           direction: RIGHT
@@ -34,7 +34,7 @@ describe("MaestroTranslators Actions - Swipe/Scroll Command Snapshots", () => {
   });
 
   it("swipe from start to end", () => {
-    MaestroTranslators.swipe({ x: "0%", y: "0%" }, { x: "100%", y: "100%" });
+    M.swipe({ x: "0%", y: "0%" }, { x: "100%", y: "100%" });
     expect(getOutput()).toMatchInlineSnapshot(`
       "- swipe:
           start: 0%, 0%
@@ -44,7 +44,7 @@ describe("MaestroTranslators Actions - Swipe/Scroll Command Snapshots", () => {
   });
 
   it("scroll", () => {
-    MaestroTranslators.scroll();
+    M.scroll();
     expect(getOutput()).toMatchInlineSnapshot(`
       "- scroll
       "
@@ -52,7 +52,7 @@ describe("MaestroTranslators Actions - Swipe/Scroll Command Snapshots", () => {
   });
 
   it("scrollUntilVisible", () => {
-    MaestroTranslators.scrollUntilVisible("testId");
+    M.scrollUntilVisible("testId");
     expect(getOutput()).toMatchInlineSnapshot(`
       "- scrollUntilVisible:
           element:

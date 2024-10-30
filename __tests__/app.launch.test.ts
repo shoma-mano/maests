@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { MaestroTranslators } from "../src/commands/commands";
+import { M } from "../src/commands/commands";
 import { out, resetOut } from "../src/out";
 
 const getOutput = () => {
@@ -14,7 +14,7 @@ describe("MaestroTranslators Application Launch Commands Snapshots", () => {
   });
 
   it("clearState with appId", () => {
-    MaestroTranslators.clearState({ appId: "testAppId" });
+    M.clearState({ appId: "testAppId" });
     expect(getOutput()).toMatchInlineSnapshot(`
       "- clearState: testAppId
       "
@@ -22,7 +22,7 @@ describe("MaestroTranslators Application Launch Commands Snapshots", () => {
   });
 
   it("clearKeychain", () => {
-    MaestroTranslators.clearKeychain();
+    M.clearKeychain();
     expect(getOutput()).toMatchInlineSnapshot(`
       "- clearKeychain
       "
