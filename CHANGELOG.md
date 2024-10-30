@@ -1,3 +1,7 @@
+## v2.2.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.2.0...v2.2.1)
+
 ## v2.2.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.1.2...v2.2.0)
