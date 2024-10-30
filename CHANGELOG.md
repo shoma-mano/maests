@@ -1,3 +1,15 @@
+## v2.3.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.2.1...v2.3.0)
+
+### 🚀 Enhancements
+
+- Add times to repeat commands props ([cd289c2](https://github.com/shoma-mano/maests/commit/cd289c2))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.2.1
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.2.0...v2.2.1)
