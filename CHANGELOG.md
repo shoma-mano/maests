@@ -1,3 +1,15 @@
+## v2.4.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.3.0...v2.4.0)
+
+### 🚀 Enhancements
+
+- Support absolute test path ([784977c](https://github.com/shoma-mano/maests/commit/784977c))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.3.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.2.1...v2.3.0)
