@@ -1,3 +1,15 @@
+## v2.4.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.4.0...v2.4.1)
+
+### 🩹 Fixes
+
+- Exit(1) when maestro test fails ([d95fcd3](https://github.com/shoma-mano/maests/commit/d95fcd3))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.4.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.3.0...v2.4.0)
