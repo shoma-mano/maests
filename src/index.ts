@@ -56,6 +56,7 @@ const main = defineCommand({
       );
     } catch (e) {
       console.error(e);
+      process.exit(1);
     } finally {
       fs.unlinkSync(tempFilePath);
     }
