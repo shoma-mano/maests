@@ -23,7 +23,10 @@ const main = defineCommand({
   },
   async run({ args }) {
     loadEnv();
-    const flowPath = args.path;
+    let flowPath = args.path;
+    if (flowPath.startsWith(process.cwd())) {
+      flowPath = flowPath.replace(`${process.cwd()}/`, "");
+    }
     const outPath = createOutPath(flowPath);
     let code = fs.readFileSync(flowPath, "utf-8");
     code = rewriteCode({ code, outPath });
