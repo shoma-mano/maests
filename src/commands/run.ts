@@ -66,7 +66,7 @@ if (import.meta.vitest) {
     runFlow({
       flow: () => {
         M.tapOn("elementId");
-        M.repeat(3, () => {
+        M.repeat({ times: 3 }, () => {
           M.tapOn("elementId");
         });
       },
