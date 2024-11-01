@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import fs, { writeFileSync } from "fs";
-import path, { join } from "path";
+import path, { dirname, join } from "path";
 import createJiti from "jiti";
 import dotenv from "dotenv";
 import { consola } from "consola";
@@ -8,6 +8,7 @@ import { rewriteCode } from "./rewriteCode";
 import { defineCommand, runMain } from "citty";
 import { createOutPath } from "./utils";
 import { execSync } from "child_process";
+import { getTsconfig } from "get-tsconfig";
 
 const main = defineCommand({
   args: {
@@ -38,13 +39,24 @@ const main = defineCommand({
     writeFileSync(tempFilePath, code);
 
     try {
+      const { config, path } = getTsconfig();
       const cwd = process.cwd();
+      const normalizedAlias = Object.fromEntries(
+        Object.entries(config?.compilerOptions?.paths || {}).map(
+          ([key, value]) => {
+            const normalizedKey = key.replace("/*", "");
+            const normalizedValue = value[0].replace("/*", "");
+            return [normalizedKey, join(dirname(path), normalizedValue)];
+          }
+        )
+      );
       const jiti = createJiti(cwd, {
         esmResolve: true,
         experimentalBun: true,
+        alias: normalizedAlias,
       });
       await jiti(tempFilePath);
-      consola.success(`Created ${outPath} ✔`);
+      consola.success(`Created Yaml to ${outPath} ✔`);
       execSync(
         `maestro ${
           args.device ? `--device ${args.device}` : ""
@@ -56,6 +68,7 @@ const main = defineCommand({
       );
     } catch (e) {
       console.error(e);
+      fs.unlinkSync(tempFilePath);
       process.exit(1);
     } finally {
       fs.unlinkSync(tempFilePath);

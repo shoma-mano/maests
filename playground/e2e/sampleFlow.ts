@@ -1,6 +1,6 @@
 import { getOutput, M } from "maests";
 import { join } from "path";
-import { openApp } from "./utils/openApp";
+import { openApp } from "@/e2e/utils/openApp";
 
 openApp();
 M.runScript({ path: join(__dirname, "utils/script.ts") });
