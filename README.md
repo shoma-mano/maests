@@ -17,7 +17,7 @@ pnpm -D add maests
 
 ### Step 1: Create your first flow
 
-Create a new file <flow-name>.ts:
+Create a new file \<flow-name>.ts:
 
 ```typescript
 import { M } from "maests";
