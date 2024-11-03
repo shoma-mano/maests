@@ -1,21 +1,21 @@
 export const rewriteCode = ({
   code,
-  outPath,
+  yamlOutPath,
 }: {
   code: string;
-  outPath: string;
+  yamlOutPath: string;
 }) => {
   code = code.replace(
     /import.*["']maests.*/,
     `import { M, getOutput } from 'maests'
 import { writeYaml } from 'maests/write-yaml'`
   );
-  code += `\nwriteYaml("${outPath}")`;
+  code += `\nwriteYaml("${yamlOutPath}")`;
   return code;
 };
 
 if (import.meta.vitest) {
-  const { createOutPath } = await import("./utils");
+  const { createYamlOutPath: createOutPath } = await import("./utils");
 
   it("rewrites code", async () => {
     // prettier-ignore
@@ -26,7 +26,7 @@ M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
     const outPath = createOutPath("my-flow.maestro.ts");
     const result = rewriteCode({
       code: flow,
-      outPath,
+      yamlOutPath: outPath,
     });
 
     expect(result).toMatchInlineSnapshot(`
