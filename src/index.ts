@@ -27,14 +27,14 @@ const main = defineCommand({
     const cwd = process.cwd();
 
     // create temp file
-    let flowPath = args.path;
-    if (flowPath.startsWith(cwd)) {
-      flowPath = flowPath.replace(`${cwd}/`, "");
-    }
-    const yamlOutPath = createYamlOutPath(flowPath);
-    let code = fs.readFileSync(flowPath, "utf-8");
+    const relativeFlowPath = args.path.startsWith(cwd)
+      ? args.path.replace(`${cwd}/`, "")
+      : args.path;
+    const fullFlowPath = join(cwd, relativeFlowPath);
+    const yamlOutPath = createYamlOutPath(relativeFlowPath);
+    let code = fs.readFileSync(relativeFlowPath, "utf-8");
     code = rewriteCode({ code, yamlOutPath });
-    const tempFilePath = join(cwd, `${flowPath.replace(".ts", ".temp.ts")}`);
+    const tempFilePath = fullFlowPath.replace(".ts", ".temp.ts");
     writeFileSync(tempFilePath, code);
 
     // create jiti instance
@@ -75,7 +75,10 @@ const main = defineCommand({
         env: process.env,
       });
     } catch (e) {
-      console.error(e);
+      consola.error({
+        message: `Test failed: ${fullFlowPath}`,
+        additional: `You can check actual yaml file at ${yamlOutPath}`,
+      });
       process.exit(1);
     }
   },
