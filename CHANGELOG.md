@@ -1,3 +1,17 @@
+## v2.5.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.5.0...v2.5.1)
+
+### 🏡 Chore
+
+- Update commands.md ([748a82e](https://github.com/shoma-mano/maests/commit/748a82e))
+- Update README.md ([981c831](https://github.com/shoma-mano/maests/commit/981c831))
+- **log:** Improve log when maestro fails ([a4ebf81](https://github.com/shoma-mano/maests/commit/a4ebf81))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.5.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.4.1...v2.5.0)
