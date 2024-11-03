@@ -7,9 +7,9 @@ export const rewriteCode = ({
 }) => {
   code = code.replace(
     /import.*["']maests.*/,
-    `import { M, getOutput } from 'maests'
-import { writeYaml } from 'maests/write-yaml'`
+    `import { M, getOutput } from 'maests'`
   );
+  code = `import { writeYaml } from 'maests/write-yaml'\n` + code;
   code += `\nwriteYaml("${yamlOutPath}")`;
   return code;
 };
@@ -30,8 +30,8 @@ M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
     });
 
     expect(result).toMatchInlineSnapshot(`
-      "import { M, getOutput } from 'maests'
-      import { writeYaml } from 'maests/write-yaml'
+      "import { writeYaml } from 'maests/write-yaml'
+      import { M, getOutput } from 'maests'
       M.initFlow({ appId: "com.my.app", NAME: "Maestro" });
       writeYaml("${outPath}")"
     `);
