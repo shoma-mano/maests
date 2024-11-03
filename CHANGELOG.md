@@ -1,3 +1,15 @@
+## v2.5.3
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.5.2...v2.5.3)
+
+### 🏡 Chore
+
+- **log:** Improve log when maestro fails ([6d0f68c](https://github.com/shoma-mano/maests/commit/6d0f68c))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.5.2
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.5.1...v2.5.2)
