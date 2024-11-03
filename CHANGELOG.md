@@ -1,3 +1,15 @@
+## v2.5.2
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.5.1...v2.5.2)
+
+### 🩹 Fixes
+
+- Fix bug when no import from maests exists ([62e5b46](https://github.com/shoma-mano/maests/commit/62e5b46))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.5.1
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.5.0...v2.5.1)
