@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import { consola } from "consola";
 import { rewriteCode } from "./rewriteCode";
 import { defineCommand, runMain } from "citty";
-import { createOutPath } from "./utils";
+import { createYamlOutPath } from "./utils";
 import { execSync } from "child_process";
 import { getTsconfig } from "get-tsconfig";
 
@@ -24,54 +24,59 @@ const main = defineCommand({
   },
   async run({ args }) {
     loadEnv();
-    let flowPath = args.path;
-    if (flowPath.startsWith(process.cwd())) {
-      flowPath = flowPath.replace(`${process.cwd()}/`, "");
-    }
-    const outPath = createOutPath(flowPath);
-    let code = fs.readFileSync(flowPath, "utf-8");
-    code = rewriteCode({ code, outPath });
+    const cwd = process.cwd();
 
-    const tempFilePath = join(
-      process.cwd(),
-      `${flowPath.replace(".ts", ".temp.ts")}`
-    );
+    // create temp file
+    let flowPath = args.path;
+    if (flowPath.startsWith(cwd)) {
+      flowPath = flowPath.replace(`${cwd}/`, "");
+    }
+    const yamlOutPath = createYamlOutPath(flowPath);
+    let code = fs.readFileSync(flowPath, "utf-8");
+    code = rewriteCode({ code, yamlOutPath });
+    const tempFilePath = join(cwd, `${flowPath.replace(".ts", ".temp.ts")}`);
     writeFileSync(tempFilePath, code);
 
-    try {
-      const { config, path } = getTsconfig();
-      const cwd = process.cwd();
-      const normalizedAlias = Object.fromEntries(
-        Object.entries(config?.compilerOptions?.paths || {}).map(
-          ([key, value]) => {
-            const normalizedKey = key.replace("/*", "");
-            const normalizedValue = value[0].replace("/*", "");
-            return [normalizedKey, join(dirname(path), normalizedValue)];
-          }
-        )
-      );
-      const jiti = createJiti(cwd, {
-        esmResolve: true,
-        experimentalBun: true,
-        alias: normalizedAlias,
-      });
-      await jiti(tempFilePath);
-      consola.success(`Created Yaml to ${outPath} ✔`);
-      execSync(
-        `maestro ${
-          args.device ? `--device ${args.device}` : ""
-        } test  ${outPath}`,
-        {
-          stdio: "inherit",
-          env: process.env,
+    // create jiti instance
+    const { config, path } = getTsconfig();
+    const normalizedAlias = Object.fromEntries(
+      Object.entries(config?.compilerOptions?.paths || {}).map(
+        ([key, value]) => {
+          const normalizedKey = key.replace("/*", "");
+          const normalizedValue = value[0].replace("/*", "");
+          return [normalizedKey, join(dirname(path), normalizedValue)];
         }
-      );
+      )
+    );
+    const jiti = createJiti(cwd, {
+      esmResolve: true,
+      experimentalBun: true,
+      alias: normalizedAlias,
+    });
+
+    // execute temp file
+    try {
+      await jiti(tempFilePath);
+      consola.success(`Created Yaml to ${yamlOutPath} ✔`);
     } catch (e) {
       console.error(e);
       fs.unlinkSync(tempFilePath);
       process.exit(1);
-    } finally {
-      fs.unlinkSync(tempFilePath);
+    }
+    fs.unlinkSync(tempFilePath);
+
+    // run maestro test
+    const command = `maestro ${
+      args.device ? `--device ${args.device}` : ""
+    } test  ${yamlOutPath}`;
+    try {
+      execSync(command, {
+        stdio: "inherit",
+        env: process.env,
+      });
+    } catch (e) {
+      console.error(e);
+      process.exit(1);
     }
   },
 });
