@@ -34,3 +34,6 @@ jobs:
         with:
           api-level: 29
           script:
+
+      - name: build apk
+        run: cd playground && adb
