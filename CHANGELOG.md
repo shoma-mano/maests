@@ -1,3 +1,15 @@
+## v2.5.4
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.5.3...v2.5.4)
+
+### 🩹 Fixes
+
+- Incorrect command used for waitForAndTapOn ([09b6b1c](https://github.com/shoma-mano/maests/commit/09b6b1c))
+
+### ❤️ Contributors
+
+- Ian Ross Hamilton <ianrosshamilton.ext@adcb.com>
+
 ## v2.5.3
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.5.2...v2.5.3)
