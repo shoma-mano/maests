@@ -107,7 +107,7 @@ export const waitForAndTapOn = (id: string, options: WaitAndTapProps = {}) => {
   const { maxWait = 5000 } = options;
   let command = `- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${maxWait}\n`;
   const cmd = {
-    extendWaitUntil: {
+    extendedWaitUntil: {
       visible: {
         id: id,
       },
@@ -136,7 +136,7 @@ if (import.meta.vitest) {
       maxWait: 10000,
     });
     expect(getOut()).toMatchInlineSnapshot(`
-      "- extendWaitUntil:
+      "- extendedWaitUntil:
           visible:
             id: elementId With Options
           timeout: 10000
