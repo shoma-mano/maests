@@ -10,65 +10,7 @@ export interface PointProps {
   y: number | string;
 }
 
-type WaitAndTapProps = TapOptions & WaitProps;
-
 export interface NestedOrBase {
-  /**
-   * Taps on a visible text element on the screen.
-   * @param text - The text to tap on.
-   * @param props - Optional tap properties such as retries, repeat count, and timeout.
-   */
-  tapOnText(text: string, props?: TapOptions): void;
-
-  /**
-   * Taps on an element specified by a testId.
-   * @param id - The testId of the target element.
-   * @param props - Optional tap properties for customized tap behavior.
-   */
-  tapOn(id: string, props?: TapOptions): void;
-
-  /**
-   * Waits for an element by testId to appear, then taps on it.
-   * @param id - Required: The testId of the element to wait for and tap.
-   * @param props - Properties for wait and tap actions, combining both WaitProps and TapProps.
-   */
-  waitForAndTapOn(id: string, props?: WaitAndTapProps): void;
-
-  /**
-   * Performs a long press on an element identified by its testId.
-   * @param id - The testId of the element to long press.
-   */
-  longPressOn(id: string): void;
-
-  /**
-   * Performs a long press on a text element visible on the screen.
-   * @param text - The visible text to long press.
-   */
-  longPressOnText(text: string): void;
-
-  /**
-   * Taps on a specific point on the screen.
-   * @param point - Coordinates to tap, can use numbers (dips) or strings (percentages).
-   * @param props - Optional tap properties.
-   */
-  tapOnPoint(point: PointProps, props?: TapOptions): void;
-
-  /**
-   * Performs a long press on a specified point.
-   * @param point - The x and y coordinates to long press.
-   */
-  longPressOnPoint(point: PointProps): void;
-
-  /**
-   * Swipes left from the screen center.
-   */
-  swipeLeft(): void;
-
-  /**
-   * Swipes right from the screen center.
-   */
-  swipeRight(): void;
-
   /**
    * Swipes down from the screen center.
    */
@@ -265,47 +207,4 @@ export interface NestedOrBase {
    * @param condition - The condition to assert.
    */
   assertTrue(condition: string): void;
-}
-
-export interface All extends NestedOrBase {
-  /**
-   * Initializes the test flow with optional configuration.
-   * @param config - Optional configuration with appId and other environment variables.
-   */
-  initFlow(config?: { appId?: string; [key: string]: string | number }): void;
-
-  /**
-   * Launches the application with optional configuration settings.
-   * @param config - Configuration options for appId, state clearing, keychain clearing, and app stopping.
-   */
-  launchApp(config?: {
-    appId?: string;
-    clearState?: boolean;
-    clearKeychain?: boolean;
-    stopApp?: boolean;
-  }): void;
-
-  /**
-   * Clears the state of the current app or the specified app by appId.
-   * @param appId - Optional appId to clear state for a specific app.
-   */
-  clearState(appId?: string): void;
-
-  /**
-   * Clears the entire keychain.
-   */
-  clearKeychain(): void;
-
-  /**
-   * Runs a sub-flow defined by a path with optional environment variables.
-   * @param path - The path to the sub-flow.
-   * @param env - Optional map of environment variables for the sub-flow.
-   */
-  runFlow(path: string, env?: { [key: string]: string | number }): void;
-
-  /**
-   * Stops the current app or the specified app by appId.
-   * @param appId - Optional appId to specify which app to stop.
-   */
-  stopApp(appId?: string): void;
 }

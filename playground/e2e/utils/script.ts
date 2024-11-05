@@ -7,7 +7,7 @@ const result = json<APIResult>(body);
 console.log("id " + result.userId);
 
 // you can use environment variables
-console.log("appId from env " + process.env.MAESTRO_APP_ID);
+console.log(`appId from env: ${process.env.MAESTRO_APP_ID}`);
 
 // you can use imported functions
 console.log("imported file " + hello());
