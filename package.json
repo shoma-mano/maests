@@ -18,7 +18,7 @@
   "scripts": {
     "build": "npx unbuild && chmod 755 dist/index.mjs",
     "release": "pnpm build && changelogen --release  --publish --push",
-    "test": "vitest run __tests__"
+    "test": "vitest run"
   },
   "author": "ms2geki@gmail.com",
   "devDependencies": {
