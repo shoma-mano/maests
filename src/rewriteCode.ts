@@ -15,7 +15,7 @@ export const rewriteCode = ({
 };
 
 if (import.meta.vitest) {
-  const { createYamlOutPath: createOutPath } = await import("./utils");
+  const { createYamlOutPath } = await import("./utils");
 
   it("rewrites code", async () => {
     // prettier-ignore
@@ -23,7 +23,7 @@ if (import.meta.vitest) {
 `import { M } from "maests";
 M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
 
-    const outPath = createOutPath("my-flow.maestro.ts");
+    const outPath = createYamlOutPath("my-flow.maestro.ts");
     const result = rewriteCode({
       code: flow,
       yamlOutPath: outPath,

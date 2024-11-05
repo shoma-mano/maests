@@ -27,13 +27,13 @@ const main = defineCommand({
     const cwd = process.cwd();
 
     // create temp file
-    const relativeFlowPath = args.path.startsWith(cwd)
-      ? args.path.replace(`${cwd}/`, "")
-      : args.path;
-    const fullFlowPath = join(cwd, relativeFlowPath);
-    const yamlOutPath = createYamlOutPath(relativeFlowPath);
-    let code = fs.readFileSync(relativeFlowPath, "utf-8");
+    const yamlOutPath = createYamlOutPath(args.path);
+
+    let code = fs.readFileSync(args.path, "utf-8");
     code = rewriteCode({ code, yamlOutPath });
+    const fullFlowPath = args.path.startsWith("/")
+      ? args.path
+      : join(cwd, args.path);
     const tempFilePath = fullFlowPath.replace(".ts", ".temp.ts");
     writeFileSync(tempFilePath, code);
 
