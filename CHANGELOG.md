@@ -1,3 +1,19 @@
+## v2.6.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.5.4...v2.6.0)
+
+### 🚀 Enhancements
+
+- Support import.meta by updating jiti to v2 ([a96d496](https://github.com/shoma-mano/maests/commit/a96d496))
+
+### 🏡 Chore
+
+- Delete android-runnner action ([13c6e20](https://github.com/shoma-mano/maests/commit/13c6e20))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.5.4
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.5.3...v2.5.4)
