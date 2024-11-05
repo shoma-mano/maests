@@ -1,3 +1,15 @@
+## v2.6.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.6.0...v2.6.1)
+
+### 🩹 Fixes
+
+- Stop using evalScript for runScript ([3fee4f5](https://github.com/shoma-mano/maests/commit/3fee4f5))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.6.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.5.4...v2.6.0)
