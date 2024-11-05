@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs, { writeFileSync } from "fs";
 import path, { dirname, join } from "path";
-import createJiti from "jiti";
+import { createJiti } from "jiti";
 import dotenv from "dotenv";
 import { consola } from "consola";
 import { rewriteCode } from "./rewriteCode";
@@ -49,14 +49,12 @@ const main = defineCommand({
       )
     );
     const jiti = createJiti(cwd, {
-      esmResolve: true,
-      experimentalBun: true,
       alias: normalizedAlias,
     });
 
     // execute temp file
     try {
-      await jiti(tempFilePath);
+      await jiti.import(tempFilePath);
       consola.success(`Created Yaml to ${yamlOutPath} ✔`);
     } catch (e) {
       console.error(e);
