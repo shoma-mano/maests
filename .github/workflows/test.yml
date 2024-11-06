@@ -39,6 +39,5 @@ jobs:
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
-
+          api-level: 29
           script: (cd playground && npx expo run:android) & echo test & npx wait-on tcp:localhost:8081 && echo ready
