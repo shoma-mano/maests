@@ -3,6 +3,7 @@ import { runFlow, runScript } from "./run";
 import { clearState, initFlow, launchApp } from "./init";
 import { repeat, repeatWhileVisible, repeatWhileNotVisible } from "./repeat";
 import { assertNotVisible, assertVisible } from "./assert";
+import { addMedia } from "./addMedia";
 import { addOut } from "../out";
 import { PointProps } from "../type";
 
@@ -256,6 +257,8 @@ const MaestroTranslators = {
   repeatWhileVisible,
 
   repeatWhileNotVisible,
+
+  addMedia,
 
   yaml: (yaml: string) => `${yaml}\n`,
 
