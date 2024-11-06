@@ -1,3 +1,15 @@
+## v2.7.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.6.1...v2.7.0)
+
+### 🚀 Enhancements
+
+- AddMedia command for uploading files ([d2e0839](https://github.com/shoma-mano/maests/commit/d2e0839))
+
+### ❤️ Contributors
+
+- Ian Ross Hamilton <ian.ross.hamilton@gmail.com>
+
 ## v2.6.1
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.6.0...v2.6.1)
