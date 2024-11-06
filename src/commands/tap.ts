@@ -1,6 +1,5 @@
 import { stringify } from "yaml";
 import { addOut, getOut } from "../out";
-import { WaitProps, PointProps } from "../type";
 
 // Helper function to format optional tap properties
 export interface TapOptions {
@@ -9,6 +8,16 @@ export interface TapOptions {
   repeat?: number;
   waitToSettleTimeoutMs?: number;
 }
+
+export interface WaitProps {
+  maxWait?: number;
+}
+
+export interface PointProps {
+  x: number | string;
+  y: number | string;
+}
+
 export type WaitAndTapProps = TapOptions & WaitProps;
 
 export const tapOn = (id: string, options: TapOptions = {}) => {

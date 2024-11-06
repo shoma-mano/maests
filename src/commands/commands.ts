@@ -285,40 +285,69 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Waits for a specified number of milliseconds.
+   * @param ms - The number of milliseconds to wait.
+   */
   wait: (ms: number) => {
     addOut(
       `- swipe:\n    start: -1, -1\n    end: -1, -100\n    duration: ${ms}\n`
     );
   },
 
+  /**
+   * Dismisses the software keyboard.
+   */
   hideKeyboard: () => {
     addOut("- hideKeyboard\n");
   },
 
+  /**
+   * Takes a screenshot and stores it with the specified filename.
+   * @param fileName - The name to save the screenshot as.
+   */
   screenshot: (fileName: string) => {
     addOut(`- takeScreenshot: ${fileName}\n`);
   },
 
+  /**
+   * Presses the enter key on the software keyboard.
+   */
   pressEnter: () => {
     addOut("- pressKey: Enter\n");
   },
 
+  /**
+   * Presses the home button on the device.
+   */
   pressHomeButton: () => {
     addOut("- pressKey: Home\n");
   },
 
+  /**
+   * Presses the lock button on the device.
+   */
   pressLockButton: () => {
     addOut("- pressKey: Lock\n");
   },
 
+  /**
+   * Presses the back button on Android devices.
+   */
   back: () => {
     addOut("- pressKey: back\n");
   },
 
+  /**
+   * Decreases the device volume.
+   */
   volumeDown: () => {
     addOut("- pressKey: volume down\n");
   },
 
+  /**
+   * Increases the device volume.
+   */
   volumeUp: () => {
     addOut("- pressKey: volume up\n");
   },
@@ -331,16 +360,33 @@ const MaestroTranslators = {
     addOut(appId ? `- stopApp: ${appId}\n` : "- stopApp\n");
   },
 
+  /**
+   * Repeats a set of actions a specified number of times.
+   * @param props - The properties of the repeat command.
+   * @param func - The function containing actions to repeat.
+   */
   repeat,
 
+  /**
+   * Repeats a set of actions while an element is visible.
+   * @param matcher - The element matcher to repeat while visible.
+   * @param func - The function containing actions to repeat.
+   */
   repeatWhileVisible,
 
+  /**
+   * Repeats a set of actions while an element is not visible.
+   * @param matcher - The element matcher to repeat while not visible.
+   * @param func - The function containing actions to repeat.
+   */
   repeatWhileNotVisible,
 
   addMedia,
 
-  yaml: (yaml: string) => `${yaml}\n`,
-
+  /**
+   * Asserts that a specified condition is true.
+   * @param condition - The condition to assert.
+   */
   assertTrue: (condition: string) => {
     addOut(`- assertTrue: ${condition}\n`);
   },
