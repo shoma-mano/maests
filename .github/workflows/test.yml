@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      - run: cd playground && pnpm install
+      - run: pnpm install && pnpm build && cd playground && pnpm install
       - uses: actions/setup-java@v4
         with:
           distribution: "oracle"
