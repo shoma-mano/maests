@@ -39,6 +39,6 @@ jobs:
         with:
           api-level: 29
           script: |
-            (cd playground 
-            npx expo run:android &
-            npx wait-on tcp:localhost:8081)
+            cd playground  && \
+            npx expo run:android & \
+            npx wait-on tcp:localhost:8081
