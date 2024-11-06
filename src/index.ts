@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs, { writeFileSync } from "fs";
 import path, { dirname, join } from "path";
-import createJiti from "jiti";
+import { createJiti } from "jiti";
 import dotenv from "dotenv";
 import { consola } from "consola";
 import { rewriteCode } from "./rewriteCode";
@@ -27,13 +27,13 @@ const main = defineCommand({
     const cwd = process.cwd();
 
     // create temp file
-    const relativeFlowPath = args.path.startsWith(cwd)
-      ? args.path.replace(`${cwd}/`, "")
-      : args.path;
-    const fullFlowPath = join(cwd, relativeFlowPath);
-    const yamlOutPath = createYamlOutPath(relativeFlowPath);
-    let code = fs.readFileSync(relativeFlowPath, "utf-8");
+    const yamlOutPath = createYamlOutPath(args.path);
+
+    let code = fs.readFileSync(args.path, "utf-8");
     code = rewriteCode({ code, yamlOutPath });
+    const fullFlowPath = args.path.startsWith("/")
+      ? args.path
+      : join(cwd, args.path);
     const tempFilePath = fullFlowPath.replace(".ts", ".temp.ts");
     writeFileSync(tempFilePath, code);
 
@@ -49,14 +49,12 @@ const main = defineCommand({
       )
     );
     const jiti = createJiti(cwd, {
-      esmResolve: true,
-      experimentalBun: true,
       alias: normalizedAlias,
     });
 
     // execute temp file
     try {
-      await jiti(tempFilePath);
+      await jiti.import(tempFilePath);
       consola.success(`Created Yaml to ${yamlOutPath} ✔`);
     } catch (e) {
       console.error(e);

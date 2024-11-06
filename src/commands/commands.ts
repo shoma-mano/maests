@@ -3,6 +3,7 @@ import { runFlow, runScript } from "./run";
 import { clearState, initFlow, launchApp } from "./init";
 import { repeat, repeatWhileVisible, repeatWhileNotVisible } from "./repeat";
 import { assertNotVisible, assertVisible } from "./assert";
+import { addMedia } from "./addMedia";
 import { addOut } from "../out";
 import { PointProps } from "../type";
 
@@ -33,33 +34,71 @@ const MaestroTranslators = {
 
   runScript,
 
+  /**
+   * Runs a sub-flow defined by a path with optional environment variables.
+   * @param path - The path to the sub-flow.
+   * @param env - Optional map of environment variables for the sub-flow.
+   */
   runFlow,
-
+  /**
+   * Taps on an element specified by a testId.
+   * @param id - The testId of the target element.
+   * @param props - Optional tap properties for customized tap behavior.
+   */
   tapOn,
-
+  /**
+   * Taps on a visible text element on the screen.
+   * @param text - The text to tap on.
+   * @param props - Optional tap properties such as retries, repeat count, and timeout.
+   */
   tapOnText,
-
+  /**
+   * Taps on a specific point on the screen.
+   * @param point - Coordinates to tap, can use numbers (dips) or strings (percentages).
+   * @param props - Optional tap properties.
+   */
   tapOnPoint,
-
+  /**
+   * Waits for an element by testId to appear, then taps on it.
+   * @param id - Required: The testId of the element to wait for and tap.
+   * @param props - Properties for wait and tap actions, combining both WaitProps and TapProps.
+   */
   waitForAndTapOn,
-
+  /**
+   * Clears the entire keychain.
+   */
   clearKeychain: () => {
     addOut("- clearKeychain\n");
   },
-
+  /**
+   * Performs a long press on an element identified by its testId.
+   * @param id - The testId of the element to long press.
+   */
   longPressOn: (id: string) => {
     addOut(`- longPressOn:\n    id: "${id}"\n`);
   },
-
+  /**
+   * Performs a long press on a specified point.
+   * @param point - The x and y coordinates to long press.
+   */
   longPressOnPoint: (pointProps: PointProps) => {
     addOut(`- longPressOn:\n    point: ${pointProps.x},${pointProps.y}\n`);
   },
-
+  /**
+   * Performs a long press on a text element visible on the screen.
+   * @param text - The visible text to long press.
+   */
   longPressOnText: (text: string) => {
     addOut(`- longPressOn: ${text}\n`);
   },
 
+  /**
+   * Swipes left from the screen center.
+   */
   swipeLeft: () => addOut("- swipe:\n    direction: LEFT\n    duration: 400\n"),
+  /**
+   * Swipes right from the screen center.
+   */
   swipeRight: () =>
     addOut("- swipe:\n    direction: RIGHT\n    duration: 400\n"),
   swipeDown: () => addOut("- swipe:\n    direction: DOWN\n    duration: 400\n"),
@@ -205,6 +244,10 @@ const MaestroTranslators = {
     addOut("- pressKey: volume up\n");
   },
 
+  /**
+   * Stops the current app or the specified app by appId.
+   * @param appId - Optional appId to specify which app to stop.
+   */
   stopApp: ({ appId }: { appId?: string } = {}) => {
     addOut(appId ? `- stopApp: ${appId}\n` : "- stopApp\n");
   },
@@ -214,6 +257,8 @@ const MaestroTranslators = {
   repeatWhileVisible,
 
   repeatWhileNotVisible,
+
+  addMedia,
 
   yaml: (yaml: string) => `${yaml}\n`,
 

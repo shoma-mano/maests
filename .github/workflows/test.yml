@@ -39,7 +39,6 @@ jobs:
         with:
           api-level: 29
           script: |
-            cd playground && npx expo run:android
-
-      - name: build apk
-        run: cd playground && adb
+            cd playground
+            npx expo run:android &
+            npx wait-on tcp:localhost:8081

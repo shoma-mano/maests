@@ -1,3 +1,43 @@
+## v2.6.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.6.0...v2.6.1)
+
+### 🩹 Fixes
+
+- Stop using evalScript for runScript ([3fee4f5](https://github.com/shoma-mano/maests/commit/3fee4f5))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
+## v2.6.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.5.4...v2.6.0)
+
+### 🚀 Enhancements
+
+- Support import.meta by updating jiti to v2 ([a96d496](https://github.com/shoma-mano/maests/commit/a96d496))
+
+### 🏡 Chore
+
+- Delete android-runnner action ([13c6e20](https://github.com/shoma-mano/maests/commit/13c6e20))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
+## v2.5.4
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.5.3...v2.5.4)
+
+### 🩹 Fixes
+
+- Incorrect command used for waitForAndTapOn ([09b6b1c](https://github.com/shoma-mano/maests/commit/09b6b1c))
+
+### ❤️ Contributors
+
+- Ian Ross Hamilton <ianrosshamilton.ext@adcb.com>
+
 ## v2.5.3
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.5.2...v2.5.3)
