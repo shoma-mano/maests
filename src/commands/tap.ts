@@ -2,7 +2,7 @@ import { stringify } from "yaml";
 import { addOut, getOut } from "../out";
 
 // Helper function to format optional tap properties
-export interface TapOptions {
+interface TapOptions {
   index?: number;
   retryTapIfNoChange?: boolean;
   repeat?: number;
@@ -17,8 +17,6 @@ export interface PointProps {
   x: number | string;
   y: number | string;
 }
-
-export type WaitAndTapProps = TapOptions & WaitProps;
 
 export const tapOn = (id: string, options: TapOptions = {}) => {
   const commands = [
@@ -112,7 +110,10 @@ if (import.meta.vitest) {
   });
 }
 
-export const waitForAndTapOn = (id: string, options: WaitAndTapProps = {}) => {
+export const waitForAndTapOn = (
+  id: string,
+  options: TapOptions & WaitProps = {}
+) => {
   const { maxWait = 5000 } = options;
   let command = `- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${maxWait}\n`;
   const cmd = {

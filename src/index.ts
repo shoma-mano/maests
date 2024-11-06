@@ -4,7 +4,7 @@ import path, { dirname, join } from "path";
 import { createJiti } from "jiti";
 import dotenv from "dotenv";
 import { consola } from "consola";
-import { rewriteCode } from "./rewriteCode";
+import { rewriteCode } from "./rewrite-code";
 import { defineCommand, runMain } from "citty";
 import { createYamlOutPath } from "./utils";
 import { execSync } from "child_process";
