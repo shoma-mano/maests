@@ -39,6 +39,7 @@ jobs:
         with:
           api-level: 29
           script: |
-            cd playground
+            cd playground &&
+            ls node_modules/.bin &&
             npx expo run:android &
             npx wait-on tcp:localhost:8081
