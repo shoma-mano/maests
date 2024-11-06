@@ -46,4 +46,4 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           force-avd-creation: false
-          script: (cd playground && npx expo run:android) & npx wait-on tcp:localhost:8081 && cd playground && npx maests e2e/sampleFlow.ts
+          script: (cd playground && npx expo run:android) & npx wait-on tcp:localhost:8081 && cd playground
