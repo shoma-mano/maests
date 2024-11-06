@@ -2,7 +2,7 @@ appId: com.my.app
 ---
 - launchApp:
     appId: "com.my.app"
-- runScript: /Users/mano/my-oss/maests/playground/maests/e2e/utils/script.js
+- runScript: /Users/mano/my-oss/maests/playground2/maests/e2e/utils/script.js
 - runFlow:
     commands:
       - assertVisible:

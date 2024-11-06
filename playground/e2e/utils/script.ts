@@ -13,4 +13,4 @@ console.log(`appId from env: ${process.env.MAESTRO_APP_ID}`);
 console.log("imported file " + hello());
 
 // set a variable to output to use in flow
-output.id = "com.android.systemui:id/battery";
+output.id = "com.my.app:id/action_bar_root";
