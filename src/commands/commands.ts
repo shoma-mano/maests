@@ -101,15 +101,31 @@ const MaestroTranslators = {
    */
   swipeRight: () =>
     addOut("- swipe:\n    direction: RIGHT\n    duration: 400\n"),
+  /**
+   * Swipes down from the screen center.
+   */
   swipeDown: () => addOut("- swipe:\n    direction: DOWN\n    duration: 400\n"),
+  /**
+   * Swipes up from the screen center.
+   */
   swipeUp: () => addOut("- swipe:\n    direction: UP\n    duration: 400\n"),
 
+  /**
+   * Swipes from a specified start point to an end point.
+   * @param start - Starting coordinates for the swipe.
+   * @param end - Ending coordinates for the swipe.
+   */
   swipe: (start: PointProps, end: PointProps) => {
     addOut(
       `- swipe:\n    start: ${start.x}, ${start.y}\n    end: ${end.x}, ${end.y}\n`
     );
   },
 
+  /**
+   * Inputs text into the focused or specified input element.
+   * @param text - The text to input.
+   * @param id - Optional testId of the input element.
+   */
   inputText: (text: string, id?: string) => {
     addOut(
       id
@@ -118,6 +134,10 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Inputs a random name into the focused or specified input element.
+   * @param id - Optional testId of the input element.
+   */
   inputRandomName: (id?: string) => {
     addOut(
       id
@@ -126,6 +146,10 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Inputs a random number into the focused or specified input element.
+   * @param id - Optional testId of the input element.
+   */
   inputRandomNumber: (id?: string) => {
     addOut(
       id
@@ -134,10 +158,18 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Copies text from an element identified by its testId.
+   * @param id - The testId of the element to copy text from.
+   */
   copyTextFrom: (id: string) => {
     addOut(`- copyTextFrom:\n    id: "${id}"\n`);
   },
 
+  /**
+   * Inputs a random email address into the focused or specified input element.
+   * @param id - Optional testId of the input element.
+   */
   inputRandomEmail: (id?: string) => {
     addOut(
       id
@@ -146,6 +178,10 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Inputs random text into the focused or specified input element.
+   * @param id - Optional testId of the input element.
+   */
   inputRandomText: (id?: string) => {
     addOut(
       id
@@ -154,6 +190,11 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Erases a specified number of characters from the focused or specified input element.
+   * @param chars - Number of characters to erase.
+   * @param id - Optional testId of the input element.
+   */
   eraseText: (chars: number, id?: string) => {
     addOut(
       id
@@ -162,26 +203,54 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Opens a specified URL or deep link.
+   * @param url - The URL or deep link to open.
+   */
   openLink: (url: string) => {
     addOut(`- openLink: ${url}\n`);
   },
 
+  /**
+   * Navigates to a specified path using the deep link base.
+   * @param path - The path to navigate to.
+   */
   navigate: (path: string) => {
     addOut(`- openLink: ${process.env["deepLinkBase"]}${path}\n`);
   },
 
+  /**
+   * Asserts that an element with the given testId is visible.
+   * @param id - The testId of the element to check.
+   * @param enabled - If true, checks that the element is both visible and enabled.
+   */
   assertVisible,
 
+  /**
+   * Asserts that an element with the given testId is not visible.
+   * @param id - The testId of the element to check.
+   */
   assertNotVisible,
 
+  /**
+   * Scrolls down on the screen.
+   */
   scroll: () => {
     addOut("- scroll\n");
   },
 
+  /**
+   * Scrolls until an element with the given testId is visible.
+   * @param id - The testId of the element to scroll until visible.
+   */
   scrollUntilVisible: (id: string) => {
     addOut(`- scrollUntilVisible:\n    element:\n      id: "${id}"\n`);
   },
 
+  /**
+   * Waits until an ongoing animation or video ends.
+   * @param maxWait - Optional timeout (in milliseconds) to wait before proceeding.
+   */
   waitForAnimationEnd: (maxWait: number = 5000) => {
     addOut(
       maxWait
@@ -190,6 +259,11 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Waits until an element with the given testId is visible.
+   * @param id - The testId of the element to wait for.
+   * @param maxWait - Maximum wait time (in milliseconds) for the element to appear.
+   */
   waitUntilVisible: (id: string, maxWait: number) => {
     addOut(
       `- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${
@@ -198,6 +272,11 @@ const MaestroTranslators = {
     );
   },
 
+  /**
+   * Waits until an element with the given testId is no longer visible.
+   * @param id - The testId of the element to wait for.
+   * @param maxWait - Maximum wait time (in milliseconds) for the element to disappear.
+   */
   waitUntilNotVisible: (id: string, maxWait: number) => {
     addOut(
       `- extendedWaitUntil:\n    notVisible:\n        id: "${id}"\n    timeout: ${
