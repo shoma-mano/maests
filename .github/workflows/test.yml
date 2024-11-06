@@ -41,4 +41,4 @@ jobs:
         with:
           api-level: 29
           force-avd-creation: true
-          script: (cd playground && npx expo run:android) & echo test & npx wait-on tcp:localhost:8081 && echo ready
+          script: (cd playground && npx expo run:android) & echo test & npx wait-on tcp:localhost:8081 && npx maests e2e/sampleFlow.ts
