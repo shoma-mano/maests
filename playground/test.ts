@@ -1,6 +1,7 @@
 import { execSync, spawn } from "child_process";
 
 const test = async () => {
+  console.log("Starting test");
   const playgroundDir = __dirname;
   const expoProc = spawn(`cd ${playgroundDir} && npx expo run:android`, {
     stdio: "inherit",
