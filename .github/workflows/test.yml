@@ -46,4 +46,4 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           force-avd-creation: false
-          script: echo no tests
+          script: cd playground && npx tsx test.ts
