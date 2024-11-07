@@ -13,5 +13,6 @@ const test = async () => {
   });
   expoProc.kill();
   console.log("Process killed");
+  process.exit(0);
 };
 test();
