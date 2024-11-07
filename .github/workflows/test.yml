@@ -52,4 +52,7 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           force-avd-creation: false
-          script: cd playground && maestro test e2e/sampleFlow.yaml
+          working-directory: ./playground
+          script: |
+            npx expo run:android
+            npx maests e2e/sampleFlow.ts
