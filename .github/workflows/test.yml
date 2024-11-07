@@ -20,7 +20,7 @@ jobs:
       - run: pnpm install && npx vitest
 
   android-test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,11 +31,11 @@ jobs:
           distribution: "oracle"
           java-version: 17
 
-      - name: Enable KVM
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
+      # - name: Enable KVM
+      #   run: |
+      #     echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+      #     sudo udevadm control --reload-rules
+      #     sudo udevadm trigger --name-match=kvm
 
       - run: curl -fsSL "https://get.maestro.mobile.dev" | bash
 
@@ -48,7 +48,7 @@ jobs:
           api-level: 29
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          arch: x86_64
+          arch: arm64-v8a
           profile: Nexus 6
           force-avd-creation: false
           script: cd playground && npx tsx test.ts
