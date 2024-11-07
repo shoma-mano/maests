@@ -45,9 +45,11 @@ jobs:
       - name: run tests
         uses: reactivecircus/android-emulator-runner@62dbb605bba737720e10b196cb4220d374026a6d
         with:
-          api-level: 31
+          api-level: 33
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
+          target: google_apis
+          arch: x86_64
           profile: Nexus 6
           force-avd-creation: false
           script: cd playground && npx tsx test.ts
