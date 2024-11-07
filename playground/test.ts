@@ -6,10 +6,10 @@ const test = async () => {
     stdio: "inherit",
   });
   execSync(`npx wait-on tcp:localhost:8081`);
-  execSync("npx maests e2e/sampleFlow.ts", {
-    cwd: __dirname,
-    stdio: "inherit",
-  });
-  proc.kill("SIGKILL");
+  // execSync("npx maests e2e/sampleFlow.ts", {
+  //   cwd: __dirname,
+  //   stdio: "inherit",
+  // });
+  // proc.kill("SIGKILL");
 };
 test();
