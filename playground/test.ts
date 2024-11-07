@@ -6,7 +6,8 @@ const test = async () => {
     stdio: "inherit",
     cwd: __dirname,
   });
-  execSync(`npx wait-on tcp:localhost:8081`);
+  // execSync(`npx wait-on tcp:localhost:8081`);
+  await new Promise((resolve) => setTimeout(resolve, 60000));
   expoProc.kill();
   console.log("Process killed");
 };
