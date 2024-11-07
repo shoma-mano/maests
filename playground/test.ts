@@ -10,6 +10,6 @@ const test = async () => {
   //   cwd: __dirname,
   //   stdio: "inherit",
   // });
-  // proc.kill("SIGKILL");
+  proc.kill("SIGKILL");
 };
 test();
