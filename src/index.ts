@@ -72,6 +72,7 @@ const main = defineCommand({
         stdio: "inherit",
         env: process.env,
       });
+      console.log("Test passed");
     } catch (e) {
       consola.error({
         message: `Test failed: ${fullFlowPath}`,
