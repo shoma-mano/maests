@@ -7,5 +7,6 @@ const test = async () => {
   });
   execSync(`npx wait-on tcp:localhost:8081`);
   expoProc.kill();
+  console.log("Process killed");
 };
 test();
