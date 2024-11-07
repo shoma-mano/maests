@@ -7,7 +7,7 @@ const test = async () => {
     cwd: __dirname,
   });
   execSync(`npx wait-on tcp:localhost:8081`);
-  execSync("npx tsx e2e/sampleFlow.ts", { cwd: __dirname });
+  execSync("npx maests e2e/sampleFlow.ts", { cwd: __dirname });
   expoProc.kill();
   console.log("Process killed");
 };
