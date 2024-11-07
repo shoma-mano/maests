@@ -1,3 +1,59 @@
+## v2.7.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.7.0...v2.7.1)
+
+### 🩹 Fixes
+
+- Deploy error ([4a01a6f](https://github.com/shoma-mano/maests/commit/4a01a6f))
+- Consola should be included in dependency ([fcefe79](https://github.com/shoma-mano/maests/commit/fcefe79))
+
+### ✅ Tests
+
+- Android-emulator-runnner ([53ab891](https://github.com/shoma-mano/maests/commit/53ab891))
+- Android-emulator-runnner ([3a09c15](https://github.com/shoma-mano/maests/commit/3a09c15))
+- Android-emulator-runnner ([bc45e1a](https://github.com/shoma-mano/maests/commit/bc45e1a))
+- Android-emulator-runnner ([7caed3a](https://github.com/shoma-mano/maests/commit/7caed3a))
+- Android-emulator-runnner ([4874804](https://github.com/shoma-mano/maests/commit/4874804))
+- Android-emulator-runnner ([1960dfe](https://github.com/shoma-mano/maests/commit/1960dfe))
+- Android-emulator-runnner ([89f28af](https://github.com/shoma-mano/maests/commit/89f28af))
+- Android-emulator-runnner ([d7dc190](https://github.com/shoma-mano/maests/commit/d7dc190))
+- Android-emulator-runnner ([f808d52](https://github.com/shoma-mano/maests/commit/f808d52))
+- Android-emulator-runnner ([173c542](https://github.com/shoma-mano/maests/commit/173c542))
+- Android-emulator-runnner ([25f809b](https://github.com/shoma-mano/maests/commit/25f809b))
+- Android-emulator-runnner ([4a7a002](https://github.com/shoma-mano/maests/commit/4a7a002))
+- Android-emulator-runnner ([82f03a4](https://github.com/shoma-mano/maests/commit/82f03a4))
+- Android-emulator-runnner ([b309a16](https://github.com/shoma-mano/maests/commit/b309a16))
+- Android-emulator-runnner ([b5f3865](https://github.com/shoma-mano/maests/commit/b5f3865))
+- Android-emulator-runnner ([7a5b0bb](https://github.com/shoma-mano/maests/commit/7a5b0bb))
+- Android-emulator-runnner ([65b657f](https://github.com/shoma-mano/maests/commit/65b657f))
+- Android-emulator-runnner ([54bc37d](https://github.com/shoma-mano/maests/commit/54bc37d))
+- Android-emulator-runnner ([3cc0a37](https://github.com/shoma-mano/maests/commit/3cc0a37))
+- Android-emulator-runnner ([8a4d778](https://github.com/shoma-mano/maests/commit/8a4d778))
+- Android-emulator-runnner ([a827931](https://github.com/shoma-mano/maests/commit/a827931))
+- Android-emulator-runnner ([dc4c244](https://github.com/shoma-mano/maests/commit/dc4c244))
+- Android-emulator-runnner ([b2ce311](https://github.com/shoma-mano/maests/commit/b2ce311))
+- Android-emulator-runnner ([fe81b58](https://github.com/shoma-mano/maests/commit/fe81b58))
+- Android-emulator-runnner ([be76545](https://github.com/shoma-mano/maests/commit/be76545))
+- Android-emulator-runnner ([ded9ba0](https://github.com/shoma-mano/maests/commit/ded9ba0))
+- Android-emulator-runnner ([fd8bea6](https://github.com/shoma-mano/maests/commit/fd8bea6))
+- Android-emulator-runnner ([5d7275a](https://github.com/shoma-mano/maests/commit/5d7275a))
+- Android-emulator-runnner ([bc5c674](https://github.com/shoma-mano/maests/commit/bc5c674))
+- Android-emulator-runnner ([e1233a7](https://github.com/shoma-mano/maests/commit/e1233a7))
+- Android-emulator-runnner ([4d06341](https://github.com/shoma-mano/maests/commit/4d06341))
+- Android-emulator-runnner ([7219b3c](https://github.com/shoma-mano/maests/commit/7219b3c))
+- Android-emulator-runnner ([236ee2d](https://github.com/shoma-mano/maests/commit/236ee2d))
+- Android-emulator-runnner ([367ddda](https://github.com/shoma-mano/maests/commit/367ddda))
+- Android-emulator-runnner ([cb44266](https://github.com/shoma-mano/maests/commit/cb44266))
+- Android-emulator-runnner ([b710a16](https://github.com/shoma-mano/maests/commit/b710a16))
+- Android-emulator-runnner ([c0c67cc](https://github.com/shoma-mano/maests/commit/c0c67cc))
+- Android-emulator-runnner ([49f2123](https://github.com/shoma-mano/maests/commit/49f2123))
+- Android-emulator-runnner ([1b377ee](https://github.com/shoma-mano/maests/commit/1b377ee))
+- Android-emulator-runnner ([9c7fa48](https://github.com/shoma-mano/maests/commit/9c7fa48))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.7.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.6.1...v2.7.0)
