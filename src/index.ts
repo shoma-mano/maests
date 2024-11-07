@@ -74,10 +74,16 @@ const main = defineCommand({
       });
       console.log("Test passed");
     } catch (e) {
-      consola.error({
-        message: `Test failed: ${fullFlowPath}`,
-        additional: `You can check actual yaml file at ${yamlOutPath}`,
-      });
+      if ("status" in e && e.status === 1) {
+        consola.error({
+          message: `Test failed: ${fullFlowPath}`,
+        });
+      } else {
+        consola.error({
+          message: `Failed to start test: ${fullFlowPath}`,
+          additional: `You can check actual yaml file at ${yamlOutPath}`,
+        });
+      }
       process.exit(1);
     }
   },
