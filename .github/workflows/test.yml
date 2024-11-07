@@ -53,6 +53,4 @@ jobs:
           profile: Nexus 6
           force-avd-creation: false
           working-directory: ./playground
-          script: |
-            npx expo run:android
-            npx maests e2e/sampleFlow.ts
+          script: npx tsx test.ts
