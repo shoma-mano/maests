@@ -16,6 +16,9 @@ importers:
       citty:
         specifier: ^0.1.6
         version: 0.1.6
+      consola:
+        specifier: ^3.2.3
+        version: 3.2.3
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -38,9 +41,6 @@ importers:
       changelogen:
         specifier: ^0.5.7
         version: 0.5.7
-      consola:
-        specifier: ^3.2.3
-        version: 3.2.3
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
