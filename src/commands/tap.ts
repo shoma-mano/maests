@@ -2,7 +2,7 @@ import { stringify } from "yaml";
 import { addOut, getOut } from "../out";
 
 // Helper function to format optional tap properties
-interface TapOptions {
+export interface TapOptions {
   index?: number;
   retryTapIfNoChange?: boolean;
   repeat?: number;
