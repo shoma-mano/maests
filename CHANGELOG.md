@@ -1,3 +1,19 @@
+## v2.7.2
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.7.1...v2.7.2)
+
+### 🩹 Fixes
+
+- Broken type ([3658a92](https://github.com/shoma-mano/maests/commit/3658a92))
+
+### 🏡 Chore
+
+- Update pnpm-lock.yaml ([a6c57f9](https://github.com/shoma-mano/maests/commit/a6c57f9))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.7.1
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.7.0...v2.7.1)
