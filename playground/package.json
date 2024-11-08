@@ -3,7 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "test": "npx tsx test/test.ts",
+    "test": "npx tsx test/android.ts",
     "android": "expo run:android",
     "ios": "expo run:ios"
   },
