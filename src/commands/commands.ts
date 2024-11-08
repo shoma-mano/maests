@@ -12,13 +12,6 @@ import { assertNotVisible, assertVisible } from "./assert";
 import { addMedia } from "./addMedia";
 import { addOut } from "../out";
 
-// Utility function for indenting except last line break
-export const indentExceptLastLineBreak = (str: string) => {
-  return str.replace(/\n(?=.*[\n])/g, "\n        ");
-};
-
-export const space = "    ";
-
 // Main translator functions
 const MaestroTranslators = {
   /**

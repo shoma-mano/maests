@@ -18,6 +18,7 @@
   "scripts": {
     "build": "npx unbuild && chmod 755 dist/index.mjs",
     "release": "pnpm build && changelogen --release  --publish --push",
+    "type-check": "tsc --noEmit",
     "test": "vitest run"
   },
   "author": "ms2geki@gmail.com",
