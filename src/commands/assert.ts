@@ -41,3 +41,7 @@ if (import.meta.vitest) {
     `);
   });
 }
+
+export const assertTrue = (condition: string) => {
+  addOut(`- assertTrue: ${condition}\n`);
+};
