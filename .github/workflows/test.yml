@@ -54,4 +54,4 @@ jobs:
           profile: Nexus 6
           force-avd-creation: false
           working-directory: ./playground
-          script: npx tsx test/test.ts
+          script: npx tsx test/android.ts
