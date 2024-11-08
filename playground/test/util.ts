@@ -14,7 +14,7 @@ export const getFirstAVD = () => {
   return execSync("emulator -list-avds")
     .toString()
     .split("\n")
-    .filter((line) => line && !line.includes("INFO"));
+    .filter((line) => line && !line.includes("INFO"))[0];
 };
 
 export const getEmulatorNames = () => {
