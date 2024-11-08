@@ -359,6 +359,6 @@ declare global {
   const output: Record<string, string>;
 
   namespace maestro {
-    const platform: "Android" | "iOS" | "Web";
+    const platform: "ios" | "android";
   }
 }
