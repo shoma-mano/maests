@@ -52,4 +52,9 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           force-avd-creation: false
-          script: cd playground && npx tsx test.ts
+          working-directory: ./playground
+          script: |
+            npx expo prebuild -p android
+            ./android/gradlew -p ./android assembleRelease
+            adb install -r ./android/app/build/outputs/apk/release/app-release.apk
+            npx maests e2e/sampleFlow.ts
