@@ -27,6 +27,7 @@ import {
   waitUntilNotVisible,
   waitUntilVisible,
 } from "./wait";
+import { platform } from "os";
 
 // Main translator functions
 const MaestroTranslators = {
@@ -356,4 +357,8 @@ declare global {
 
   const json: <T extends any>(str: string) => T;
   const output: Record<string, string>;
+
+  namespace maestro {
+    const platform: "Android" | "iOS" | "Web";
+  }
 }
