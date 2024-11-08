@@ -53,4 +53,6 @@ jobs:
           profile: Nexus 6
           force-avd-creation: false
           working-directory: ./playground
-          script: npx tsx test.ts
+          script: |
+            ./android/gradlew -p ./android assembleRelease
+            adb install -r ./android/app/build/outputs/apk/release/app-release.apk
