@@ -32,12 +32,6 @@ M.tapOn("someTestId");
 npx maests my-first-flow.ts
 ```
 
-## 🛠️ Commands
-
-This package offers a rich set of commands to cover various actions in your flows, including initializing flows, performing taps and presses, swiping, asserting conditions, and more.
-
-For a detailed list of all commands with examples, refer to the [Commands Documentation](./commands.md).
-
 ## 🛹 Playground
 
 You can try maests by simulator in [playground](playground)
@@ -49,9 +43,14 @@ pnpm build
 # try maests in playground
 cd playground
 pnpm install
-npx expo run:android
-npx maests e2e/sampleFlow.ts
+pnpm test
 ```
+
+## 🛠️ Commands
+
+This package offers a rich set of commands to cover various actions in your flows, including initializing flows, performing taps and presses, swiping, asserting conditions, and more.
+
+For a detailed list of all commands with examples, refer to the [Commands Documentation](./commands.md).
 
 ## 🚨 Trouble Shooting
 
