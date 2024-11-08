@@ -1,5 +1,4 @@
 import { handleNest, addOut, getOut } from "../out";
-import { space } from "./commands";
 
 const envAppId = process.env["appId"];
 
@@ -11,10 +10,7 @@ export const initFlow = ({
   let commands = appIdCommand;
   if (onFlowStart) {
     const nested = handleNest(onFlowStart);
-    const flowCommand = `onFlowStart:\n${nested.replaceAll(
-      /\n/g,
-      `${space}\n`
-    )}`;
+    const flowCommand = `onFlowStart:\n${nested.replaceAll(/\n/g, `    \n`)}`;
     commands += flowCommand;
   }
   const separator = "---\n";

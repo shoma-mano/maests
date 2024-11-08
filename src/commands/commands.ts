@@ -8,16 +8,25 @@ import {
 import { runFlow, runScript } from "./run";
 import { clearState, initFlow, launchApp } from "./init";
 import { repeat, repeatWhileVisible, repeatWhileNotVisible } from "./repeat";
-import { assertNotVisible, assertVisible } from "./assert";
+import { assertNotVisible, assertTrue, assertVisible } from "./assert";
 import { addMedia } from "./addMedia";
 import { addOut } from "../out";
-
-// Utility function for indenting except last line break
-export const indentExceptLastLineBreak = (str: string) => {
-  return str.replace(/\n(?=.*[\n])/g, "\n        ");
-};
-
-export const space = "    ";
+import {
+  copyTextFrom,
+  eraseText,
+  inputRandomEmail,
+  inputRandomName,
+  inputRandomNumber,
+  inputRandomText,
+  inputText,
+} from "./text";
+import { swipeDown, swipeLeft, swipeRight, swipeUp } from "./swipe";
+import {
+  wait,
+  waitForAnimationEnd,
+  waitUntilNotVisible,
+  waitUntilVisible,
+} from "./wait";
 
 // Main translator functions
 const MaestroTranslators = {
@@ -100,20 +109,19 @@ const MaestroTranslators = {
   /**
    * Swipes left from the screen center.
    */
-  swipeLeft: () => addOut("- swipe:\n    direction: LEFT\n    duration: 400\n"),
+  swipeLeft,
   /**
    * Swipes right from the screen center.
    */
-  swipeRight: () =>
-    addOut("- swipe:\n    direction: RIGHT\n    duration: 400\n"),
+  swipeRight,
   /**
    * Swipes down from the screen center.
    */
-  swipeDown: () => addOut("- swipe:\n    direction: DOWN\n    duration: 400\n"),
+  swipeDown,
   /**
    * Swipes up from the screen center.
    */
-  swipeUp: () => addOut("- swipe:\n    direction: UP\n    duration: 400\n"),
+  swipeUp,
 
   /**
    * Swipes from a specified start point to an end point.
@@ -131,82 +139,44 @@ const MaestroTranslators = {
    * @param text - The text to input.
    * @param id - Optional testId of the input element.
    */
-  inputText: (text: string, id?: string) => {
-    addOut(
-      id
-        ? `- tapOn:\n    id: "${id}"\n- inputText: ${text}\n`
-        : `- inputText: ${text}\n`
-    );
-  },
+  inputText,
 
   /**
    * Inputs a random name into the focused or specified input element.
    * @param id - Optional testId of the input element.
    */
-  inputRandomName: (id?: string) => {
-    addOut(
-      id
-        ? `- tapOn:\n    id: "${id}"\n- inputRandomPersonName\n`
-        : `- inputRandomPersonName\n`
-    );
-  },
+  inputRandomName,
 
   /**
    * Inputs a random number into the focused or specified input element.
    * @param id - Optional testId of the input element.
    */
-  inputRandomNumber: (id?: string) => {
-    addOut(
-      id
-        ? `- tapOn:\n    id: "${id}"\n- inputRandomNumber\n`
-        : `- inputRandomNumber\n`
-    );
-  },
+  inputRandomNumber,
 
   /**
    * Copies text from an element identified by its testId.
    * @param id - The testId of the element to copy text from.
    */
-  copyTextFrom: (id: string) => {
-    addOut(`- copyTextFrom:\n    id: "${id}"\n`);
-  },
+  copyTextFrom,
 
   /**
    * Inputs a random email address into the focused or specified input element.
    * @param id - Optional testId of the input element.
    */
-  inputRandomEmail: (id?: string) => {
-    addOut(
-      id
-        ? `- tapOn:\n    id: "${id}"\n- inputRandomEmail\n`
-        : `- inputRandomEmail\n`
-    );
-  },
+  inputRandomEmail,
 
   /**
    * Inputs random text into the focused or specified input element.
    * @param id - Optional testId of the input element.
    */
-  inputRandomText: (id?: string) => {
-    addOut(
-      id
-        ? `- tapOn:\n    id: "${id}"\n- inputRandomText\n`
-        : `- inputRandomText\n`
-    );
-  },
+  inputRandomText,
 
   /**
    * Erases a specified number of characters from the focused or specified input element.
    * @param chars - Number of characters to erase.
    * @param id - Optional testId of the input element.
    */
-  eraseText: (chars: number, id?: string) => {
-    addOut(
-      id
-        ? `- tapOn:\n    id: "${id}"\n- eraseText: ${chars ?? 50}\n`
-        : `- eraseText: ${chars ?? 50}\n`
-    );
-  },
+  eraseText,
 
   /**
    * Opens a specified URL or deep link.
@@ -238,6 +208,12 @@ const MaestroTranslators = {
   assertNotVisible,
 
   /**
+   * Asserts that a specified condition is true.
+   * @param condition - The condition to assert.
+   */
+  assertTrue,
+
+  /**
    * Scrolls down on the screen.
    */
   scroll: () => {
@@ -256,49 +232,27 @@ const MaestroTranslators = {
    * Waits until an ongoing animation or video ends.
    * @param maxWait - Optional timeout (in milliseconds) to wait before proceeding.
    */
-  waitForAnimationEnd: (maxWait: number = 5000) => {
-    addOut(
-      maxWait
-        ? `- waitForAnimationToEnd:\n    timeout: ${maxWait}\n`
-        : "- waitForAnimationToEnd\n"
-    );
-  },
+  waitForAnimationEnd,
 
   /**
    * Waits until an element with the given testId is visible.
    * @param id - The testId of the element to wait for.
    * @param maxWait - Maximum wait time (in milliseconds) for the element to appear.
    */
-  waitUntilVisible: (id: string, maxWait: number) => {
-    addOut(
-      `- extendedWaitUntil:\n    visible:\n        id: "${id}"\n    timeout: ${
-        maxWait ?? 5000
-      }\n`
-    );
-  },
+  waitUntilVisible,
 
   /**
    * Waits until an element with the given testId is no longer visible.
    * @param id - The testId of the element to wait for.
    * @param maxWait - Maximum wait time (in milliseconds) for the element to disappear.
    */
-  waitUntilNotVisible: (id: string, maxWait: number) => {
-    addOut(
-      `- extendedWaitUntil:\n    notVisible:\n        id: "${id}"\n    timeout: ${
-        maxWait ?? 5000
-      }\n`
-    );
-  },
+  waitUntilNotVisible,
 
   /**
    * Waits for a specified number of milliseconds.
    * @param ms - The number of milliseconds to wait.
    */
-  wait: (ms: number) => {
-    addOut(
-      `- swipe:\n    start: -1, -1\n    end: -1, -100\n    duration: ${ms}\n`
-    );
-  },
+  wait,
 
   /**
    * Dismisses the software keyboard.
@@ -387,14 +341,6 @@ const MaestroTranslators = {
   repeatWhileNotVisible,
 
   addMedia,
-
-  /**
-   * Asserts that a specified condition is true.
-   * @param condition - The condition to assert.
-   */
-  assertTrue: (condition: string) => {
-    addOut(`- assertTrue: ${condition}\n`);
-  },
 };
 
 export { MaestroTranslators as M };
