@@ -54,6 +54,7 @@ jobs:
           force-avd-creation: false
           working-directory: ./playground
           script: |
+            npx expo prebuild -p android
             ./android/gradlew -p ./android assembleRelease
             adb install -r ./android/app/build/outputs/apk/release/app-release.apk
             npx maests e2e/sampleFlow.ts
