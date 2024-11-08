@@ -56,3 +56,4 @@ jobs:
           script: |
             ./android/gradlew -p ./android assembleRelease
             adb install -r ./android/app/build/outputs/apk/release/app-release.apk
+            npx maests e2e/sampleFlow.ts
