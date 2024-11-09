@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 import fs, { writeFileSync } from "fs";
-import path, { dirname, join } from "path";
-import { createJiti } from "jiti";
+import path, { join } from "path";
 import dotenv from "dotenv";
 import { consola } from "consola";
 import { rewriteCode } from "./rewrite-code";
 import { defineCommand, runMain } from "citty";
-import { createYamlOutPath } from "./utils";
+import { createYamlOutPath, jiti } from "./utils";
 import { execSync } from "child_process";
-import { getTsconfig } from "get-tsconfig";
 
 const main = defineCommand({
   args: {
@@ -28,29 +26,15 @@ const main = defineCommand({
 
     // create temp file
     const yamlOutPath = createYamlOutPath(args.path);
-
-    let code = fs.readFileSync(args.path, "utf-8");
-    code = rewriteCode({ code, yamlOutPath });
     const fullFlowPath = args.path.startsWith("/")
       ? args.path
       : join(cwd, args.path);
+
+    let code = fs.readFileSync(args.path, "utf-8");
+    code = rewriteCode({ code, yamlOutPath, fullFlowPath });
+
     const tempFilePath = fullFlowPath.replace(".ts", ".temp.ts");
     writeFileSync(tempFilePath, code);
-
-    // create jiti instance
-    const { config, path } = getTsconfig();
-    const normalizedAlias = Object.fromEntries(
-      Object.entries(config?.compilerOptions?.paths || {}).map(
-        ([key, value]) => {
-          const normalizedKey = key.replace("/*", "");
-          const normalizedValue = value[0].replace("/*", "");
-          return [normalizedKey, join(dirname(path), normalizedValue)];
-        }
-      )
-    );
-    const jiti = createJiti(cwd, {
-      alias: normalizedAlias,
-    });
 
     // execute temp file
     try {

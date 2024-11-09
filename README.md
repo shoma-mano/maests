@@ -34,7 +34,39 @@ npx maests my-first-flow.ts
 
 ## 🛹 Playground
 
-You can try maests by simulator in [playground](playground)
+There is sample flow you can try actually in playground
+
+`sample-flow.ts`
+
+```typescript
+import { getOutput, M } from "maests";
+import { openApp } from "@/e2e/utils/openApp";
+import { someScript } from "./utils/script";
+
+// use composable flow easiliy
+openApp();
+
+// run script like this
+M.runScript(someScript);
+
+// use runFlow to run some flow with condition
+M.runFlow({
+  flow: () => {
+    // use variables set in someScript
+    M.assertVisible({ id: getOutput("id") });
+    M.repeatWhileNotVisible(
+      {
+        text: "4",
+      },
+      () => {
+        M.tapOnText("Increment");
+      }
+    );
+  },
+});
+```
+
+You can try maests by this sample flow with simulator in [playground](playground)
 
 ```shell
 # build maests

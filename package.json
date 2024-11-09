@@ -13,10 +13,10 @@
     "./write-yaml": "./dist/write-yaml.mjs"
   },
   "bin": {
-    "maests": "./dist/index.mjs"
+    "maests": "./dist/main.mjs"
   },
   "scripts": {
-    "build": "npx unbuild && chmod 755 dist/index.mjs",
+    "build": "npx unbuild && chmod 755 dist/main.mjs",
     "release": "pnpm build && changelogen --release  --publish --push",
     "type-check": "tsc --noEmit",
     "test": "vitest run"
@@ -48,12 +48,18 @@
   "homepage": "https://github.com/shoma-mano/maests#readme",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/types": "^7.26.0",
+    "@types/babel__core": "^7.20.5",
+    "babel": "^6.23.0",
     "citty": "^0.1.6",
-    "dotenv": "^16.4.5",
     "consola": "^3.2.3",
+    "core": "link:@types/@babel/core",
+    "dotenv": "^16.4.5",
     "esbuild": "^0.24.0",
     "get-tsconfig": "^4.8.1",
     "jiti": "2.4.0",
+    "magicast": "^0.3.5",
     "yaml": "^2.6.0"
   },
   "packageManager": "pnpm@9.1.0+sha512.67f5879916a9293e5cf059c23853d571beaf4f753c707f40cb22bed5fb1578c6aad3b6c4107ccb3ba0b35be003eb621a16471ac836c87beb53f9d54bb4612724",

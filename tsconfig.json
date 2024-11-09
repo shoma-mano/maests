@@ -8,7 +8,10 @@
     "declaration": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["vitest/importMeta", "vitest/globals"]
+    "types": ["vitest/importMeta", "vitest/globals"],
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": [
     "src/**/*",
