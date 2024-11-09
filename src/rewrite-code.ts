@@ -1,7 +1,7 @@
 import { parseModule } from "magicast";
 import { PluginObj, transformSync } from "@babel/core";
 import * as t from "@babel/types";
-import { createYamlOutPath, jiti } from "./utils";
+import { createScriptOutPath, createYamlOutPath, jiti } from "./utils";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
@@ -54,11 +54,12 @@ M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
       fullFlowPath,
     });
 
+    const scriptPath = join(__dirname, "../fixtures/foo-script.ts");
     expect(result).toMatchInlineSnapshot(`
       "import { writeYaml } from 'maests/write-yaml';
       import { M, getOutput } from 'maests';
       import { fooScript } from "@/fixtures/foo-script";
-      M.runScript("/Users/mano/my-oss/maests/fixtures/foo-script.ts", "fooScript");
+      M.runScript("${scriptPath}", "fooScript");
       M.initFlow({
         appId: "com.my.app",
         NAME: "Maestro"
