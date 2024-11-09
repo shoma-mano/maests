@@ -9,6 +9,10 @@
 
 ## 🚀 Getting Started
 
+### Requirement
+
+If you have not installed maestro yet, you have to [install](https://maestro.mobile.dev/getting-started/installing-maestro) it at first.
+
 ### Installation
 
 ```sh:
@@ -34,7 +38,7 @@ npx maests my-first-flow.ts
 
 ## 🛹 Playground
 
-There is sample flow you can try actually in playground
+There is sample flow you can try actually in [playground](playground)
 
 `sample-flow.ts`
 
@@ -69,9 +73,14 @@ M.runFlow({
 You can try maests by this sample flow with simulator in [playground](playground)
 
 ```shell
+# clone this repo
+git clone https://github.com/shoma-mano/maests
+cd maests
+
 # build maests
 pnpm install
 pnpm build
+
 # try maests in playground
 cd playground
 pnpm install
