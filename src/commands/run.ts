@@ -4,9 +4,12 @@ import { stringify } from "yaml";
 import { M } from "./commands";
 import { addOut, getOut, handleNest } from "../out";
 import { createScriptOutPath, writeFileWithDirectorySync } from "../utils";
-import { unlinkSync } from "fs";
+import { readFileSync, unlinkSync } from "fs";
+import { WhenCondition } from "./type";
+import { deleteExport } from "../rewrite-code";
 
-export const runScript = ({ path }: { path: string }) => {
+export const runScript = (path: string | (() => void), funcName?: string) => {
+  if (typeof path === "function") return;
   const { outputFiles } = buildSync({
     entryPoints: [path],
     bundle: true,
@@ -17,15 +20,11 @@ export const runScript = ({ path }: { path: string }) => {
   });
 
   let code = outputFiles[0].text;
-  code = code.replace(/process\.env\.([^\n\s]*)/g, (_, p1) => {
-    if (!p1.startsWith("MAESTRO_")) {
-      console.warn(
-        "Environment variable that is not started with MAESTRO_ will be ignored:",
-        p1
-      );
-    }
-    return p1;
+  code = code.replace(/\${process\.env\.([^\n\s]*)}/g, (_, p1) => {
+    return process.env[p1] || "";
   });
+  code = deleteExport(code);
+  code += `\n${funcName ? `${funcName}();` : ""}`;
   const scriptPath = createScriptOutPath(path);
   writeFileWithDirectorySync(scriptPath, code);
   const command = `- runScript: ${scriptPath}\n`;
@@ -38,23 +37,34 @@ if (import.meta.vitest) {
       __dirname,
       "../../playground/e2e/utils/script.ts"
     );
-    runScript({
-      path: tsScriptPath,
-    });
+    runScript(tsScriptPath, "someScript");
+    const scriptPath = createScriptOutPath(tsScriptPath);
     expect(getOut()).toMatchInlineSnapshot(`
-      "- runScript: ${createScriptOutPath(tsScriptPath)}
+      "- runScript: ${scriptPath}
       "
     `);
-    unlinkSync(createScriptOutPath(tsScriptPath));
+    const code = readFileSync(scriptPath, "utf-8");
+    expect(code).toMatchInlineSnapshot(`
+      "// playground/e2e/utils/hello.ts
+      var hello = () => "Hello, World!";
+
+      // playground/e2e/utils/script.ts
+      var someScript = () => {
+        const body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;
+        const result = json(body);
+        console.log("id " + result.userId);
+        console.log(\`appId from env: \`);
+        console.log("imported file " + hello());
+        if (maestro.platform === "android") {
+          console.log("platform is android");
+        }
+        output.id = "com.my.app:id/action_bar_root";
+      };
+      someScript();"
+    `);
+    unlinkSync(scriptPath);
   });
 }
-
-type WhenCondition = {
-  visible?: string;
-  notVisible?: string;
-  true?: any;
-  platform?: "Android" | "iOS" | "Web";
-};
 
 export const runFlow = ({
   flow,

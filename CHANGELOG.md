@@ -1,3 +1,45 @@
+## v2.7.3
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.7.2...v2.7.3)
+
+### 💅 Refactors
+
+- Remove unnecessary code ([cccad95](https://github.com/shoma-mano/maests/commit/cccad95))
+- Split commands.ts ([ba09d00](https://github.com/shoma-mano/maests/commit/ba09d00))
+- Delete tests folder ([b4f317e](https://github.com/shoma-mano/maests/commit/b4f317e))
+
+### 🏡 Chore
+
+- Improve error logging ([b37c169](https://github.com/shoma-mano/maests/commit/b37c169))
+
+### ✅ Tests
+
+- Android-emulator-runnner ([1f140f4](https://github.com/shoma-mano/maests/commit/1f140f4))
+- Android-emulator-runnner ([c91a8f2](https://github.com/shoma-mano/maests/commit/c91a8f2))
+- Android-emulator-runnner ([5656949](https://github.com/shoma-mano/maests/commit/5656949))
+- Android-emulator-runnner ([7172df1](https://github.com/shoma-mano/maests/commit/7172df1))
+- Android-emulator-runnner ([be488f1](https://github.com/shoma-mano/maests/commit/be488f1))
+- Android-emulator-runnner ([e6b4094](https://github.com/shoma-mano/maests/commit/e6b4094))
+- Android-emulator-runnner ([a88ef32](https://github.com/shoma-mano/maests/commit/a88ef32))
+- Android-emulator-runnner ([3253a2b](https://github.com/shoma-mano/maests/commit/3253a2b))
+- Android-emulator-runnner ([a82bda1](https://github.com/shoma-mano/maests/commit/a82bda1))
+- Android-emulator-runnner ([acb9776](https://github.com/shoma-mano/maests/commit/acb9776))
+- Android-emulator-runnner ([b7273e9](https://github.com/shoma-mano/maests/commit/b7273e9))
+- Android-emulator-runnner ([aac76cc](https://github.com/shoma-mano/maests/commit/aac76cc))
+- Android-emulator-runnner ([e1ff2cc](https://github.com/shoma-mano/maests/commit/e1ff2cc))
+- Android-emulator-runnner ([e88ec05](https://github.com/shoma-mano/maests/commit/e88ec05))
+- Android-emulator-runnner ([6401103](https://github.com/shoma-mano/maests/commit/6401103))
+- Update e2e test example ([bcd935a](https://github.com/shoma-mano/maests/commit/bcd935a))
+- Update e2e test example ([a3d3811](https://github.com/shoma-mano/maests/commit/a3d3811))
+- Update e2e test example ([0ebe3f3](https://github.com/shoma-mano/maests/commit/0ebe3f3))
+- Update e2e test example ([5c03713](https://github.com/shoma-mano/maests/commit/5c03713))
+- Update e2e test example ([52b2e4e](https://github.com/shoma-mano/maests/commit/52b2e4e))
+- Update e2e test example ([0cfc709](https://github.com/shoma-mano/maests/commit/0cfc709))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.7.2
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.7.1...v2.7.2)

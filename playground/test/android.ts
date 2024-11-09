@@ -22,7 +22,7 @@ const test = async () => {
     "adb -s emulator-5584 install -r ./android/app/build/outputs/apk/release/app-release.apk",
     { stdio: "inherit" }
   );
-  execSync("npx maests e2e/sampleFlow.ts", {
+  execSync("npx maests e2e/sample-flow.ts", {
     stdio: "inherit",
   });
   if (proc) proc.kill();

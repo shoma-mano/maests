@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     globals: true,
     include: ["**/*.{test,spec}.?(c|m)[jt]s?(x)", "**/*.[jt]s?(x)"],
-    exclude: [...defaultExclude, "playground/**/*"],
+    exclude: [...defaultExclude, "playground/**/*", "maests/**/*"],
     passWithNoTests: true,
     root: "./",
   },
