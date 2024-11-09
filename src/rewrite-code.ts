@@ -58,12 +58,12 @@ M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
       "import { writeYaml } from 'maests/write-yaml';
       import { M, getOutput } from 'maests';
       import { fooScript } from "@/fixtures/foo-script";
-      M.runScript("/Users/mano/my-oss/maests/fixtures/foo-script.ts");
+      M.runScript("/Users/mano/my-oss/maests/fixtures/foo-script.ts", "fooScript");
       M.initFlow({
         appId: "com.my.app",
         NAME: "Maestro"
       });
-      writeYaml("/Users/mano/my-oss/maests/maests/my-flow.maestro.yaml");"
+      writeYaml("${yamlOutPath}");"
     `);
   });
 }
@@ -102,7 +102,9 @@ if (import.meta.vitest) {
     const result = rewriteRunScript(code, {
       someScript: "./some-script.ts",
     });
-    expect(result).toMatchInlineSnapshot(`"M.runScript("./some-script.ts", "someScript");"`);
+    expect(result).toMatchInlineSnapshot(
+      `"M.runScript("./some-script.ts", "someScript");"`
+    );
   });
 }
 

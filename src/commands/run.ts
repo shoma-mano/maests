@@ -35,7 +35,7 @@ if (import.meta.vitest) {
   it("runScript", () => {
     const tsScriptPath = join(
       __dirname,
-      "../../playground/e2e/utils/some-script.ts"
+      "../../playground/e2e/utils/script.ts"
     );
     runScript(tsScriptPath, "someScript");
     const scriptPath = createScriptOutPath(tsScriptPath);
@@ -45,10 +45,10 @@ if (import.meta.vitest) {
     `);
     const code = readFileSync(scriptPath, "utf-8");
     expect(code).toMatchInlineSnapshot(`
-      "// ../../playground/e2e/utils/hello.ts
+      "// playground/e2e/utils/hello.ts
       var hello = () => "Hello, World!";
 
-      // ../../playground/e2e/utils/some-script.ts
+      // playground/e2e/utils/script.ts
       var someScript = () => {
         const body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;
         const result = json(body);
