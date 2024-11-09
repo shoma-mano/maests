@@ -24,6 +24,6 @@ M.runFlow({
     );
   },
   condition: {
-    visible: getOutput("id"),
+    visible: "Increment",
   },
 });
