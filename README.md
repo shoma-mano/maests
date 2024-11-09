@@ -53,11 +53,12 @@ openApp();
 // run script like this
 M.runScript(someScript);
 
+// use variables set in someScript
+M.assertVisible({ id: getOutput("id") });
+
 // use runFlow to run some flow with condition
 M.runFlow({
   flow: () => {
-    // use variables set in someScript
-    M.assertVisible({ id: getOutput("id") });
     M.repeatWhileNotVisible(
       {
         text: "4",
@@ -66,6 +67,9 @@ M.runFlow({
         M.tapOnText("Increment");
       }
     );
+  },
+  condition: {
+    visible: getOutput("id"),
   },
 });
 ```
