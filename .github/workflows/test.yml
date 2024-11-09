@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      - run: pnpm install && npx vitest
+      - run: pnpm install && pnpm build && npx vitest
 
   android-test:
     runs-on: ubuntu-latest
