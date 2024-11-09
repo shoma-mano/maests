@@ -1,3 +1,27 @@
+## v2.8.0
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.7.3...v2.8.0)
+
+### 🚀 Enhancements
+
+- Support maestro.platform type ([9d33fae](https://github.com/shoma-mano/maests/commit/9d33fae))
+- Support pass callback to runScript directly ([eb1a664](https://github.com/shoma-mano/maests/commit/eb1a664))
+
+### 🏡 Chore
+
+- Add type for maestro.platform ([f35093b](https://github.com/shoma-mano/maests/commit/f35093b))
+- Update readme.md ([7319b41](https://github.com/shoma-mano/maests/commit/7319b41))
+
+### ✅ Tests
+
+- Fix failed tests ([cf93951](https://github.com/shoma-mano/maests/commit/cf93951))
+- Fix failed tests ([4dce1d0](https://github.com/shoma-mano/maests/commit/4dce1d0))
+- Fix failed tests ([568db1a](https://github.com/shoma-mano/maests/commit/568db1a))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.7.3
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.7.2...v2.7.3)
