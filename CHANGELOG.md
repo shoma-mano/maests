@@ -1,3 +1,19 @@
+## v2.8.3
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.8.2...v2.8.3)
+
+### 🩹 Fixes
+
+- **rewrite-code:** Fix relative import path bug ([4dcecb1](https://github.com/shoma-mano/maests/commit/4dcecb1))
+
+### 🏡 Chore
+
+- Update lock file ([2f87714](https://github.com/shoma-mano/maests/commit/2f87714))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.8.2
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.8.1...v2.8.2)
