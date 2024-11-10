@@ -1,3 +1,15 @@
+## v2.8.4
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.8.3...v2.8.4)
+
+### 🩹 Fixes
+
+- **runScript:** Regex for rewriting env ([7c3ce2f](https://github.com/shoma-mano/maests/commit/7c3ce2f))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.8.3
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.8.2...v2.8.3)
