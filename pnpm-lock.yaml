@@ -28,9 +28,6 @@ importers:
       consola:
         specifier: ^3.2.3
         version: 3.2.3
-      core:
-        specifier: link:@types/@babel/core
-        version: link:@types/@babel/core
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
