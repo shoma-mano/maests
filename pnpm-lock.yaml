@@ -19,9 +19,6 @@ importers:
       '@babel/types':
         specifier: ^7.26.0
         version: 7.26.0
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
       babel:
         specifier: ^6.23.0
         version: 6.23.0
@@ -53,6 +50,9 @@ importers:
         specifier: ^2.6.0
         version: 2.6.0
     devDependencies:
+      '@types/babel__core':
+        specifier: ^7.20.5
+        version: 7.20.5
       '@types/node':
         specifier: ^18.14.0
         version: 18.19.44
