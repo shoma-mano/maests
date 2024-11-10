@@ -54,7 +54,6 @@
     "babel": "^6.23.0",
     "citty": "^0.1.6",
     "consola": "^3.2.3",
-    "core": "link:@types/@babel/core",
     "dotenv": "^16.4.5",
     "esbuild": "^0.24.0",
     "get-tsconfig": "^4.8.1",
