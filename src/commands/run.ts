@@ -20,7 +20,7 @@ export const runScript = (path: string | (() => void), funcName?: string) => {
   });
 
   let code = outputFiles[0].text;
-  code = code.replace(/\${process\.env\.([^\n\s]*)}/g, (_, p1) => {
+  code = code.replace(/(?:\${)?process\.env\.([^\n\s}]*)}?/g, (_, p1) => {
     return process.env[p1] || "";
   });
   code = deleteExport(code);
