@@ -25,7 +25,7 @@ export const rewriteCode = ({
   const imports = JSON.parse(JSON.stringify(_imports)) as typeof _imports;
   const rewriteMap: Record<string, string> = Object.fromEntries(
     Object.entries(imports).map(([key, value]) => {
-      if (value.from.startsWith("./")) {
+      if (value.from.startsWith(".")) {
         value.from = join(dirname(fullFlowPath), value.from);
       }
       const path = jiti.esmResolve(value.from);
