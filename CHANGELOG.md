@@ -1,3 +1,21 @@
+## v2.8.1
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.8.0...v2.8.1)
+
+### 🩹 Fixes
+
+- Remove @types/babel__core from dependency ([a584e9c](https://github.com/shoma-mano/maests/commit/a584e9c))
+
+### 🏡 Chore
+
+- Update .gitignore ([6cc4c21](https://github.com/shoma-mano/maests/commit/6cc4c21))
+- Update README.md ([11ffe97](https://github.com/shoma-mano/maests/commit/11ffe97))
+- Update README.md ([9da2331](https://github.com/shoma-mano/maests/commit/9da2331))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.8.0
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.7.3...v2.8.0)
