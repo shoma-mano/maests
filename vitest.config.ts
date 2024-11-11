@@ -7,5 +7,8 @@ export default defineConfig({
     exclude: [...defaultExclude, "playground/**/*", "maests/**/*"],
     passWithNoTests: true,
     root: "./",
+    alias: {
+      "@/": new URL("./", import.meta.url).pathname,
+    },
   },
 });

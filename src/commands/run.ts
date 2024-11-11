@@ -10,6 +10,13 @@ import { deleteExport } from "../rewrite-code";
 
 export const runScript = (path: string | (() => void), funcName?: string) => {
   if (typeof path === "function") return;
+  const scriptPath = createScriptOutPath(path);
+
+  // add command that references scriptPath
+  const command = `- runScript: ${scriptPath}\n`;
+  addOut(command);
+
+  // write script file to scriptPath
   const { outputFiles } = buildSync({
     entryPoints: [path],
     bundle: true,
@@ -18,17 +25,13 @@ export const runScript = (path: string | (() => void), funcName?: string) => {
     legalComments: "none",
     write: false,
   });
-
   let code = outputFiles[0].text;
   code = code.replace(/(?:\${)?process\.env\.([^\n\s}]*)}?/g, (_, p1) => {
     return process.env[p1] || "";
   });
   code = deleteExport(code);
   code += `\n${funcName ? `${funcName}();` : ""}`;
-  const scriptPath = createScriptOutPath(path);
   writeFileWithDirectorySync(scriptPath, code);
-  const command = `- runScript: ${scriptPath}\n`;
-  addOut(command);
 };
 
 if (import.meta.vitest) {
@@ -47,19 +50,19 @@ if (import.meta.vitest) {
     expect(code).toMatchInlineSnapshot(`
       "// playground/e2e/utils/hello.ts
       var hello = () => "Hello, World!";
-
       // playground/e2e/utils/script.ts
       var someScript = () => {
-        const body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;
-        const result = json(body);
-        console.log("id " + result.userId);
-        console.log(\`appId from env: \`);
-        console.log("imported file " + hello());
-        if (maestro.platform === "android") {
-          console.log("platform is android");
-        }
-        output.id = "com.my.app:id/action_bar_root";
+          const body = http.get("https://jsonplaceholder.typicode.com/todos/1").body;
+          const result = json(body);
+          console.log("id " + result.userId);
+          console.log(\`appId from env: \`);
+          console.log("imported file " + hello());
+          if (maestro.platform === "android") {
+              console.log("platform is android");
+          }
+          output.id = "com.my.app:id/action_bar_root";
       };
+
       someScript();"
     `);
     unlinkSync(scriptPath);

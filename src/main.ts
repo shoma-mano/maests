@@ -31,7 +31,7 @@ const main = defineCommand({
       : join(cwd, args.path);
 
     let code = fs.readFileSync(args.path, "utf-8");
-    code = rewriteCode({ code, yamlOutPath, fullFlowPath });
+    code = await rewriteCode({ yamlOutPath, fullFlowPath });
 
     const tempFilePath = fullFlowPath.replace(".ts", ".temp.ts");
     writeFileSync(tempFilePath, code);
