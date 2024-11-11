@@ -1,3 +1,15 @@
+## v2.8.5
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.8.4...v2.8.5)
+
+### 🩹 Fixes
+
+- Fix bug that happens when runScript is used in imported flow ([06f7aaf](https://github.com/shoma-mano/maests/commit/06f7aaf))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.8.4
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.8.3...v2.8.4)
