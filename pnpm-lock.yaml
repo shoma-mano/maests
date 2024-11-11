@@ -13,15 +13,6 @@ importers:
 
   .:
     dependencies:
-      '@babel/core':
-        specifier: ^7.26.0
-        version: 7.26.0
-      '@babel/types':
-        specifier: ^7.26.0
-        version: 7.26.0
-      babel:
-        specifier: ^6.23.0
-        version: 6.23.0
       citty:
         specifier: ^0.1.6
         version: 0.1.6
@@ -43,22 +34,19 @@ importers:
       magicast:
         specifier: ^0.3.5
         version: 0.3.5
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
       yaml:
         specifier: ^2.6.0
         version: 2.6.0
     devDependencies:
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
       '@types/node':
         specifier: ^18.14.0
         version: 18.19.44
       changelogen:
         specifier: ^0.5.7
         version: 0.5.7(magicast@0.3.5)
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
       unbuild:
         specifier: ^2.0.0
         version: 2.0.0(typescript@5.5.4)
@@ -893,18 +881,6 @@ packages:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
 
-  '@types/babel__core@7.20.5':
-    resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
-
-  '@types/babel__generator@7.6.8':
-    resolution: {integrity: sha512-ASsj+tpEDsEiFr1arWrlN6V3mdfjRMZt6LtK/Vp/kreFLnr5QH5+DhvD5nINYZXzwJvXeGq+05iUXcAzVrqWtw==}
-
-  '@types/babel__template@7.4.4':
-    resolution: {integrity: sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A==}
-
-  '@types/babel__traverse@7.20.6':
-    resolution: {integrity: sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==}
-
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
@@ -967,11 +943,6 @@ packages:
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
-
-  babel@6.23.0:
-    resolution: {integrity: sha512-ZDcCaI8Vlct8PJ3DvmyqUz+5X2Ylz3ZuuItBe/74yXosk2dwyVo/aN7MCJ8HJzhnnJ+6yP4o+lDgG9MBe91DLA==}
-    deprecated: In 6.x, the babel package has been deprecated in favor of babel-cli. Check https://opencollective.com/babel to support the Babel maintainers
-    hasBin: true
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -2552,27 +2523,6 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
-  '@types/babel__core@7.20.5':
-    dependencies:
-      '@babel/parser': 7.26.2
-      '@babel/types': 7.26.0
-      '@types/babel__generator': 7.6.8
-      '@types/babel__template': 7.4.4
-      '@types/babel__traverse': 7.20.6
-
-  '@types/babel__generator@7.6.8':
-    dependencies:
-      '@babel/types': 7.26.0
-
-  '@types/babel__template@7.4.4':
-    dependencies:
-      '@babel/parser': 7.26.2
-      '@babel/types': 7.26.0
-
-  '@types/babel__traverse@7.20.6':
-    dependencies:
-      '@babel/types': 7.26.0
-
   '@types/estree@1.0.6': {}
 
   '@types/node@18.19.44':
@@ -2644,8 +2594,6 @@ snapshots:
       picocolors: 1.1.1
       postcss: 8.4.47
       postcss-value-parser: 4.2.0
-
-  babel@6.23.0: {}
 
   balanced-match@1.0.2: {}
 

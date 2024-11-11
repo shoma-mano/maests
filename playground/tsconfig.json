@@ -11,6 +11,7 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "test.js"
+    "test.js",
+    "e2e/sample-flow.mts"
   ]
 }

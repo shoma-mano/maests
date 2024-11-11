@@ -1,130 +1,188 @@
 import { parseModule } from "magicast";
-import { PluginObj, transformSync } from "@babel/core";
-import * as t from "@babel/types";
-import { createScriptOutPath, createYamlOutPath, jiti } from "./utils";
+
+import { createYamlOutPath, jiti } from "./utils";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { build, Plugin } from "esbuild";
+import { readFileSync } from "fs";
+import * as ts from "typescript";
 
-export const rewriteCode = ({
-  code,
+const rewriteRunScriptPlugin = (): Plugin => ({
+  name: "rewrite-run-script",
+  setup(build) {
+    build.onLoad({ filter: /.*/ }, async (args) => {
+      let code = readFileSync(args.path, "utf-8");
+
+      const _imports = parseModule(code).imports;
+      const imports = JSON.parse(JSON.stringify(_imports)) as typeof _imports;
+      const rewriteMap: Record<string, string> = Object.fromEntries(
+        Object.entries(imports).map(([key, value]) => {
+          if (value.from.startsWith(".")) {
+            value.from = join(dirname(args.path), value.from);
+          }
+          const path = jiti.esmResolve(value.from);
+          return [key, fileURLToPath(path)];
+        })
+      );
+      code = rewriteRunScript(code, rewriteMap);
+      return {
+        contents: code,
+        loader: "ts",
+      };
+    });
+  },
+});
+
+export const rewriteCode = async ({
   yamlOutPath,
   fullFlowPath,
 }: {
-  code: string;
   yamlOutPath: string;
   fullFlowPath: string;
 }) => {
-  code = code.replace(
-    /import.*["']maests.*/,
-    `import { M, getOutput } from 'maests'`
-  );
-  code = `import { writeYaml } from 'maests/write-yaml'\n` + code;
-  code += `\nwriteYaml("${yamlOutPath}")`;
+  let code = await build({
+    entryPoints: [fullFlowPath],
+    bundle: true,
+    packages: "external",
+    platform: "node",
+    write: false,
+    target: "esnext",
+    plugins: [rewriteRunScriptPlugin()],
+    format: "esm",
+  }).then((bundled) => bundled.outputFiles[0].text);
 
-  const _imports = parseModule(code).imports;
-  const imports = JSON.parse(JSON.stringify(_imports)) as typeof _imports;
-  const rewriteMap: Record<string, string> = Object.fromEntries(
-    Object.entries(imports).map(([key, value]) => {
-      if (value.from.startsWith(".")) {
-        value.from = join(dirname(fullFlowPath), value.from);
-      }
-      const path = jiti.esmResolve(value.from);
-      return [key, fileURLToPath(path)];
-    })
-  );
-  code = rewriteRunScript(code, rewriteMap);
+  code =
+    `import { writeYaml } from 'maests/write-yaml'\n` +
+    code +
+    `\nwriteYaml("${yamlOutPath}")`;
 
   return code;
 };
 
 if (import.meta.vitest) {
   it("rewrites ts flow code", async () => {
-    // prettier-ignore
-    const tsFlowCode = 
-`import { M } from "maests"
-import { fooScript } from "@/fixtures/foo-script";
-M.runScript(fooScript);
-M.initFlow({ appId: "com.my.app", NAME: "Maestro" });`;
-
     const yamlOutPath = createYamlOutPath("my-flow.maestro.ts");
-    const fullFlowPath = join(__dirname, "../playground/e2e/sampleFlow.ts");
-    const result = rewriteCode({
-      code: tsFlowCode,
+    const fullFlowPath = join(__dirname, "../fixtures/sample-flow.ts");
+    const result = await rewriteCode({
       yamlOutPath,
       fullFlowPath,
     });
 
-    const scriptPath = join(__dirname, "../fixtures/foo-script.ts");
     expect(result).toMatchInlineSnapshot(`
-      "import { writeYaml } from 'maests/write-yaml';
-      import { M, getOutput } from 'maests';
-      import { fooScript } from "@/fixtures/foo-script";
-      M.runScript("${scriptPath}", "fooScript");
-      M.initFlow({
-        appId: "com.my.app",
-        NAME: "Maestro"
+      "import { writeYaml } from 'maests/write-yaml'
+      // fixtures/sample-flow.ts
+      import { getOutput, M as M2 } from "maests";
+
+      // fixtures/utils/openApp.ts
+      import { M } from "maests";
+      var openApp = () => {
+        M.initFlow({ appId: "com.my.app" });
+        M.launchApp({ appId: "com.my.app" });
+      };
+
+      // fixtures/sample-flow.ts
+      openApp();
+      M2.runScript("/Users/mano/my-oss/maests/fixtures/utils/script.ts", "someScript");
+      M2.assertVisible({ id: getOutput("id") });
+      M2.runFlow({
+        flow: () => {
+          M2.repeatWhileNotVisible({
+            text: "4"
+          }, () => {
+            M2.tapOnText("Increment");
+          });
+        },
+        condition: {
+          visible: "Increment"
+        }
       });
-      writeYaml("${yamlOutPath}");"
+
+      writeYaml("/Users/mano/my-oss/maests/maests/my-flow.maestro.yaml")"
     `);
   });
 }
 
-const rewriteRunScript = (code: string, rewriteMap: Record<string, string>) => {
-  const plugin = (): PluginObj => {
-    return {
-      visitor: {
-        CallExpression(path) {
-          if (
-            t.isMemberExpression(path.node.callee) &&
-            t.isIdentifier(path.node.callee.object, { name: "M" }) &&
-            t.isIdentifier(path.node.callee.property, { name: "runScript" }) &&
-            t.isIdentifier(path.node.arguments[0])
-          ) {
-            if (t.isIdentifier(path.node.arguments[0])) {
-              const argName = path.node.arguments[0].name;
-              path.node.arguments = [
-                t.stringLiteral(rewriteMap[argName]),
-                t.stringLiteral(argName),
-              ];
-            }
-          }
-        },
-      },
+const rewriteRunScript = (
+  code: string,
+  rewriteMap: Record<string, string>
+): string => {
+  const sourceFile = ts.createSourceFile(
+    "tempFile.ts",
+    code,
+    ts.ScriptTarget.Latest,
+    true
+  );
+
+  const transformer = <T extends ts.Node>(
+    context: ts.TransformationContext
+  ) => {
+    const visit: ts.Visitor = (node: ts.Node): ts.Node | undefined => {
+      if (ts.isCallExpression(node)) {
+        const expression = node.expression;
+        if (
+          ts.isPropertyAccessExpression(expression) &&
+          ts.isIdentifier(expression.expression) &&
+          expression.expression.text === "M" &&
+          expression.name.text === "runScript" &&
+          node.arguments.length > 0 &&
+          ts.isIdentifier(node.arguments[0])
+        ) {
+          const argName = node.arguments[0].text;
+          const newArguments = [
+            ts.factory.createStringLiteral(rewriteMap[argName]),
+            ts.factory.createStringLiteral(argName),
+          ];
+          return ts.factory.updateCallExpression(
+            node,
+            expression,
+            node.typeArguments,
+            newArguments
+          );
+        }
+      }
+      return ts.visitEachChild(node, visit, context);
     };
+    return (node: T) => ts.visitNode(node, visit);
   };
-  return transformSync(code, {
-    plugins: [plugin],
-  })?.code;
+
+  const result = ts.transform(sourceFile, [transformer]);
+  const printer = ts.createPrinter();
+  const transformedSourceFile = result.transformed[0] as ts.SourceFile;
+  const transformedCode = printer.printFile(transformedSourceFile);
+
+  return transformedCode;
 };
 
-if (import.meta.vitest) {
-  it("rewrites M.runScript", () => {
-    const code = `M.runScript(someScript)`;
-    const result = rewriteRunScript(code, {
-      someScript: "./some-script.ts",
-    });
-    expect(result).toMatchInlineSnapshot(
-      `"M.runScript("./some-script.ts", "someScript");"`
-    );
-  });
-}
+export const deleteExport = (code: string): string => {
+  const sourceFile = ts.createSourceFile(
+    "tempFile.ts",
+    code,
+    ts.ScriptTarget.Latest,
+    true
+  );
 
-export const deleteExport = (code: string) => {
-  // delete export { ... }
-  const plugin = (): PluginObj => {
-    return {
-      visitor: {
-        ExportNamedDeclaration(path) {
-          path.remove();
-        },
-      },
+  const transformer = <T extends ts.Node>(
+    context: ts.TransformationContext
+  ) => {
+    const visit: ts.Visitor = (node: ts.Node): ts.Node | undefined => {
+      // ExportNamedDeclarationを削除
+      if (ts.isExportDeclaration(node) || ts.isExportAssignment(node)) {
+        return undefined;
+      }
+      return ts.visitEachChild(node, visit, context);
     };
+    return (node: T) => ts.visitNode(node, visit);
   };
-  return transformSync(code, {
-    plugins: [plugin],
-  })?.code;
+
+  const result = ts.transform(sourceFile, [transformer]);
+  const printer = ts.createPrinter();
+  const transformedSourceFile = result.transformed[0] as ts.SourceFile;
+  const transformedCode = printer.printFile(transformedSourceFile);
+
+  return transformedCode;
 };
 
+// テスト
 if (import.meta.vitest) {
   it("delete export", () => {
     const code = `
@@ -132,6 +190,9 @@ if (import.meta.vitest) {
     export { foo }
     `;
     const result = deleteExport(code);
-    expect(result).toMatchInlineSnapshot(`"const foo = 1;"`);
+    expect(result).toMatchInlineSnapshot(`
+      "const foo = 1;
+      "
+    `);
   });
 }
