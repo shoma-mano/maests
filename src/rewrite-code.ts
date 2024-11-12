@@ -20,8 +20,9 @@ const rewriteRunScriptPlugin = (): Plugin => ({
           if (value.from.startsWith(".")) {
             value.from = join(dirname(args.path), value.from);
           }
-          const path = jiti.esmResolve(value.from);
-          return [key, fileURLToPath(path)];
+          let path = jiti.esmResolve(value.from, { try: true });
+          if (path) path = fileURLToPath(path);
+          return [key, path];
         })
       );
       code = rewriteRunScript(code, rewriteMap);
@@ -153,6 +154,24 @@ const rewriteRunScript = (
   return transformedCode;
 };
 
+if (import.meta.vitest) {
+  it("rewrite runScript", () => {
+    const code = `
+    import { someScript } from "./utils/script";
+    M.runScript(someScript);
+    `;
+    const rewriteMap = {
+      someScript: "/Users/user-name/my-oss/maests/fixtures/utils/script.ts",
+    };
+    const result = rewriteRunScript(code, rewriteMap);
+    expect(result).toMatchInlineSnapshot(`
+      "import { someScript } from "./utils/script";
+      M.runScript("/Users/user-name/my-oss/maests/fixtures/utils/script.ts", "someScript");
+      "
+    `);
+  });
+}
+
 export const deleteExport = (code: string): string => {
   const sourceFile = ts.createSourceFile(
     "tempFile.ts",
@@ -182,7 +201,6 @@ export const deleteExport = (code: string): string => {
   return transformedCode;
 };
 
-// テスト
 if (import.meta.vitest) {
   it("delete export", () => {
     const code = `

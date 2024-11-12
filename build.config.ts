@@ -13,6 +13,7 @@ export default defineBuildConfig({
         },
         treeShaking: true,
         format: "esm",
+        minifySyntax: true,
       },
     },
   ],

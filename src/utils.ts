@@ -15,11 +15,9 @@ export const createYamlOutPath = (tsFlowPath: string) => {
   return join(maestsDir, tsFlowPath.replace(".ts", ".yaml"));
 };
 
-export const createScriptOutPath = (tsScriptPath: string) => {
-  if (tsScriptPath.startsWith(tsConfigDir)) {
-    tsScriptPath = tsScriptPath.replace(`${tsConfigDir}/`, "");
-  }
-  return join(maestsDir, tsScriptPath.replace(".ts", ".js"));
+export const createScriptOutPath = (scriptFullPath: string) => {
+  const scriptPath = scriptFullPath.replace(`${tsConfigDir}/`, "");
+  return join(maestsDir, scriptPath.replace(".ts", ".js"));
 };
 
 export const writeFileWithDirectorySync = (filePath: string, data: string) => {
