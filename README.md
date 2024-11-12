@@ -40,8 +40,6 @@ npx maests my-first-flow.ts
 
 There is sample flow you can try actually in [playground](playground)
 
-`sample-flow.ts`
-
 ```typescript
 import { getOutput, M } from "maests";
 import { openApp } from "@/e2e/utils/openApp";
@@ -74,7 +72,7 @@ M.runFlow({
 });
 ```
 
-You can try maests by this sample flow with simulator in [playground](playground)
+You can try maests by this sample flow with simulator.
 
 ```shell
 # clone this repo
