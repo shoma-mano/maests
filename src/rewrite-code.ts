@@ -1,6 +1,6 @@
 import { parseModule } from "magicast";
 
-import { createYamlOutPath, jiti } from "./utils";
+import { createYamlOutPath, jiti, maestsDir, tsConfigDir } from "./utils";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { build, Plugin } from "esbuild";
@@ -71,12 +71,18 @@ if (import.meta.vitest) {
       var openApp = () => {
         M.initFlow({ appId: "com.my.app" });
         M.launchApp({ appId: "com.my.app" });
-        M.runScript("/Users/mano/my-oss/maests/fixtures/utils/nest-script.ts", "nestScript");
+        M.runScript("${join(
+          tsConfigDir,
+          "fixtures/utils/nest-script.ts"
+        )}", "nestScript");
       };
 
       // fixtures/sample-flow.ts
       openApp();
-      M2.runScript("/Users/mano/my-oss/maests/fixtures/utils/script.ts", "someScript");
+      M2.runScript("${join(
+        tsConfigDir,
+        "fixtures/utils/script.ts"
+      )}", "someScript");
       M2.assertVisible({ id: getOutput("id") });
       M2.runFlow({
         flow: () => {
@@ -91,7 +97,7 @@ if (import.meta.vitest) {
         }
       });
 
-      writeYaml("/Users/mano/my-oss/maests/maests/fixtures/sample-flow.yaml")"
+      writeYaml("${join(tsConfigDir, "maests/fixtures/sample-flow.yaml")}")"
     `);
   });
 }
