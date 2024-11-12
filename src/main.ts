@@ -25,18 +25,15 @@ const main = defineCommand({
     const cwd = process.cwd();
 
     // create temp file
-    const yamlOutPath = createYamlOutPath(args.path);
     const fullFlowPath = args.path.startsWith("/")
       ? args.path
       : join(cwd, args.path);
-
-    let code = fs.readFileSync(args.path, "utf-8");
-    code = await rewriteCode({ yamlOutPath, fullFlowPath });
-
+    const code = await rewriteCode(fullFlowPath);
     const tempFilePath = fullFlowPath.replace(".ts", ".temp.ts");
     writeFileSync(tempFilePath, code);
 
     // execute temp file
+    const yamlOutPath = createYamlOutPath(fullFlowPath);
     try {
       await jiti.import(tempFilePath);
       consola.success(`Created Yaml to ${yamlOutPath} ✔`);

@@ -1,6 +1,6 @@
 import { parseModule } from "magicast";
 
-import { createYamlOutPath, jiti } from "./utils";
+import { createYamlOutPath, jiti, maestsDir, tsConfigDir } from "./utils";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { build, Plugin } from "esbuild";
@@ -20,8 +20,9 @@ const rewriteRunScriptPlugin = (): Plugin => ({
           if (value.from.startsWith(".")) {
             value.from = join(dirname(args.path), value.from);
           }
-          const path = jiti.esmResolve(value.from);
-          return [key, fileURLToPath(path)];
+          let path = jiti.esmResolve(value.from, { try: true });
+          if (path) path = fileURLToPath(path);
+          return [key, path];
         })
       );
       code = rewriteRunScript(code, rewriteMap);
@@ -33,13 +34,9 @@ const rewriteRunScriptPlugin = (): Plugin => ({
   },
 });
 
-export const rewriteCode = async ({
-  yamlOutPath,
-  fullFlowPath,
-}: {
-  yamlOutPath: string;
-  fullFlowPath: string;
-}) => {
+export const rewriteCode = async (fullFlowPath: string) => {
+  const yamlOutPath = createYamlOutPath(fullFlowPath);
+
   let code = await build({
     entryPoints: [fullFlowPath],
     bundle: true,
@@ -61,12 +58,8 @@ export const rewriteCode = async ({
 
 if (import.meta.vitest) {
   it("rewrites ts flow code", async () => {
-    const yamlOutPath = createYamlOutPath("my-flow.maestro.ts");
     const fullFlowPath = join(__dirname, "../fixtures/sample-flow.ts");
-    const result = await rewriteCode({
-      yamlOutPath,
-      fullFlowPath,
-    });
+    const result = await rewriteCode(fullFlowPath);
 
     expect(result).toMatchInlineSnapshot(`
       "import { writeYaml } from 'maests/write-yaml'
@@ -78,11 +71,18 @@ if (import.meta.vitest) {
       var openApp = () => {
         M.initFlow({ appId: "com.my.app" });
         M.launchApp({ appId: "com.my.app" });
+        M.runScript("${join(
+          tsConfigDir,
+          "fixtures/utils/nest-script.ts"
+        )}", "nestScript");
       };
 
       // fixtures/sample-flow.ts
       openApp();
-      M2.runScript("/Users/mano/my-oss/maests/fixtures/utils/script.ts", "someScript");
+      M2.runScript("${join(
+        tsConfigDir,
+        "fixtures/utils/script.ts"
+      )}", "someScript");
       M2.assertVisible({ id: getOutput("id") });
       M2.runFlow({
         flow: () => {
@@ -97,7 +97,7 @@ if (import.meta.vitest) {
         }
       });
 
-      writeYaml("/Users/mano/my-oss/maests/maests/my-flow.maestro.yaml")"
+      writeYaml("${join(tsConfigDir, "maests/fixtures/sample-flow.yaml")}")"
     `);
   });
 }
@@ -153,6 +153,24 @@ const rewriteRunScript = (
   return transformedCode;
 };
 
+if (import.meta.vitest) {
+  it("rewrite runScript", () => {
+    const code = `
+    import { someScript } from "./utils/script";
+    M.runScript(someScript);
+    `;
+    const rewriteMap = {
+      someScript: "/Users/user-name/my-oss/maests/fixtures/utils/script.ts",
+    };
+    const result = rewriteRunScript(code, rewriteMap);
+    expect(result).toMatchInlineSnapshot(`
+      "import { someScript } from "./utils/script";
+      M.runScript("/Users/user-name/my-oss/maests/fixtures/utils/script.ts", "someScript");
+      "
+    `);
+  });
+}
+
 export const deleteExport = (code: string): string => {
   const sourceFile = ts.createSourceFile(
     "tempFile.ts",
@@ -182,7 +200,6 @@ export const deleteExport = (code: string): string => {
   return transformedCode;
 };
 
-// テスト
 if (import.meta.vitest) {
   it("delete export", () => {
     const code = `

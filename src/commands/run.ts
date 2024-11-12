@@ -3,10 +3,15 @@ import { join } from "path";
 import { stringify } from "yaml";
 import { M } from "./commands";
 import { addOut, getOut, handleNest } from "../out";
-import { createScriptOutPath, writeFileWithDirectorySync } from "../utils";
+import { maestsDir, tsConfigDir, writeFileWithDirectorySync } from "../utils";
 import { readFileSync, unlinkSync } from "fs";
 import { WhenCondition } from "./type";
 import { deleteExport } from "../rewrite-code";
+
+const createScriptOutPath = (scriptFullPath: string) => {
+  const scriptPath = scriptFullPath.replace(`${tsConfigDir}/`, "");
+  return join(maestsDir, scriptPath.replace(".ts", ".js"));
+};
 
 export const runScript = (path: string | (() => void), funcName?: string) => {
   if (typeof path === "function") return;

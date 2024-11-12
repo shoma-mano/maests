@@ -4,22 +4,13 @@ import { createJiti } from "jiti";
 import { dirname, join } from "path";
 
 const { path, config } = getTsconfig();
-const tsConfigDir = dirname(path);
+export const tsConfigDir = dirname(path);
 export const maestsDir = join(tsConfigDir, "maests");
 if (!existsSync(maestsDir)) mkdirSync(maestsDir);
 
-export const createYamlOutPath = (tsFlowPath: string) => {
-  if (tsFlowPath.startsWith(tsConfigDir)) {
-    tsFlowPath = tsFlowPath.replace(`${tsConfigDir}/`, "");
-  }
+export const createYamlOutPath = (fullTsFlowPath: string) => {
+  const tsFlowPath = fullTsFlowPath.replace(`${tsConfigDir}/`, "");
   return join(maestsDir, tsFlowPath.replace(".ts", ".yaml"));
-};
-
-export const createScriptOutPath = (tsScriptPath: string) => {
-  if (tsScriptPath.startsWith(tsConfigDir)) {
-    tsScriptPath = tsScriptPath.replace(`${tsConfigDir}/`, "");
-  }
-  return join(maestsDir, tsScriptPath.replace(".ts", ".js"));
 };
 
 export const writeFileWithDirectorySync = (filePath: string, data: string) => {
