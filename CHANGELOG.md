@@ -1,3 +1,23 @@
+## v2.8.6
+
+[compare changes](https://github.com/shoma-mano/maests/compare/v2.8.5...v2.8.6)
+
+### 🩹 Fixes
+
+- EsmResolve in rewriteRunScriptPlugin throw error ([a89b3ad](https://github.com/shoma-mano/maests/commit/a89b3ad))
+
+### 💅 Refactors
+
+- Refactored utils ([2669227](https://github.com/shoma-mano/maests/commit/2669227))
+
+### 🏡 Chore
+
+- **test:** Fix failed unit tests ([30e399c](https://github.com/shoma-mano/maests/commit/30e399c))
+
+### ❤️ Contributors
+
+- Shoma-mano <ms2geki@gmail.com>
+
 ## v2.8.5
 
 [compare changes](https://github.com/shoma-mano/maests/compare/v2.8.4...v2.8.5)
