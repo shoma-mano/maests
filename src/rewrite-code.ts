@@ -34,13 +34,9 @@ const rewriteRunScriptPlugin = (): Plugin => ({
   },
 });
 
-export const rewriteCode = async ({
-  yamlOutPath,
-  fullFlowPath,
-}: {
-  yamlOutPath: string;
-  fullFlowPath: string;
-}) => {
+export const rewriteCode = async (fullFlowPath: string) => {
+  const yamlOutPath = createYamlOutPath(fullFlowPath);
+
   let code = await build({
     entryPoints: [fullFlowPath],
     bundle: true,
@@ -62,12 +58,8 @@ export const rewriteCode = async ({
 
 if (import.meta.vitest) {
   it("rewrites ts flow code", async () => {
-    const yamlOutPath = createYamlOutPath("my-flow.maestro.ts");
     const fullFlowPath = join(__dirname, "../fixtures/sample-flow.ts");
-    const result = await rewriteCode({
-      yamlOutPath,
-      fullFlowPath,
-    });
+    const result = await rewriteCode(fullFlowPath);
 
     expect(result).toMatchInlineSnapshot(`
       "import { writeYaml } from 'maests/write-yaml'
@@ -79,6 +71,7 @@ if (import.meta.vitest) {
       var openApp = () => {
         M.initFlow({ appId: "com.my.app" });
         M.launchApp({ appId: "com.my.app" });
+        M.runScript("/Users/mano/my-oss/maests/fixtures/utils/nest-script.ts", "nestScript");
       };
 
       // fixtures/sample-flow.ts
@@ -98,7 +91,7 @@ if (import.meta.vitest) {
         }
       });
 
-      writeYaml("/Users/mano/my-oss/maests/maests/my-flow.maestro.yaml")"
+      writeYaml("/Users/mano/my-oss/maests/maests/fixtures/sample-flow.yaml")"
     `);
   });
 }
