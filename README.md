@@ -19,9 +19,9 @@ If you have not installed maestro yet, you have to [install](https://maestro.mob
 pnpm -D add maests
 ```
 
-### Step 1: Create your first flow
+### 1: Create your first flow
 
-Create a new file \<flow-name>.ts:
+Create a new file my-first-flow.ts:
 
 ```typescript
 import { M } from "maests";
@@ -30,70 +30,15 @@ M.initFlow({ appId: "com.myTeam.myApp" });
 M.tapOn("someTestId");
 ```
 
-### Step 2: Execute Test
+### 2: Execute Test
+
+If the Android Emulator or iOS Simulator is launched, you can execute the test with:
 
 ```sh
 npx maests my-first-flow.ts
 ```
 
-## 🛹 Playground
-
-There is sample flow you can try actually in [playground](playground)
-
-```typescript
-import { getOutput, M } from "maests";
-import { openApp } from "@/e2e/utils/openApp";
-import { someScript } from "./utils/script";
-
-// use composable flow easiliy
-openApp();
-
-// run script like this
-M.runScript(someScript);
-
-// use variables set in someScript
-M.assertVisible({ id: getOutput("id") });
-
-// use runFlow to run some flow with condition
-M.runFlow({
-  flow: () => {
-    M.repeatWhileNotVisible(
-      {
-        text: "4",
-      },
-      () => {
-        M.tapOnText("Increment");
-      }
-    );
-  },
-  condition: {
-    visible: "Increment",
-  },
-});
-```
-
-You can try maests by this sample flow with simulator.
-
-```shell
-# clone this repo
-git clone https://github.com/shoma-mano/maests
-cd maests
-
-# build maests
-pnpm install
-pnpm build
-
-# try maests in playground
-cd playground
-pnpm install
-pnpm test
-```
-
-## 🛠️ Commands
-
-This package offers a rich set of commands to cover various actions in your flows, including initializing flows, performing taps and presses, swiping, asserting conditions, and more.
-
-For a detailed list of all commands with examples, refer to the [Commands Documentation](./commands.md).
+If you don't have a project to try, the [Playground](https://maests.vercel.app/playground.html) is ready for you to use.
 
 ## 🚨 Trouble Shooting
 
