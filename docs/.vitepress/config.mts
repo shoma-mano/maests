@@ -7,7 +7,6 @@ export default defineConfig({
   head: [["link", { rel: "icon", type: "image/png", href: "/maests.png" }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    nav: [{ text: "Getting Started", link: "/getting-started" }],
 
     logo: "/maests.png",
 
@@ -26,7 +25,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
+      { icon: "github", link: "https://github.com/shoma-mano/maests" },
     ],
   },
 });

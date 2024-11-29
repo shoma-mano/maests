@@ -43,7 +43,6 @@ You can try maests by above sample flow with simulator.
 ### 1.Clone repo
 
 ```shell
-# Clone this repo
 git clone https://github.com/shoma-mano/maests
 cd maests
 ```
