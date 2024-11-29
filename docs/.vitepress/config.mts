@@ -7,10 +7,7 @@ export default defineConfig({
   head: [["link", { rel: "icon", type: "image/png", href: "/maests.png" }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
-    ],
+    nav: [{ text: "Getting Started", link: "/getting-started" }],
 
     logo: "/maests.png",
 
@@ -18,9 +15,13 @@ export default defineConfig({
       {
         text: "Introduction",
         items: [
-          { text: "Markdown Examples", link: "/markdown-examples" },
-          { text: "Runtime API Examples", link: "/api-examples" },
+          { text: "Getting Started", link: "/getting-started" },
+          { text: "Playground", link: "/playground" },
         ],
+      },
+      {
+        text: "API",
+        items: [{ text: "Commands", link: "/commands" }],
       },
     ],
 
